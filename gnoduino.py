@@ -16,6 +16,8 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
+import time
+import tempfile
 import os
 import sys
 import glib
@@ -131,7 +133,7 @@ def quit(widget, data=None):
 
 def compile(widget, data=file):
 	page = nb.get_nth_page(nb.get_current_page())
-	compiler.compile(page.get_data("file"), tw, sb)
+	compiler.compile(page.get_data("buffer"), id, tw, sb)
 
 def stop(widget, data=None):
 	print "stop"
@@ -154,7 +156,11 @@ def menu(gui):
 	[gui.get_object(i[0]).add_accelerator("activate", accel, i[2][0], i[2][1], 0) for i in menus]
 	a.add_accel_group(accel)
 
+def makeWorkdir():
+	return tempfile.mkdtemp("", "/tmp/build"+str(time.time()))
+
 try:
+	id = makeWorkdir()
 	#p = popup()
 	#p.show("popup text")
 	ser = serialio.sconsole()

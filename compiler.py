@@ -22,8 +22,10 @@ import logging
 import select
 import subprocess
 import sys
+import time
 import tempfile
 import gettext
+import hashlib
 #gettext.bindtextdomain('myapplication', '/path/to/my/language/directory')
 #gettext.textdomain('myapplication')
 _ = gettext.gettext
@@ -103,16 +105,17 @@ hex = [
 
 arduino_path = "hardware/arduino/cores/arduino"
 
-def compile(file, output, notify):
+def compile(b, id, output, notify):
 	context = notify.get_context_id("main")
 	notify.pop(context)
 	notify.push(context, _("Compilling..."))
 	clearConsole(output)
-	tmpdir =  tempfile.mkdtemp("", "/tmp/build")
+	tmpdir = id
 	#compile inter c objects
 	try:
 		"""preproces pde"""
-		pre_file = preproc.add_headers(tmpdir, file)
+		pre_file = preproc.add_headers(id, b)
+		print pre_file
 		"""precompile pde"""
 		compline=[j for j in defcpp]
 		compline.append("-I"+os.getcwd()+"/"+arduino_path)
@@ -127,7 +130,8 @@ def compile(file, output, notify):
 			compline=[j for j in defc]
 			compline.append("-I"+os.getcwd()+"/"+arduino_path)
 			compline.append(os.getcwd()+"/"+arduino_path+"/"+i)
-			compline.append("-o"+tmpdir+"/"+i+".o")
+			compline.append("-o"+id+"/"+i+".o")
+			print compline
 			(run, sout) = runProg(compline)
 			if run == False:
 				printError(notify, output, sout)
@@ -137,36 +141,39 @@ def compile(file, output, notify):
 			compline = [j for j in defcpp]
 			compline.append("-I"+os.getcwd()+"/"+arduino_path)
 			compline.append(os.getcwd()+"/"+arduino_path+"/"+i)
-			compline.append("-o"+tmpdir+"/"+i+".o")
+			compline.append("-o"+id+"/"+i+".o")
+			print compline
 			(run, sout) = runProg(compline)
 			if run == False:
 				printError(notify, output, sout)
 				raise
 		compline = [i for i in link]
-		compline.append("-o"+tmpdir+"/"+os.path.basename(file)+".elf")
+		tempobj = tempfile.mktemp("", "Tempobj", id)
+		compline.append("-o"+tempobj+".elf")
 		compline.append(pre_file+".o")
-		[compline.append(tmpdir+"/"+i+".o") for i in cobj]
-		[compline.append(tmpdir+"/"+i+".o") for i in cppobj]
+		[compline.append(id+"/"+i+".o") for i in cobj]
+		[compline.append(id+"/"+i+".o") for i in cppobj]
 		compline.append("-lm")
+		print compline
 		(run, sout) = runProg(compline)
 		if run == False:
 			printError(notify, output, sout)
 			raise
 		compline=[i for i in eep]
-		compline.append(tmpdir+"/"+os.path.basename(file)+".elf")
-		compline.append(tmpdir+"/"+os.path.basename(file)+".eep")
+		compline.append(tempobj+".elf")
+		compline.append(tempobj+".eep")
 		(run, sout) = runProg(compline)
 		if run == False:
 			printError(notify, output, sout)
 			raise
 		compline=[i for i in hex]
-		compline.append(tmpdir+"/"+os.path.basename(file)+".elf")
-		compline.append(tmpdir+"/"+os.path.basename(file)+".hex")
+		compline.append(tempobj+".elf")
+		compline.append(tempobj+".hex")
 		(run, sout) = runProg(compline)
 		if run == False:
 			printError(notify, output, sout)
 			raise
-		size = computeSize(tmpdir+"/"+os.path.basename(file)+".hex")
+		size = computeSize(tempobj+".hex")
 		notify.pop(context)
 		notify.push(context, _("Done compilling."))
 		

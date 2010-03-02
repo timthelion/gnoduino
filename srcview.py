@@ -50,11 +50,16 @@ def get_lang_for_content(content):
 
 def modifyText(w, (f, label)):
 	nh = hashlib.sha224(w.get_text(w.get_start_iter(), w.get_end_iter())).hexdigest()
-	fh = hashlib.sha224(file(f).read()).hexdigest()
-	if (nh != fh):
-		label.set_text(os.path.basename(f)+"*")
+	if f != None:
+		fh = hashlib.sha224(file(f).read()).hexdigest()
+		name = os.path.basename(f)
 	else:
-		label.set_text(os.path.basename(f))
+		fh = 0
+		name = "Untitled"
+	if (nh != fh):
+		label.set_text(name+"*")
+	else:
+		label.set_text(name)
 
 def instext(obj, b):
 	print gnomevfs.get_mime_type_for_data(b.get_text(b.get_start_iter(), b.get_end_iter()))

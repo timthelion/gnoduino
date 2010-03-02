@@ -115,7 +115,6 @@ def compile(b, id, output, notify):
 	try:
 		"""preproces pde"""
 		pre_file = preproc.add_headers(id, b)
-		print pre_file
 		"""precompile pde"""
 		compline=[j for j in defcpp]
 		compline.append("-I"+os.getcwd()+"/"+arduino_path)
@@ -131,7 +130,6 @@ def compile(b, id, output, notify):
 			compline.append("-I"+os.getcwd()+"/"+arduino_path)
 			compline.append(os.getcwd()+"/"+arduino_path+"/"+i)
 			compline.append("-o"+id+"/"+i+".o")
-			print compline
 			(run, sout) = runProg(compline)
 			if run == False:
 				printError(notify, output, sout)
@@ -142,7 +140,6 @@ def compile(b, id, output, notify):
 			compline.append("-I"+os.getcwd()+"/"+arduino_path)
 			compline.append(os.getcwd()+"/"+arduino_path+"/"+i)
 			compline.append("-o"+id+"/"+i+".o")
-			print compline
 			(run, sout) = runProg(compline)
 			if run == False:
 				printError(notify, output, sout)
@@ -154,7 +151,6 @@ def compile(b, id, output, notify):
 		[compline.append(id+"/"+i+".o") for i in cobj]
 		[compline.append(id+"/"+i+".o") for i in cppobj]
 		compline.append("-lm")
-		print compline
 		(run, sout) = runProg(compline)
 		if run == False:
 			printError(notify, output, sout)

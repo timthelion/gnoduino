@@ -25,6 +25,7 @@ import gobject
 import gtk
 import subprocess
 import select
+import shutil
 
 import compiler
 import srcview
@@ -129,6 +130,7 @@ def csave(w, data=None):
 	srcview.modifyText(b, (f, l))
 
 def quit(widget, data=None):
+	shutil.rmtree(id, True)
 	gtk.main_quit()
 
 def compile(widget, data=file):

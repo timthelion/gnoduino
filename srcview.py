@@ -85,4 +85,7 @@ def create_source_view(label, f=None):
 	sv.set_right_margin_position(80)
 #	sv.connect("paste-clipboard", instext, sbuffer)
 	sbuffer.connect("changed", modifyText, (f, label))
+	sv.set_highlight_current_line(True)
+	#sv.scroll_to_mark()
+	#sv.move_mark_onscreen(gtksourceview2.Mark.next(gtksourceview2.Mark.get_category()))
 	return sbuffer, sv

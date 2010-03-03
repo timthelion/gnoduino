@@ -71,10 +71,12 @@ def createPage(nb, f=None):
 	sw = gtk.ScrolledWindow()
 	sw.add(sv)
 	sw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+	sw.set_placement(gtk.CORNER_BOTTOM_LEFT)
 	sw.set_shadow_type(gtk.SHADOW_IN)
 	sw.show_all()
 	p = nb.append_page(sw, hbox)
 	nb.set_current_page(p)
+	sv.grab_focus()
 	b.connect("clicked", destroyPage, sw)
 	wp = nb.get_nth_page(p)
 	wp.set_data("file", f)		#add file information to the page widget
@@ -156,7 +158,7 @@ def menu(gui):
 	[gui.get_object(i[0]).connect("activate", i[1]) for i in menus]
 	accel = gtk.AccelGroup()
 	[gui.get_object(i[0]).add_accelerator("activate", accel, i[2][0], i[2][1], 0) for i in menus]
-	a.add_accel_group(accel)
+	mainwin.add_accel_group(accel)
 
 def makeWorkdir():
 	return tempfile.mkdtemp("", "/tmp/build"+str(time.time()))
@@ -168,7 +170,7 @@ try:
 	ser = serialio.sconsole()
 	gui = gtk.Builder()
 	gui.add_from_file("./main.ui");
-	a = gui.get_object("top_win");
+	mainwin = gui.get_object("top_win");
 	vbox = gui.get_object("vpan");
 	sb = gui.get_object("statusbar1");
 	comp = gui.get_object("compile").connect("clicked", compile)
@@ -192,10 +194,10 @@ try:
 	tw.modify_text(gtk.STATE_NORMAL, gtk.gdk.Color("#ffffff"))
 	sw.add(tw)
 	vbox.add(sw)
-	a.set_focus(sv)
-	a.show_all()
-	a.set_title("Arduino")
-	a.connect("destroy", quit)
+	mainwin.set_focus(sv)
+	mainwin.show_all()
+	mainwin.set_title("Arduino")
+	mainwin.connect("destroy", quit)
 	gui.get_object("serial").connect("clicked", cserial, tw)
 	gtk.main()
 except KeyboardInterrupt:

@@ -52,7 +52,9 @@ cobj = [
 cppobj = [
 	"WMath.cpp",
 	"HardwareSerial.cpp",
-	"Print.cpp" 
+	"Print.cpp", 
+	"main.cpp",
+	"Tone.cpp"
 	]
 
 defc = [
@@ -73,10 +75,16 @@ defcpp = [
 	"-w",
 	"-g",
 	"-Os",
+	"-fno-exceptions",
 	"-ffunction-sections",
 	"-fdata-sections",
 	"-mmcu=atmega8",
 	"-DF_CPU=16000000L"
+	]
+
+defar = [
+	"/usr/bin/avr-ar",
+	"rcs"
 	]
 
 link = [
@@ -115,15 +123,6 @@ def compile(b, id, output, notify):
 	try:
 		"""preproces pde"""
 		pre_file = preproc.add_headers(id, b)
-		"""precompile pde"""
-		compline=[j for j in defcpp]
-		compline.append("-I"+os.getcwd()+"/"+arduino_path)
-		compline.append(pre_file)
-		compline.append("-o"+pre_file+".o")
-		(run, sout) = runProg(compline)
-		if run == False:
-			printError(notify, output, sout)
-			raise
 		"""compile C targets"""
 		for i in cobj:
 			compline=[j for j in defc]
@@ -144,12 +143,32 @@ def compile(b, id, output, notify):
 			if run == False:
 				printError(notify, output, sout)
 				raise
+		"""generate archive objects"""
+		for i in cobj+cppobj:
+			compline = [j for j in defar]
+			compline.append(id+"/core.a")
+			compline.append(id+"/"+i+".o")
+			(run, sout) = runProg(compline)
+			if run == False:
+				printError(notify, output, sout)
+				raise
+		"""precompile pde"""
+		compline=[j for j in defcpp]
+		compline.append("-I"+os.getcwd()+"/"+arduino_path)
+		compline.append(pre_file)
+		compline.append("-o"+pre_file+".o")
+		(run, sout) = runProg(compline)
+		if run == False:
+			printError(notify, output, sout)
+			raise
+
+		"""compile all objects"""
 		compline = [i for i in link]
 		tempobj = tempfile.mktemp("", "Tempobj", id)
 		compline.append("-o"+tempobj+".elf")
 		compline.append(pre_file+".o")
-		[compline.append(id+"/"+i+".o") for i in cobj]
-		[compline.append(id+"/"+i+".o") for i in cppobj]
+		compline.append(id+"/core.a")
+		compline.append("-L"+id)
 		compline.append("-lm")
 		(run, sout) = runProg(compline)
 		if run == False:

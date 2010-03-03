@@ -26,8 +26,6 @@ MAIN = "hardware/arduino/cores/arduino/main.cpp"
 """Returns the index of the first character that's not whitespace, a comment
 or a pre-processor directive."""
 def firstStatement(instr):
-	#m = re.match("off a", instr)
-	print instr
 	m = re.match(r"""\s+|
 		/\*[^*]*(?:\*(?!/)[^*]*)*\*/
 		|\s+|
@@ -50,8 +48,5 @@ def add_headers(path, b):
 	of = tempfile.mktemp(".cpp", "", path)
 	w = file(of, "w")
 	w.write(result)
-	fl = file(MAIN).read().splitlines(True)[1:]
-	for i in fl[1:]:
-		w.write(i)
 	w.close()
 	return of

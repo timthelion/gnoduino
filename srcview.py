@@ -83,6 +83,6 @@ def create_source_view(label, f=None):
 #	sv.set_show_line_numbers(True)
 	sv.set_wrap_mode(gtk.WRAP_CHAR)
 	sv.set_right_margin_position(80)
-	sv.connect("paste-clipboard", instext, sbuffer)
+#	sv.connect("paste-clipboard", instext, sbuffer)
 	sbuffer.connect("changed", modifyText, (f, label))
 	return sbuffer, sv

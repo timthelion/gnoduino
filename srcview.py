@@ -48,7 +48,7 @@ def get_lang_for_content(content):
 			if p == mime: 
 				return lang
 
-def modifyText(w, (f, label)):
+def modifyText(w, (f, label, status)):
 	nh = hashlib.sha224(w.get_text(w.get_start_iter(), w.get_end_iter())).hexdigest()
 	if f != None:
 		fh = hashlib.sha224(file(f).read()).hexdigest()
@@ -60,12 +60,23 @@ def modifyText(w, (f, label)):
 		label.set_text(name+"*")
 	else:
 		label.set_text(name)
+	updatePos(w, status)
 
 def instext(obj, b):
 	print gnomevfs.get_mime_type_for_data(b.get_text(b.get_start_iter(), b.get_end_iter()))
 
+def updatePos(buffer, sb):
+	sb.pop(1)
+	iter = buffer.get_iter_at_mark(buffer.get_insert())
+	row = iter.get_line();
+	col = iter.get_line_offset();
+	msg = "Ln %d, Col %d" % (row+1, col+1)
+	sb.push(1, msg);
 
-def create_source_view(label, f=None):
+def markCb(buffer, iter, mark, data):
+	updatePos(buffer, data)
+
+def createsrcview(label, status, f=None):
 	sbuffer = gtksourceview2.Buffer()
 	if f: 
 		content = file(f).read()
@@ -83,8 +94,9 @@ def create_source_view(label, f=None):
 #	sv.set_show_line_numbers(True)
 	sv.set_wrap_mode(gtk.WRAP_CHAR)
 	sv.set_right_margin_position(80)
-#	sv.connect("paste-clipboard", instext, sbuffer)
-	sbuffer.connect("changed", modifyText, (f, label))
+	updatePos(sbuffer, status)
+	sbuffer.connect("mark_set", markCb, status)
+	sbuffer.connect("changed", modifyText, (f, label, status))
 	sv.set_highlight_current_line(True)
 	#sv.scroll_to_mark()
 	#sv.move_mark_onscreen(gtksourceview2.Mark.next(gtksourceview2.Mark.get_category()))

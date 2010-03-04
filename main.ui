@@ -358,9 +358,27 @@
               </packing>
             </child>
             <child>
-              <object class="GtkStatusbar" id="statusbar1">
+              <object class="GtkHBox" id="hbox2">
                 <property name="visible">True</property>
-                <property name="spacing">2</property>
+                <child>
+                  <object class="GtkStatusbar" id="statusbar1">
+                    <property name="visible">True</property>
+                    <property name="spacing">2</property>
+                    <property name="has_resize_grip">False</property>
+                  </object>
+                  <packing>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkStatusbar" id="statusbar2">
+                    <property name="visible">True</property>
+                    <property name="spacing">2</property>
+                  </object>
+                  <packing>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
               </object>
               <packing>
                 <property name="expand">False</property>

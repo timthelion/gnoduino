@@ -67,7 +67,7 @@ def createPage(nb, f=None):
 	b.set_relief(gtk.RELIEF_NONE)
 	hbox.pack_start(b, True, True)
 	hbox.show_all()
-	(sbuf,sv) = srcview.create_source_view(flabel, f)
+	(sbuf,sv) = srcview.createsrcview(flabel, sb2, f)
 	sw = gtk.ScrolledWindow()
 	sw.add(sv)
 	sw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
@@ -173,6 +173,7 @@ try:
 	mainwin = gui.get_object("top_win");
 	vbox = gui.get_object("vpan");
 	sb = gui.get_object("statusbar1");
+	sb2 = gui.get_object("statusbar2");
 	comp = gui.get_object("compile").connect("clicked", compile)
 	gui.get_object("stop").connect("clicked", stop)
 	gui.get_object("new").connect("clicked", cnew)

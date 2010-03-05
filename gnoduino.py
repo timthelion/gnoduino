@@ -74,6 +74,9 @@ def updatePageTitle(w, status):
 		l.set_text(name)
 	srcview.updatePos(w, status)
 
+def switchPage(page, a, b, c):
+	nb.set_current_page(int(chr(b-1)))
+
 def createPage(nb, f=None):
 	hbox = gtk.HBox(False, 0)
 	flabel = gtk.Label(os.path.basename(f) if f else "Untitled")
@@ -96,8 +99,19 @@ def createPage(nb, f=None):
 	sw.show_all()
 	p = nb.append_page(sw, hbox)
 	nb.set_current_page(p)
+	page = nb.get_nth_page(p)
+	nb.set_scrollable(True);
+	nb.set_tab_reorderable(page, True);
+	accel = gtk.AccelGroup()
+	for i in range(1, 10):
+		accel.connect_group(ord(str(i)), gtk.gdk.MOD1_MASK, 0, 
+			switchPage)
+	mainwin.add_accel_group(accel)
 	sv.grab_focus()
 	b.connect("clicked", destroyPage, sw)
+	accel = gtk.AccelGroup()
+	b.add_accelerator("activate", accel, ord("w"), gtk.gdk.CONTROL_MASK, 0)
+	mainwin.add_accel_group(accel)
 	wp = nb.get_nth_page(p)
 	wp.set_data("file", f)		#add file information to the page widget
 	wp.set_data("buffer", sbuf)	#add buffer information to the page widget
@@ -115,9 +129,9 @@ def searchFile(nb, f):
 			return True
 	return False
 
-def process_file(w, dialog):
+def processFile(w):
 	if searchFile(nb, w.get_filename()) == True:
-		dialog.destroy()
+		w.destroy()
 		return
 
 	page = nb.get_nth_page(nb.get_current_page())
@@ -125,31 +139,28 @@ def process_file(w, dialog):
 		replacePage(page)
 
 	createPage(nb, w.get_filename())
-	dialog.destroy()
 
 def saveAs():
 	p = gtk.FileChooserDialog("Save file", None, gtk.FILE_CHOOSER_ACTION_OPEN,
 		(gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT, 
 		gtk.STOCK_OK, gtk.RESPONSE_ACCEPT))
 	p.set_size_request(650, 500)
-	p.connect("file-activated", process_file, p)
+	p.show_all()
 	if p.run() == gtk.RESPONSE_ACCEPT:
 		f = p.get_filename()
 		p.destroy()
 		return f
+	p.destroy()
+	return None
 	
 def copen(widget, data=None):
-	p = gtk.Dialog("Open file", None, gtk.DIALOG_DESTROY_WITH_PARENT, 
+	p = gtk.FileChooserDialog("Open file", None, gtk.FILE_CHOOSER_ACTION_OPEN,
 		(gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT, 
 		gtk.STOCK_OK, gtk.RESPONSE_ACCEPT))
 	p.set_size_request(650, 500)
-	area = p.get_content_area()
-	fc = gtk.FileChooserWidget()
-	fc.connect("file-activated", process_file, p)
-	area.pack_start(fc, True, True)
 	p.show_all()
 	if p.run() == gtk.RESPONSE_ACCEPT:
-		createPage(nb, fc.get_filename())
+		processFile(p)
 	p.destroy()
 
 def csave_as(w, data=None):
@@ -162,8 +173,10 @@ def csave(w, data=None):
 	f = page.get_data("file") 
 	if f == None or data == True:
 		f = saveAs()
-		l.set_text(os.path.basename(f) if f else "Untitled")
-		page.set_data("file", f)
+		if f == None: return
+		else:
+			l.set_text(os.path.basename(f))
+			page.set_data("file", f)
 	F = open(f, "w")
 	F.write(b.get_text(b.get_start_iter(), b.get_end_iter()))
 	F.close()

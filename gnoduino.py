@@ -16,6 +16,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
+import hashlib
 import time
 import tempfile
 import os
@@ -55,6 +56,24 @@ def destroyPage(w, b):
 	if nb.get_n_pages() < 1:
 		createPage(nb)
 
+def updatePageTitle(w, status):
+	page = nb.get_nth_page(nb.get_current_page())
+	f = page.get_data("file")
+	l = page.get_data("label")
+	nh = hashlib.sha224(w.get_text(w.get_start_iter(), w.get_end_iter())).hexdigest()
+	if f != None:
+		fh = hashlib.sha224(file(f).read()).hexdigest()
+		name = os.path.basename(f)
+	else:
+		fh = 0
+		name = "Untitled"
+
+	if (nh != fh):
+		l.set_text(name+"*")
+	else:
+		l.set_text(name)
+	srcview.updatePos(w, status)
+
 def createPage(nb, f=None):
 	hbox = gtk.HBox(False, 0)
 	flabel = gtk.Label(os.path.basename(f) if f else "Untitled")
@@ -67,7 +86,8 @@ def createPage(nb, f=None):
 	b.set_relief(gtk.RELIEF_NONE)
 	hbox.pack_start(b, True, True)
 	hbox.show_all()
-	(sbuf,sv) = srcview.createsrcview(flabel, sb2, f)
+	(sbuf,sv) = srcview.createsrcview(sb2, f)
+	sbuf.connect("changed", updatePageTitle, sb2)
 	sw = gtk.ScrolledWindow()
 	sw.add(sv)
 	sw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
@@ -107,6 +127,17 @@ def process_file(w, dialog):
 	createPage(nb, w.get_filename())
 	dialog.destroy()
 
+def saveAs():
+	p = gtk.FileChooserDialog("Save file", None, gtk.FILE_CHOOSER_ACTION_OPEN,
+		(gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT, 
+		gtk.STOCK_OK, gtk.RESPONSE_ACCEPT))
+	p.set_size_request(650, 500)
+	p.connect("file-activated", process_file, p)
+	if p.run() == gtk.RESPONSE_ACCEPT:
+		f = p.get_filename()
+		p.destroy()
+		return f
+	
 def copen(widget, data=None):
 	p = gtk.Dialog("Open file", None, gtk.DIALOG_DESTROY_WITH_PARENT, 
 		(gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT, 
@@ -121,15 +152,22 @@ def copen(widget, data=None):
 		createPage(nb, fc.get_filename())
 	p.destroy()
 
+def csave_as(w, data=None):
+	csave(w, True)
+
 def csave(w, data=None):
 	page = nb.get_nth_page(nb.get_current_page())
 	l = page.get_data("label")
 	b = page.get_data("buffer")
-	f = page.get_data("file")
+	f = page.get_data("file") 
+	if f == None or data == True:
+		f = saveAs()
+		l.set_text(os.path.basename(f) if f else "Untitled")
+		page.set_data("file", f)
 	F = open(f, "w")
 	F.write(b.get_text(b.get_start_iter(), b.get_end_iter()))
 	F.close()
-	srcview.modifyText(b, (f, l))
+	updatePageTitle(b, sb2)
 
 def quit(widget, data=None):
 	shutil.rmtree(id, True)
@@ -153,6 +191,7 @@ def menu(gui):
 			("menu-new", cnew, (ord('n'), gtk.gdk.CONTROL_MASK)),
 			("menu-open", copen, (ord('o'), gtk.gdk.CONTROL_MASK)),
 			("menu-save", csave, (ord('s'), gtk.gdk.CONTROL_MASK)),
+			("menu-save-as", csave_as, (ord('s'), gtk.gdk.CONTROL_MASK|gtk.gdk.SHIFT_MASK)),
 			("menu-quit", quit, (ord('q'), gtk.gdk.CONTROL_MASK)),
 		]
 	[gui.get_object(i[0]).connect("activate", i[1]) for i in menus]

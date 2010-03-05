@@ -18,7 +18,6 @@
 
 import os
 import gtk
-import hashlib
 import fnmatch
 import gtksourceview2
 import gnomevfs
@@ -48,20 +47,6 @@ def get_lang_for_content(content):
 			if p == mime: 
 				return lang
 
-def modifyText(w, (f, label, status)):
-	nh = hashlib.sha224(w.get_text(w.get_start_iter(), w.get_end_iter())).hexdigest()
-	if f != None:
-		fh = hashlib.sha224(file(f).read()).hexdigest()
-		name = os.path.basename(f)
-	else:
-		fh = 0
-		name = "Untitled"
-	if (nh != fh):
-		label.set_text(name+"*")
-	else:
-		label.set_text(name)
-	updatePos(w, status)
-
 def instext(obj, b):
 	print gnomevfs.get_mime_type_for_data(b.get_text(b.get_start_iter(), b.get_end_iter()))
 
@@ -76,7 +61,7 @@ def updatePos(buffer, sb):
 def markCb(buffer, iter, mark, data):
 	updatePos(buffer, data)
 
-def createsrcview(label, status, f=None):
+def createsrcview(status, f=None):
 	sbuffer = gtksourceview2.Buffer()
 	if f: 
 		content = file(f).read()
@@ -96,7 +81,6 @@ def createsrcview(label, status, f=None):
 	sv.set_right_margin_position(80)
 	updatePos(sbuffer, status)
 	sbuffer.connect("mark_set", markCb, status)
-	sbuffer.connect("changed", modifyText, (f, label, status))
 	sv.set_highlight_current_line(True)
 	#sv.scroll_to_mark()
 	#sv.move_mark_onscreen(gtksourceview2.Mark.next(gtksourceview2.Mark.get_category()))

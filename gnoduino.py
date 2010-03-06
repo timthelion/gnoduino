@@ -48,6 +48,14 @@ class popup:
 			print "accept"
 		p.destroy()
 
+def setupPage(w, page, p):
+	if p == 0: return		#no point in adding signal we we're the only ones left
+	pg = w.get_nth_page(p)
+	cl = pg.get_data("close");
+	accel = gtk.AccelGroup()
+	cl.add_accelerator("activate", accel, ord("w"), gtk.gdk.CONTROL_MASK, 0)
+	mainwin.add_accel_group(accel)
+
 def replacePage(page):
 	nb.remove_page(nb.page_num(page))
 
@@ -98,6 +106,11 @@ def createPage(nb, f=None):
 	sw.set_shadow_type(gtk.SHADOW_IN)
 	sw.show_all()
 	p = nb.append_page(sw, hbox)
+	wp = nb.get_nth_page(p)
+	wp.set_data("file", f)		#add file information to the page widget
+	wp.set_data("buffer", sbuf)	#add buffer information to the page widget
+	wp.set_data("label", flabel)	#add source view widget to the page widget
+	wp.set_data("close", b)	#add close widget to the page widget
 	nb.set_current_page(p)
 	page = nb.get_nth_page(p)
 	nb.set_scrollable(True);
@@ -109,13 +122,6 @@ def createPage(nb, f=None):
 	mainwin.add_accel_group(accel)
 	sv.grab_focus()
 	b.connect("clicked", destroyPage, sw)
-	accel = gtk.AccelGroup()
-	b.add_accelerator("activate", accel, ord("w"), gtk.gdk.CONTROL_MASK, 0)
-	mainwin.add_accel_group(accel)
-	wp = nb.get_nth_page(p)
-	wp.set_data("file", f)		#add file information to the page widget
-	wp.set_data("buffer", sbuf)	#add buffer information to the page widget
-	wp.set_data("label", flabel)	#add source view widget to the page widget
 	return sv
 
 def cnew(widget, data=None):
@@ -133,12 +139,10 @@ def processFile(w):
 	if searchFile(nb, w.get_filename()) == True:
 		w.destroy()
 		return
-
 	page = nb.get_nth_page(nb.get_current_page())
+	createPage(nb, w.get_filename())
 	if page.get_data("label").get_text() == "Untitled":
 		replacePage(page)
-
-	createPage(nb, w.get_filename())
 
 def saveAs():
 	p = gtk.FileChooserDialog("Save file", None, gtk.FILE_CHOOSER_ACTION_OPEN,
@@ -233,6 +237,7 @@ try:
 	menu(gui)
 
 	nb = gtk.Notebook()
+	nb.connect("switch-page", setupPage)
 	sv = createPage(nb)
 	vbox.add(nb)
 	sw = gtk.ScrolledWindow()

@@ -49,9 +49,9 @@ class popup:
 		p.destroy()
 
 def setupPage(w, page, p):
-	#if p == 0: return		#no point in adding signal we we're the only ones left
 	pg = w.get_nth_page(p)
 	cl = pg.get_data("close");
+	if cl == None: return
 	accel = gtk.AccelGroup()
 	cl.add_accelerator("activate", accel, ord("w"), gtk.gdk.CONTROL_MASK, 0)
 	mainwin.add_accel_group(accel)
@@ -199,11 +199,22 @@ def compile(widget, data=file):
 def stop(widget, data=None):
 	print "stop"
 
-def cserial(w, data=None):
-	compiler.clearConsole(data)
-	glib.timeout_add(1000,
-		ser.updateConsole,
-		data)
+def cserial(w, st, data=None):
+	
+	global sertime
+	#compiler.clearConsole(data)
+	if (sertime == None):
+		sertime = glib.timeout_add(1000,
+			ser.updateConsole,
+			data)
+		vbox.remove(con)
+		vbox.add(scon)
+	else:
+		glib.source_remove(sertime)
+		sertime = None
+		vbox.remove(scon)
+		vbox.add(con)
+		
 
 def menu(gui):
 	menus = [
@@ -221,11 +232,51 @@ def menu(gui):
 def makeWorkdir():
 	return tempfile.mkdtemp("", "/tmp/build"+str(time.time()))
 
+def createCon():
+	sw = gtk.ScrolledWindow()
+	sw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+	sw.set_shadow_type(gtk.SHADOW_IN)
+	tw = gtk.TextView()
+	tw.set_size_request(-1, 200)
+	tw.set_editable(False)
+	twbuf = gtk.TextBuffer()
+	tw.set_buffer(twbuf)
+	tw.modify_base(gtk.STATE_NORMAL, gtk.gdk.Color(0,0,0))
+	tw.modify_text(gtk.STATE_NORMAL, gtk.gdk.Color("#ffffff"))
+	sw.add(tw)
+	sw.show_all()
+	return sw
+
+def createScon():
+	sw = gtk.ScrolledWindow()
+	sw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+	sw.set_shadow_type(gtk.SHADOW_IN)
+	tw = gtk.TextView()
+	tw.set_size_request(-1, 200)
+	tw.set_editable(False)
+	twbuf = gtk.TextBuffer()
+	tw.set_buffer(twbuf)
+	tw.modify_base(gtk.STATE_NORMAL, gtk.gdk.Color(0,0,0))
+	tw.modify_text(gtk.STATE_NORMAL, gtk.gdk.Color("#ffffff"))
+	sw.add(tw)
+	hbox = gtk.HBox(False, 0)
+	b = gtk.Button("Send")
+	text = gtk.Entry()
+	hbox.pack_start(text, False, False, 3)
+	hbox.pack_start(b, False, False, 3)
+	vbox = gtk.VBox(False, 0)
+	vbox.pack_start(hbox, False, False, 3)
+	vbox.pack_start(sw, False, False, 3)
+	vbox.show_all()
+	return (vbox, tw)
+	
+
 try:
 	id = makeWorkdir()
 	#p = popup()
 	#p.show("popup text")
 	ser = serialio.sconsole()
+	sertime = None
 	gui = gtk.Builder()
 	gui.add_from_file("./main.ui");
 	mainwin = gui.get_object("top_win");
@@ -242,23 +293,17 @@ try:
 	nb.connect("switch-page", setupPage)
 	sv = createPage(nb)
 	vbox.add(nb)
-	sw = gtk.ScrolledWindow()
-	sw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
-	sw.set_shadow_type(gtk.SHADOW_IN)
-	tw = gtk.TextView()
-	tw.set_size_request(-1, 200)
-	tw.set_editable(False)
-	twbuf = gtk.TextBuffer()
-	tw.set_buffer(twbuf)
-	tw.modify_base(gtk.STATE_NORMAL, gtk.gdk.Color(0,0,0))
-	tw.modify_text(gtk.STATE_NORMAL, gtk.gdk.Color("#ffffff"))
-	sw.add(tw)
-	vbox.add(sw)
+
+	con = createCon()
+	(scon,tw) = createScon()
+	vbox.add(con)
+
+
 	mainwin.set_focus(sv)
 	mainwin.show_all()
 	mainwin.set_title("Arduino")
 	mainwin.connect("destroy", quit)
-	gui.get_object("serial").connect("clicked", cserial, tw)
+	gui.get_object("serial").connect("clicked", cserial, sertime, tw)
 	gtk.main()
 except KeyboardInterrupt:
 	print "\nExit on user cancel."

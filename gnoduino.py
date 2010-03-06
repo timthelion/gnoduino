@@ -49,12 +49,13 @@ class popup:
 		p.destroy()
 
 def setupPage(w, page, p):
-	if p == 0: return		#no point in adding signal we we're the only ones left
+	#if p == 0: return		#no point in adding signal we we're the only ones left
 	pg = w.get_nth_page(p)
 	cl = pg.get_data("close");
 	accel = gtk.AccelGroup()
 	cl.add_accelerator("activate", accel, ord("w"), gtk.gdk.CONTROL_MASK, 0)
 	mainwin.add_accel_group(accel)
+	srcview.updatePos(pg.get_data("buffer"), sb2)
 
 def replacePage(page):
 	nb.remove_page(nb.page_num(page))
@@ -122,6 +123,7 @@ def createPage(nb, f=None):
 	mainwin.add_accel_group(accel)
 	sv.grab_focus()
 	b.connect("clicked", destroyPage, sw)
+	srcview.updatePos(sbuf, sb2)
 	return sv
 
 def cnew(widget, data=None):

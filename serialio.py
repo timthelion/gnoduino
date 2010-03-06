@@ -24,7 +24,8 @@ class sconsole:
 	def updateConsole(self, console):
 		b = console.get_buffer()
 		cont = self.read()
-		if cont != None:
+		if cont != None and cont.isalnum():
+			print "str:%s|" % cont
 			b.insert(b.get_end_iter(), cont)
 			console.scroll_mark_onscreen(b.get_insert())
 		return True

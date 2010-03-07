@@ -113,7 +113,7 @@ hex = [
 
 arduino_path = "hardware/arduino/cores/arduino"
 
-def compile(b, id, output, notify):
+def compile(tw, id, output, notify):
 	context = notify.get_context_id("main")
 	notify.pop(context)
 	notify.push(context, _("Compilling..."))
@@ -122,7 +122,7 @@ def compile(b, id, output, notify):
 	#compile inter c objects
 	try:
 		"""preproces pde"""
-		pre_file = preproc.add_headers(id, b)
+		pre_file = preproc.add_headers(id, tw.get_buffer())
 		"""compile C targets"""
 		for i in cobj:
 			compline=[j for j in defc]
@@ -160,6 +160,8 @@ def compile(b, id, output, notify):
 		(run, sout) = runProg(compline)
 		if run == False:
 			printError(notify, output, sout)
+			print getErrorLine(sout)
+			moveCursor(tw, int(getErrorLine(sout)))
 			raise
 
 		"""compile all objects"""
@@ -199,6 +201,17 @@ def compile(b, id, output, notify):
 		print "Error compiling. Op aborted!"
 	return tmpdir
 
+def getErrorLine(buffer):
+	return int(buffer.splitlines()[1].split(":")[1])-1-2; # -2 added by preprocesor
+
+def moveCursor(view, line):
+	b = view.get_buffer()
+	mark = b.get_insert()
+	iter = b.get_iter_at_mark(mark)
+	iter.set_line(line);
+	b.place_cursor(iter)
+	view.scroll_mark_onscreen(mark)
+
 def computeSize(f):
 	p = subprocess.Popen(["/usr/bin/avr-size", f],
 		stdout = subprocess.PIPE,
@@ -226,7 +239,7 @@ def runProg(cmdline):
 		logging.debug("ERR:%s", sout)
 		return (False, sout)
 	return (True, sout)
-	
+
 def clearConsole(console):
 	b = console.get_buffer()
 	b.delete(b.get_start_iter(), b.get_end_iter())

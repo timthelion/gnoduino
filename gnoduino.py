@@ -110,6 +110,7 @@ def createPage(nb, f=None):
 	wp = nb.get_nth_page(p)
 	wp.set_data("file", f)		#add file information to the page widget
 	wp.set_data("buffer", sbuf)	#add buffer information to the page widget
+	wp.set_data("view", sv)	#add buffer information to the page widget
 	wp.set_data("label", flabel)	#add source view widget to the page widget
 	wp.set_data("close", b)	#add close widget to the page widget
 	nb.set_current_page(p)
@@ -194,7 +195,7 @@ def quit(widget, data=None):
 
 def compile(widget, data=file):
 	page = nb.get_nth_page(nb.get_current_page())
-	compiler.compile(page.get_data("buffer"), id, tw, sb)
+	compiler.compile(page.get_data("view"), id, tw, sb) #page.get_data("buffer")
 
 def stop(widget, data=None):
 	print "stop"

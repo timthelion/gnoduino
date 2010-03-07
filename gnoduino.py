@@ -237,7 +237,7 @@ def createCon():
 	sw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
 	sw.set_shadow_type(gtk.SHADOW_IN)
 	tw = gtk.TextView()
-	tw.set_size_request(-1, 200)
+	tw.set_size_request(-1, 150)
 	tw.set_editable(False)
 	twbuf = gtk.TextBuffer()
 	tw.set_buffer(twbuf)
@@ -245,14 +245,14 @@ def createCon():
 	tw.modify_text(gtk.STATE_NORMAL, gtk.gdk.Color("#ffffff"))
 	sw.add(tw)
 	sw.show_all()
-	return sw
+	return (sw,tw)
 
 def createScon():
 	sw = gtk.ScrolledWindow()
 	sw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
 	sw.set_shadow_type(gtk.SHADOW_IN)
 	tw = gtk.TextView()
-	tw.set_size_request(-1, 200)
+	tw.set_size_request(-1, 150)
 	tw.set_editable(False)
 	twbuf = gtk.TextBuffer()
 	tw.set_buffer(twbuf)
@@ -260,9 +260,18 @@ def createScon():
 	tw.modify_text(gtk.STATE_NORMAL, gtk.gdk.Color("#ffffff"))
 	sw.add(tw)
 	hbox = gtk.HBox(False, 0)
-	b = gtk.Button("Send")
+	s = gtk.Button("Send")
+	c = gtk.Button("Clear")
+	l = gtk.Label("Baud:")
+	b = gtk.combo_box_new_text()
+	baud = ["300", "1200", "2400", "4800", "9600", "14400", "19200", "28800", "38400", "57600", "115200"]
+	[b.append_text(i) for i in baud]
+	b.set_active(4)
 	text = gtk.Entry()
 	hbox.pack_start(text, False, False, 3)
+	hbox.pack_start(s, False, False, 3)
+	hbox.pack_start(c, False, False, 3)
+	hbox.pack_start(l, False, False, 3)
 	hbox.pack_start(b, False, False, 3)
 	vbox = gtk.VBox(False, 0)
 	vbox.pack_start(hbox, False, False, 3)
@@ -294,8 +303,8 @@ try:
 	sv = createPage(nb)
 	vbox.add(nb)
 
-	con = createCon()
-	(scon,tw) = createScon()
+	(con, tw) = createCon()
+	(scon,sctw) = createScon()
 	vbox.add(con)
 
 
@@ -303,7 +312,7 @@ try:
 	mainwin.show_all()
 	mainwin.set_title("Arduino")
 	mainwin.connect("destroy", quit)
-	gui.get_object("serial").connect("clicked", cserial, sertime, tw)
+	gui.get_object("serial").connect("clicked", cserial, sertime, sctw)
 	gtk.main()
 except KeyboardInterrupt:
 	print "\nExit on user cancel."

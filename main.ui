@@ -246,7 +246,7 @@
                 <property name="is_important">True</property>
                 <property name="label" translatable="yes">Compile</property>
                 <property name="use_underline">True</property>
-                <property name="stock_id">gtk-media-play</property>
+                <property name="icon_widget">image1</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -258,7 +258,7 @@
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">Stop</property>
                 <property name="use_underline">True</property>
-                <property name="stock_id">gtk-media-stop</property>
+                <property name="icon_widget">image2</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -279,7 +279,7 @@
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">New</property>
                 <property name="use_underline">True</property>
-                <property name="stock_id">gtk-new</property>
+                <property name="icon_widget">image3</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -291,7 +291,7 @@
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">Open</property>
                 <property name="use_underline">True</property>
-                <property name="stock_id">gtk-open</property>
+                <property name="icon_widget">image4</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -303,7 +303,7 @@
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">Save</property>
                 <property name="use_underline">True</property>
-                <property name="stock_id">gtk-save</property>
+                <property name="icon_widget">image5</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -315,7 +315,7 @@
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">Upload</property>
                 <property name="use_underline">True</property>
-                <property name="stock_id">gtk-connect</property>
+                <property name="icon_widget">image6</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -327,7 +327,7 @@
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">Serial Monitor</property>
                 <property name="use_underline">True</property>
-                <property name="stock_id">gtk-disconnect</property>
+                <property name="icon_widget">image7</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -441,5 +441,33 @@
         </child>
       </object>
     </child>
+  </object>
+  <object class="GtkImage" id="image1">
+    <property name="visible">True</property>
+    <property name="pixbuf">compile.png</property>
+  </object>
+  <object class="GtkImage" id="image2">
+    <property name="visible">True</property>
+    <property name="pixbuf">stop.png</property>
+  </object>
+  <object class="GtkImage" id="image3">
+    <property name="visible">True</property>
+    <property name="pixbuf">new.png</property>
+  </object>
+  <object class="GtkImage" id="image4">
+    <property name="visible">True</property>
+    <property name="pixbuf">open.png</property>
+  </object>
+  <object class="GtkImage" id="image5">
+    <property name="visible">True</property>
+    <property name="pixbuf">save.png</property>
+  </object>
+  <object class="GtkImage" id="image6">
+    <property name="visible">True</property>
+    <property name="pixbuf">upload.png</property>
+  </object>
+  <object class="GtkImage" id="image7">
+    <property name="visible">True</property>
+    <property name="pixbuf">serial.png</property>
   </object>
 </interface>

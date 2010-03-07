@@ -61,6 +61,12 @@ def updatePos(buffer, sb):
 def markCb(buffer, iter, mark, data):
 	updatePos(buffer, data)
 
+def resetCursor(buffer):
+	mark = buffer.get_insert()
+	iter = buffer.get_iter_at_mark(mark)
+	iter.set_line(0);
+	buffer.place_cursor(iter)
+
 def createsrcview(status, f=None):
 	sbuffer = gtksourceview2.Buffer()
 	if f: 
@@ -82,6 +88,7 @@ def createsrcview(status, f=None):
 	updatePos(sbuffer, status)
 	sbuffer.connect("mark_set", markCb, status)
 	sv.set_highlight_current_line(True)
+	resetCursor(sbuffer)
 	#sv.scroll_to_mark()
 	#sv.move_mark_onscreen(gtksourceview2.Mark.next(gtksourceview2.Mark.get_category()))
 	return sbuffer, sv

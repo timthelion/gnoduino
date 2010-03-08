@@ -30,3 +30,8 @@ class sconsole:
 				b.insert(b.get_end_iter(), cont)
 				console.scroll_mark_onscreen(b.get_insert())
 		return True
+
+	def resetBoard(self):
+		self.serial.setDTR(False)
+		time.sleep(0.1)
+		self.serial.setDTR(True)

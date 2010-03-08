@@ -22,8 +22,6 @@ def runProg(cmdline):
 		poll = select.poll()
 		poll.register(p.stdout, select.POLLIN)
 		(sout,serr) = p.communicate()
-		print sout
-		print serr
 		if p.poll()==1: raise
 	except:
 		logging.debug("ERR:%s", sout)

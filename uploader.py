@@ -1,9 +1,10 @@
 
 import misc
+import time
 
 avr = [
-	"avrdude",
-#	"-Chardware/tools/avrdude.conf",
+	"hardware/tools/avrdude",
+	"-Chardware/tools/avrdude.conf",
 	"-v",
 	"-v",
 	"-v",
@@ -15,7 +16,8 @@ avr = [
 	"-D"
 ]
 
-def upload(obj, output, notify):
+def upload(obj, serial, output, notify):
+	serial.resetBoard()
 	compline=[i for i in avr]
 	compline.append("-Uflash:w:"+obj+".hex:i")
 	print compline

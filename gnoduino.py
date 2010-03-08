@@ -198,9 +198,9 @@ def compile(widget, data=file):
 	page = nb.get_nth_page(nb.get_current_page())
 	return compiler.compile(page.get_data("view"), id, tw, sb) #page.get_data("buffer")
 
-def upload(widget, data=file):
+def upload(widget, serial, data=file):
 	obj = compile(widget, data)
-	uploader.upload(obj, tw, sb)
+	uploader.upload(obj, serial, tw, sb)
 
 
 def stop(widget, data=None):
@@ -319,7 +319,7 @@ try:
 	mainwin.set_title("Arduino")
 	mainwin.connect("destroy", quit)
 	gui.get_object("serial").connect("clicked", cserial, sertime, sctw)
-	gui.get_object("upload").connect("clicked", upload)
+	gui.get_object("upload").connect("clicked", upload, ser)
 	comp = gui.get_object("compile").connect("clicked", compile)
 	gtk.main()
 except KeyboardInterrupt:

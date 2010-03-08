@@ -47,8 +47,8 @@ def get_lang_for_content(content):
 			if p == mime: 
 				return lang
 
-def instext(obj, b):
-	print gnomevfs.get_mime_type_for_data(b.get_text(b.get_start_iter(), b.get_end_iter()))
+def instext(b, iter, text, len) :
+	b.set_language(get_lang_for_content(text))
 
 def updatePos(buffer, sb):
 	sb.pop(1)
@@ -87,8 +87,7 @@ def createsrcview(status, f=None):
 	sv.set_right_margin_position(80)
 	updatePos(sbuffer, status)
 	sbuffer.connect("mark_set", markCb, status)
+	sbuffer.connect("insert_text", instext)
 	sv.set_highlight_current_line(True)
 	resetCursor(sbuffer)
-	#sv.scroll_to_mark()
-	#sv.move_mark_onscreen(gtksourceview2.Mark.next(gtksourceview2.Mark.get_category()))
 	return sbuffer, sv

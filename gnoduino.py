@@ -29,6 +29,7 @@ import select
 import shutil
 
 import compiler
+import uploader
 import srcview
 import serialio
 
@@ -195,7 +196,12 @@ def quit(widget, data=None):
 
 def compile(widget, data=file):
 	page = nb.get_nth_page(nb.get_current_page())
-	compiler.compile(page.get_data("view"), id, tw, sb) #page.get_data("buffer")
+	return compiler.compile(page.get_data("view"), id, tw, sb) #page.get_data("buffer")
+
+def upload(widget, data=file):
+	obj = compile(widget, data)
+	uploader.upload(obj, tw, sb)
+
 
 def stop(widget, data=None):
 	print "stop"
@@ -293,7 +299,6 @@ try:
 	vbox = gui.get_object("vpan");
 	sb = gui.get_object("statusbar1");
 	sb2 = gui.get_object("statusbar2");
-	comp = gui.get_object("compile").connect("clicked", compile)
 	gui.get_object("stop").connect("clicked", stop)
 	gui.get_object("new").connect("clicked", cnew)
 	gui.get_object("open").connect("clicked", copen)
@@ -314,6 +319,8 @@ try:
 	mainwin.set_title("Arduino")
 	mainwin.connect("destroy", quit)
 	gui.get_object("serial").connect("clicked", cserial, sertime, sctw)
+	gui.get_object("upload").connect("clicked", upload)
+	comp = gui.get_object("compile").connect("clicked", compile)
 	gtk.main()
 except KeyboardInterrupt:
 	print "\nExit on user cancel."

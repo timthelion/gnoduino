@@ -34,6 +34,7 @@ COMPILE_MAX_SIZE = 7168
 LOG_FILENAME = 'arduino.out'
 logging.basicConfig(filename=LOG_FILENAME,level=logging.DEBUG)
 
+import misc
 import preproc
 
 #output = output buffer
@@ -119,6 +120,7 @@ def compile(tw, id, output, notify):
 	notify.push(context, _("Compilling..."))
 	clearConsole(output)
 	tmpdir = id
+	tempobj = tempfile.mktemp("", "Tempobj", id)
 	#compile inter c objects
 	try:
 		"""preproces pde"""
@@ -129,7 +131,7 @@ def compile(tw, id, output, notify):
 			compline.append("-I"+os.getcwd()+"/"+arduino_path)
 			compline.append(os.getcwd()+"/"+arduino_path+"/"+i)
 			compline.append("-o"+id+"/"+i+".o")
-			(run, sout) = runProg(compline)
+			(run, sout) = misc.runProg(compline)
 			if run == False:
 				printError(notify, output, sout)
 				raise
@@ -139,7 +141,7 @@ def compile(tw, id, output, notify):
 			compline.append("-I"+os.getcwd()+"/"+arduino_path)
 			compline.append(os.getcwd()+"/"+arduino_path+"/"+i)
 			compline.append("-o"+id+"/"+i+".o")
-			(run, sout) = runProg(compline)
+			(run, sout) = misc.runProg(compline)
 			if run == False:
 				printError(notify, output, sout)
 				raise
@@ -148,7 +150,7 @@ def compile(tw, id, output, notify):
 			compline = [j for j in defar]
 			compline.append(id+"/core.a")
 			compline.append(id+"/"+i+".o")
-			(run, sout) = runProg(compline)
+			(run, sout) = misc.runProg(compline)
 			if run == False:
 				printError(notify, output, sout)
 				raise
@@ -157,36 +159,34 @@ def compile(tw, id, output, notify):
 		compline.append("-I"+os.getcwd()+"/"+arduino_path)
 		compline.append(pre_file)
 		compline.append("-o"+pre_file+".o")
-		(run, sout) = runProg(compline)
+		(run, sout) = misc.runProg(compline)
 		if run == False:
 			printError(notify, output, sout)
-			print getErrorLine(sout)
 			moveCursor(tw, int(getErrorLine(sout)))
 			raise
 
 		"""compile all objects"""
 		compline = [i for i in link]
-		tempobj = tempfile.mktemp("", "Tempobj", id)
 		compline.append("-o"+tempobj+".elf")
 		compline.append(pre_file+".o")
 		compline.append(id+"/core.a")
 		compline.append("-L"+id)
 		compline.append("-lm")
-		(run, sout) = runProg(compline)
+		(run, sout) = misc.runProg(compline)
 		if run == False:
 			printError(notify, output, sout)
 			raise
 		compline=[i for i in eep]
 		compline.append(tempobj+".elf")
 		compline.append(tempobj+".eep")
-		(run, sout) = runProg(compline)
+		(run, sout) = misc.runProg(compline)
 		if run == False:
 			printError(notify, output, sout)
 			raise
 		compline=[i for i in hex]
 		compline.append(tempobj+".elf")
 		compline.append(tempobj+".hex")
-		(run, sout) = runProg(compline)
+		(run, sout) = misc.runProg(compline)
 		if run == False:
 			printError(notify, output, sout)
 			raise
@@ -199,7 +199,7 @@ def compile(tw, id, output, notify):
 		print "Error: %s" % e
 	except:
 		print "Error compiling. Op aborted!"
-	return tmpdir
+	return tempobj
 
 def getErrorLine(buffer):
 	return int(buffer.splitlines()[1].split(":")[1])-1-2; # -2 added by preprocesor
@@ -222,23 +222,6 @@ def computeSize(f):
 	poll.register(p.stdout, select.POLLIN)
 	(sout,serr) = p.communicate()
 	return sout.splitlines()[1].split()[3]
-
-def runProg(cmdline):
-	logging.debug("CMD:-%s", cmdline)
-	try:
-		p = subprocess.Popen(cmdline,
-			stdout = subprocess.PIPE,
-			stderr = subprocess.STDOUT,
-			stdin = subprocess.PIPE,
-			close_fds = True)
-		poll = select.poll()
-		poll.register(p.stdout, select.POLLIN)
-		(sout,serr) = p.communicate()
-		if p.poll()==1: raise
-	except:
-		logging.debug("ERR:%s", sout)
-		return (False, sout)
-	return (True, sout)
 
 def clearConsole(console):
 	b = console.get_buffer()

@@ -196,7 +196,9 @@ def quit(widget, data=None):
 
 def compile(widget, data=file):
 	page = nb.get_nth_page(nb.get_current_page())
-	return compiler.compile(page.get_data("view"), id, tw, sb) #page.get_data("buffer")
+	obj = compiler.compile(page.get_data("view"), id, tw, sb) #page.get_data("buffer")
+	print obj
+	return obj
 
 def upload(widget, serial, data=file):
 	obj = compile(widget, data)

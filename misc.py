@@ -36,3 +36,20 @@ def printError(notify, console, message):
 	notify.push(context, _("Error compilling."))
 	b.delete(b.get_start_iter(), b.get_end_iter())
 	b.set_text(message)
+
+class MessageBox:
+
+	def __init__(self):
+		pass
+	def show(self, message, message2):
+		p = gtk.MessageDialog(None,
+			gtk.DIALOG_MODAL,
+			gtk.MESSAGE_INFO,
+			gtk.BUTTONS_OK_CANCEL)
+		p.set_markup(message)
+		p.format_secondary_markup(message2)
+		if p.run() == gtk.RESPONSE_OK:
+			p.destroy()
+			return True
+		p.destroy()
+		return False

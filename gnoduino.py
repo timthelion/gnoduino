@@ -29,25 +29,10 @@ import select
 import shutil
 
 import compiler
+import misc
 import uploader
 import srcview
 import serialio
-
-class popup:
-
-	def __init__(self):
-		print "constructor"
-	def show(self, title):
-		p = gtk.Dialog(title, None, gtk.DIALOG_DESTROY_WITH_PARENT, 
-			(gtk.STOCK_OK, gtk.RESPONSE_ACCEPT, gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT))
-		area = p.get_content_area()
-		l = gtk.Label("simple text")
-		l.show()
-		area.pack_start(l, True, True)
-		area.show()
-		if p.run() == gtk.RESPONSE_ACCEPT:
-			print "accept"
-		p.destroy()
 
 def setupPage(w, page, p):
 	pg = w.get_nth_page(p)
@@ -183,6 +168,10 @@ def csave(w, data=None):
 		f = saveAs()
 		if f == None: return
 		else:
+			p = misc.MessageBox()
+			res = p.show("""<b>A file named %s already exists. Do you want to replace it?</b>""" % f,
+			"The file already exists in \"%s\". Replacing it will overwrite its contents." % os.path.dirname(f))
+			if not res: return
 			l.set_text(os.path.basename(f))
 			page.set_data("file", f)
 	F = open(f, "w")

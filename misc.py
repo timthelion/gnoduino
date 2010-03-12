@@ -21,7 +21,11 @@ def runProg(cmdline):
 			close_fds = True)
 		poll = select.poll()
 		poll.register(p.stdout, select.POLLIN)
+		while gtk.events_pending():
+			gtk.main_iteration()
 		(sout,serr) = p.communicate()
+		while gtk.events_pending():
+			gtk.main_iteration()
 		if p.poll()==1: raise
 	except:
 		logging.debug("ERR:%s", sout)

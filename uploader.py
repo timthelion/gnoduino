@@ -23,7 +23,7 @@ avr = [
 def upload(obj, serial, output, notify):
 	context = notify.get_context_id("main")
         notify.pop(context)
-        notify.push(context, _("Uploading..."))
+        notify.push(context, _("Flashing..."))
 	serial.resetBoard()
 	compline=[i for i in avr]
 	compline.append("-Uflash:w:"+obj+".hex:i")
@@ -34,5 +34,5 @@ def upload(obj, serial, output, notify):
 		misc.printError(notify, output, sout)
 		raise
         notify.pop(context)
-        notify.push(context, _("Upload complete."))
+        notify.push(context, _("Flashing complete."))
 

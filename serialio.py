@@ -24,7 +24,8 @@ class sconsole:
 	def updateConsole(self, console):
 		b = console.get_buffer()
 		cont = self.read()
-		print "ser:%s" % cont
+		if cont:
+			print "%s" % cont
 		if cont != None:
 			if len(cont) > 1:
 				b.insert(b.get_end_iter(), cont)
@@ -35,3 +36,8 @@ class sconsole:
 		self.serial.setDTR(False)
 		time.sleep(0.1)
 		self.serial.setDTR(True)
+
+	def clearConsole(self, w, console):
+		b = console.get_buffer()
+		b.delete(b.get_start_iter(), b.get_end_iter())
+		b.set_text("")

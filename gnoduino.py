@@ -260,6 +260,7 @@ def createScon():
 	hbox = gtk.HBox(False, 0)
 	s = gtk.Button("Send")
 	c = gtk.Button("Clear")
+	c.connect("clicked", ser.clearConsole, tw)
 	l = gtk.Label("Baud:")
 	b = gtk.combo_box_new_text()
 	baud = ["300", "1200", "2400", "4800", "9600", "14400", "19200", "28800", "38400", "57600", "115200"]

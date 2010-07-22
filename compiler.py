@@ -47,13 +47,13 @@ cobj = [
 #	"wiring_serial.c",
 	"pins_arduino.c",
 	"WInterrupts.c",
-	"wiring.c" 
+	"wiring.c"
 	]
 
 cppobj = [
 	"WMath.cpp",
 	"HardwareSerial.cpp",
-	"Print.cpp", 
+	"Print.cpp",
 	"main.cpp",
 	"Tone.cpp"
 	]
@@ -193,7 +193,7 @@ def compile(tw, id, output, notify):
 		size = computeSize(tempobj+".hex")
 		notify.pop(context)
 		notify.push(context, _("Done compilling."))
-		
+
 		printMessage(output, _("Binary sketch size: %s bytes (of a %d bytes maximum)") % (size, COMPILE_MAX_SIZE))
 	except StandardError as e:
 		print "Error: %s" % e

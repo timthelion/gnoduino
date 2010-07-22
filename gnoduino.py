@@ -28,6 +28,10 @@ import subprocess
 import select
 import shutil
 
+import gettext
+_ = lambda x: gettext.ldgettext(NAME, x)
+
+
 import compiler
 import misc
 import uploader
@@ -105,7 +109,7 @@ def createPage(nb, f=None):
 	nb.set_tab_reorderable(page, True);
 	accel = gtk.AccelGroup()
 	for i in range(1, 10):
-		accel.connect_group(ord(str(i)), gtk.gdk.MOD1_MASK, 0, 
+		accel.connect_group(ord(str(i)), gtk.gdk.MOD1_MASK, 0,
 			switchPage)
 	mainwin.add_accel_group(accel)
 	sv.grab_focus()
@@ -135,7 +139,7 @@ def processFile(w):
 
 def saveAs():
 	p = gtk.FileChooserDialog("Save file", None, gtk.FILE_CHOOSER_ACTION_OPEN,
-		(gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT, 
+		(gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT,
 		gtk.STOCK_OK, gtk.RESPONSE_ACCEPT))
 	p.set_size_request(650, 500)
 	p.show_all()
@@ -145,10 +149,10 @@ def saveAs():
 		return f
 	p.destroy()
 	return None
-	
+
 def copen(widget, data=None):
 	p = gtk.FileChooserDialog("Open file", None, gtk.FILE_CHOOSER_ACTION_OPEN,
-		(gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT, 
+		(gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT,
 		gtk.STOCK_OK, gtk.RESPONSE_ACCEPT))
 	p.set_size_request(650, 500)
 	p.show_all()
@@ -163,7 +167,7 @@ def csave(w, data=None):
 	page = nb.get_nth_page(nb.get_current_page())
 	l = page.get_data("label")
 	b = page.get_data("buffer")
-	f = page.get_data("file") 
+	f = page.get_data("file")
 	if f == None or data == True:
 		f = saveAs()
 		if f == None: return
@@ -198,7 +202,7 @@ def stop(widget, data=None):
 	print "stop"
 
 def cserial(w, st, data=None):
-	
+
 	global sertime
 	#compiler.clearConsole(data)
 	if (sertime == None):
@@ -212,23 +216,23 @@ def cserial(w, st, data=None):
 		sertime = None
 		vbox.remove(scon)
 		vbox.add(con)
-		
+
+menus = [
+		("menu-new", cnew, (ord('n'), gtk.gdk.CONTROL_MASK)),
+		("menu-open", copen, (ord('o'), gtk.gdk.CONTROL_MASK)),
+		("menu-save", csave, (ord('s'), gtk.gdk.CONTROL_MASK)),
+		("menu-save-as", csave_as, (ord('s'), gtk.gdk.CONTROL_MASK|gtk.gdk.SHIFT_MASK)),
+		("menu-quit", quit, (ord('q'), gtk.gdk.CONTROL_MASK)),
+	]
 
 def menu(gui):
-	menus = [
-			("menu-new", cnew, (ord('n'), gtk.gdk.CONTROL_MASK)),
-			("menu-open", copen, (ord('o'), gtk.gdk.CONTROL_MASK)),
-			("menu-save", csave, (ord('s'), gtk.gdk.CONTROL_MASK)),
-			("menu-save-as", csave_as, (ord('s'), gtk.gdk.CONTROL_MASK|gtk.gdk.SHIFT_MASK)),
-			("menu-quit", quit, (ord('q'), gtk.gdk.CONTROL_MASK)),
-		]
 	[gui.get_object(i[0]).connect("activate", i[1]) for i in menus]
 	accel = gtk.AccelGroup()
 	[gui.get_object(i[0]).add_accelerator("activate", accel, i[2][0], i[2][1], 0) for i in menus]
 	mainwin.add_accel_group(accel)
 
 def makeWorkdir():
-	return tempfile.mkdtemp("", "/tmp/build"+str(time.time()))
+	return tempfile.mkdtemp("", os.path.join(tempfile.gettempdir(), "build"+str(time.time())))
 
 def createCon():
 	sw = gtk.ScrolledWindow()
@@ -277,7 +281,18 @@ def createScon():
 	vbox.pack_start(sw, False, False, 3)
 	vbox.show_all()
 	return (vbox, tw)
-	
+
+buttons = [
+		("compile", "compile.png", compile),
+		("stop", "stop.png", stop),
+
+		("open", "open.png", copen),
+		("new", "new.png", cnew),
+
+		("save", "save.png", None),
+		("upload", "upload.png", None),
+		("serial", "serial.png", None)
+	]
 
 try:
 	id = makeWorkdir()
@@ -286,14 +301,18 @@ try:
 	ser = serialio.sconsole()
 	sertime = None
 	gui = gtk.Builder()
-	gui.add_from_file("./main.ui");
+	try:
+		gui.add_from_file(os.path.join(os.getcwd(), "ui", "main.ui"))
+	except:
+		try:
+			gui.add_from_file(os.path.join(sys.prefix, "share", "gnoduino", "ui", "main.ui"))
+		except Exception,e:
+			print(e)
+			raise SystemExit(_("Cannot load ui file"))
 	mainwin = gui.get_object("top_win");
 	vbox = gui.get_object("vpan");
 	sb = gui.get_object("statusbar1");
 	sb2 = gui.get_object("statusbar2");
-	gui.get_object("stop").connect("clicked", stop)
-	gui.get_object("new").connect("clicked", cnew)
-	gui.get_object("open").connect("clicked", copen)
 	menu(gui)
 
 	nb = gtk.Notebook()
@@ -312,7 +331,21 @@ try:
 	mainwin.connect("destroy", quit)
 	gui.get_object("serial").connect("clicked", cserial, sertime, sctw)
 	gui.get_object("upload").connect("clicked", upload, ser)
-	comp = gui.get_object("compile").connect("clicked", compile)
+	for i in buttons:
+		w = gtk.Image()
+		try:
+			w.set_from_file(os.path.join(os.getcwd(), "pixmaps", i[1]))
+		except:
+			try:
+				w.set_from_file(os.path.join(sys.prefix, 'share', 'gnoduino', "pixmaps", i[1]))
+			except Exception,e:
+				print(e)
+				raise SystemExit(_("Cannot load pixmap files"))
+		o = gui.get_object(i[0])
+		o.set_icon_widget(w)
+		o.show_all()
+		if i[2] != None:
+			o.connect("clicked", i[2])
 	gtk.main()
 except KeyboardInterrupt:
 	print "\nExit on user cancel."

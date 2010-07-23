@@ -240,9 +240,11 @@
         <child>
           <object class="GtkToolbar" id="toolbar1">
             <property name="visible">True</property>
+            <property name="toolbar_style">icons</property>
             <child>
               <object class="GtkToolButton" id="compile">
                 <property name="visible">True</property>
+                <property name="tooltip_markup">Compile</property>
                 <property name="is_important">True</property>
                 <property name="label" translatable="yes">Compile</property>
                 <property name="use_underline">True</property>
@@ -255,6 +257,7 @@
             <child>
               <object class="GtkToolButton" id="stop">
                 <property name="visible">True</property>
+                <property name="tooltip_text" translatable="yes">Stop</property>
                 <property name="label" translatable="yes">Stop</property>
                 <property name="use_underline">True</property>
               </object>
@@ -275,6 +278,7 @@
             <child>
               <object class="GtkToolButton" id="new">
                 <property name="visible">True</property>
+                <property name="tooltip_text" translatable="yes">New</property>
                 <property name="label" translatable="yes">New</property>
                 <property name="use_underline">True</property>
               </object>
@@ -286,6 +290,7 @@
             <child>
               <object class="GtkToolButton" id="open">
                 <property name="visible">True</property>
+                <property name="tooltip_text" translatable="yes">Open</property>
                 <property name="label" translatable="yes">Open</property>
                 <property name="use_underline">True</property>
               </object>
@@ -297,6 +302,7 @@
             <child>
               <object class="GtkToolButton" id="save">
                 <property name="visible">True</property>
+                <property name="tooltip_text" translatable="yes">Save</property>
                 <property name="label" translatable="yes">Save</property>
                 <property name="use_underline">True</property>
               </object>
@@ -308,6 +314,7 @@
             <child>
               <object class="GtkToolButton" id="upload">
                 <property name="visible">True</property>
+                <property name="tooltip_text" translatable="yes">Upload</property>
                 <property name="label" translatable="yes">Upload</property>
                 <property name="use_underline">True</property>
               </object>
@@ -319,6 +326,7 @@
             <child>
               <object class="GtkToolButton" id="serial">
                 <property name="visible">True</property>
+                <property name="tooltip_text" translatable="yes">Serial Monitor</property>
                 <property name="label" translatable="yes">Serial Monitor</property>
                 <property name="use_underline">True</property>
               </object>

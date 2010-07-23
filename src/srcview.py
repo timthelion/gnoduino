@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # Arduino python implementation
 # Copyright (C) 2010  Lucian Langa
 #

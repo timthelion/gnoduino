@@ -20,6 +20,7 @@ import gtk
 import fnmatch
 import gtksourceview2
 import gnomevfs
+import misc
 
 def get_lang_for_file(f):
 	manager = gtksourceview2.language_manager_get_default()
@@ -43,7 +44,7 @@ def get_lang_for_content(content):
 		globs = gtksourceview2.Language.get_mime_types(lang)
 		if globs == None: continue
 		for p in globs:
-			if p == mime: 
+			if p == mime:
 				return lang
 
 def instext(b, iter, text, len) :
@@ -68,11 +69,12 @@ def resetCursor(buffer):
 
 def createsrcview(status, f=None):
 	sbuffer = gtksourceview2.Buffer()
-	if f: 
+	if f:
 		content = file(f).read()
 		sbuffer.set_language(get_lang_for_content(content))
 		sbuffer.set_text(content)
 	sv = gtksourceview2.View(sbuffer)
+	misc.set_widget_font(sv, "Monospace 8")
 	manager = gtksourceview2.StyleSchemeManager()
 #	for i in gtksourceview2.StyleSchemeManager.get_scheme_ids(manager):
 #		print i

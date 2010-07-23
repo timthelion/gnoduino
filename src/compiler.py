@@ -116,21 +116,21 @@ arduino_path = "hardware/arduino/cores/arduino"
 
 def stripOut(sout, pre):
 	sout = sout.replace(pre+":", '').split(" ", 1)
-	return sout[1]
+	print len(sout)
+	if len(sout) >= 2: return sout[1]
+	else: return sout
 
 def compile(tw, id, output, notify):
 	context = notify.get_context_id("main")
 	notify.pop(context)
 	notify.push(context, _("Compilling..."))
-	clearConsole(output)
+	misc.clearConsole(output)
 	tmpdir = id
 	tempobj = tempfile.mktemp("", "Tempobj", id)
 	#compile inter c objects
 	try:
 		"""preproces pde"""
 		pre_file = preproc.add_headers(id, tw.get_buffer())
-		print "pre"
-		print pre_file
 		"""compile C targets"""
 		for i in cobj:
 			compline=[j for j in defc]
@@ -139,7 +139,7 @@ def compile(tw, id, output, notify):
 			compline.append("-o"+id+"/"+i+".o")
 			(run, sout) = misc.runProg(compline)
 			if run == False:
-				printError(notify, output, stripOut(sout, pre_file))
+				misc.printError(notify, output, stripOut(sout, pre_file))
 				raise
 		"""compile C++ targets"""
 		for i in cppobj:
@@ -149,7 +149,7 @@ def compile(tw, id, output, notify):
 			compline.append("-o"+id+"/"+i+".o")
 			(run, sout) = misc.runProg(compline)
 			if run == False:
-				printError(notify, output, sout)
+				misc.printError(notify, output, sout)
 				raise
 		"""generate archive objects"""
 		for i in cobj+cppobj:
@@ -158,7 +158,7 @@ def compile(tw, id, output, notify):
 			compline.append(id+"/"+i+".o")
 			(run, sout) = misc.runProg(compline)
 			if run == False:
-				printError(notify, output, stripOut(sout, pre_file))
+				misc.printError(notify, output, stripOut(sout, pre_file))
 				raise
 		"""precompile pde"""
 		compline=[j for j in defcpp]
@@ -167,7 +167,7 @@ def compile(tw, id, output, notify):
 		compline.append("-o"+pre_file+".o")
 		(run, sout) = misc.runProg(compline)
 		if run == False:
-			printError(notify, output, stripOut(sout, pre_file))
+			misc.printError(notify, output, stripOut(sout, pre_file))
 			moveCursor(tw, int(getErrorLine(sout)))
 			raise
 
@@ -180,21 +180,21 @@ def compile(tw, id, output, notify):
 		compline.append("-lm")
 		(run, sout) = misc.runProg(compline)
 		if run == False:
-			printError(notify, output, stripOut(sout, pre_file))
+			misc.printError(notify, output, stripOut(sout, pre_file))
 			raise
 		compline=[i for i in eep]
 		compline.append(tempobj+".elf")
 		compline.append(tempobj+".eep")
 		(run, sout) = misc.runProg(compline)
 		if run == False:
-			printError(notify, output, sout)
+			misc.printError(notify, output, sout)
 			raise
 		compline=[i for i in hex]
 		compline.append(tempobj+".elf")
 		compline.append(tempobj+".hex")
 		(run, sout) = misc.runProg(compline)
 		if run == False:
-			printError(notify, output, sout)
+			misc.printError(notify, output, sout)
 			raise
 		size = computeSize(tempobj+".hex")
 		notify.pop(context)
@@ -228,24 +228,3 @@ def computeSize(f):
 	poll.register(p.stdout, select.POLLIN)
 	(sout,serr) = p.communicate()
 	return sout.splitlines()[1].split()[3]
-
-def clearConsole(console):
-	b = console.get_buffer()
-	b.delete(b.get_start_iter(), b.get_end_iter())
-	b.set_text("")
-
-def printMessage(console, message):
-	console.modify_text(gtk.STATE_NORMAL, gtk.gdk.Color("#ffffff"))
-	b = console.get_buffer()
-	b.delete(b.get_start_iter(), b.get_end_iter())
-	b.set_text(message)
-
-def printError(notify, console, message):
-	console.modify_text(gtk.STATE_NORMAL, gtk.gdk.Color(red=1.0))
-	b = console.get_buffer()
-	context = notify.get_context_id("main")
-	notify.pop(context)
-	notify.push(context, _("Error compilling."))
-	b.delete(b.get_start_iter(), b.get_end_iter())
-	b.set_text(message)
-	print message.split(":")

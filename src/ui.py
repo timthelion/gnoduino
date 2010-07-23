@@ -18,8 +18,6 @@
 import os
 import sys
 import hashlib
-import time
-import tempfile
 import glib
 import gobject
 import gtk
@@ -35,6 +33,8 @@ import misc
 import uploader
 import srcview
 import serialio
+
+font = "Monospace 10"
 
 def setupPage(w, page, p):
 	pg = w.get_nth_page(p)
@@ -229,9 +229,6 @@ def menu(gui):
 	[gui.get_object(i[0]).add_accelerator("activate", accel, i[2][0], i[2][1], 0) for i in menus]
 	mainwin.add_accel_group(accel)
 
-def makeWorkdir():
-	return tempfile.mkdtemp("", os.path.join(tempfile.gettempdir(), "build"+str(time.time())))
-
 def createCon():
 	sw = gtk.ScrolledWindow()
 	sw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
@@ -243,6 +240,7 @@ def createCon():
 	tw.set_buffer(twbuf)
 	tw.modify_base(gtk.STATE_NORMAL, gtk.gdk.Color(0,0,0))
 	tw.modify_text(gtk.STATE_NORMAL, gtk.gdk.Color("#ffffff"))
+	misc.set_widget_font(tw, font);
 	sw.add(tw)
 	sw.show_all()
 	return (sw,tw)
@@ -258,6 +256,7 @@ def createScon():
 	tw.set_buffer(twbuf)
 	tw.modify_base(gtk.STATE_NORMAL, gtk.gdk.Color(0,0,0))
 	tw.modify_text(gtk.STATE_NORMAL, gtk.gdk.Color("#ffffff"))
+	misc.set_widget_font(tw, font);
 	sw.add(tw)
 	hbox = gtk.HBox(False, 0)
 	s = gtk.Button("Send")
@@ -298,7 +297,10 @@ def run():
 		global sb2
 		global ser
 		global id
-		id = makeWorkdir()
+		global nb
+		global tw
+		global sb
+		id = misc.makeWorkdir()
 		ser = serialio.sconsole()
 		sertime = None
 		gui = gtk.Builder()

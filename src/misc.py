@@ -15,15 +15,22 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
+import os
 import gtk
 import logging
 import select
 import subprocess
+import pango
+import time
+import tempfile
 import gettext
 _ = gettext.gettext
 
 LOG_FILENAME = 'arduino.out'
 logging.basicConfig(filename=LOG_FILENAME,level=logging.DEBUG)
+
+def makeWorkdir():
+	return tempfile.mkdtemp("", os.path.join(tempfile.gettempdir(), "build"+str(time.time())))
 
 def runProg(cmdline):
 	sout = ""
@@ -48,12 +55,30 @@ def runProg(cmdline):
 		return (False, sout)
 	return (True, sout)
 
+def set_widget_font(widget, font):
+	context = widget.get_pango_context()
+	font_desc = context.get_font_description()
+	cur_font = pango.FontDescription(font)
+	font_desc.merge(cur_font, True)
+	widget.modify_font(font_desc)
+
+def clearConsole(console):
+	b = console.get_buffer()
+	b.delete(b.get_start_iter(), b.get_end_iter())
+	b.set_text("")
+
 def printError(notify, console, message):
 	console.modify_text(gtk.STATE_NORMAL, gtk.gdk.Color(red=1.0))
 	b = console.get_buffer()
 	context = notify.get_context_id("main")
 	notify.pop(context)
 	notify.push(context, _("Error compilling."))
+	b.delete(b.get_start_iter(), b.get_end_iter())
+	b.set_text(message)
+
+def printMessage(console, message):
+	console.modify_text(gtk.STATE_NORMAL, gtk.gdk.Color("#ffffff"))
+	b = console.get_buffer()
 	b.delete(b.get_start_iter(), b.get_end_iter())
 	b.set_text(message)
 

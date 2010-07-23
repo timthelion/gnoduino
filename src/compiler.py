@@ -114,8 +114,9 @@ hex = [
 
 arduino_path = "hardware/arduino/cores/arduino"
 
-def stripOut(pre):
-	return self.replace(pre+":", '').strip()
+def stripOut(sout, pre):
+	sout = sout.replace(pre+":", '').split(" ", 1)
+	return sout[1]
 
 def compile(tw, id, output, notify):
 	context = notify.get_context_id("main")
@@ -128,6 +129,8 @@ def compile(tw, id, output, notify):
 	try:
 		"""preproces pde"""
 		pre_file = preproc.add_headers(id, tw.get_buffer())
+		print "pre"
+		print pre_file
 		"""compile C targets"""
 		for i in cobj:
 			compline=[j for j in defc]
@@ -136,7 +139,7 @@ def compile(tw, id, output, notify):
 			compline.append("-o"+id+"/"+i+".o")
 			(run, sout) = misc.runProg(compline)
 			if run == False:
-				printError(notify, output, stripOut(pre_file))
+				printError(notify, output, stripOut(sout, pre_file))
 				raise
 		"""compile C++ targets"""
 		for i in cppobj:
@@ -155,7 +158,7 @@ def compile(tw, id, output, notify):
 			compline.append(id+"/"+i+".o")
 			(run, sout) = misc.runProg(compline)
 			if run == False:
-				printError(notify, output, sout.stripOut(pre_file))
+				printError(notify, output, stripOut(sout, pre_file))
 				raise
 		"""precompile pde"""
 		compline=[j for j in defcpp]
@@ -164,7 +167,7 @@ def compile(tw, id, output, notify):
 		compline.append("-o"+pre_file+".o")
 		(run, sout) = misc.runProg(compline)
 		if run == False:
-			printError(notify, output, stripOut(pre_file))
+			printError(notify, output, stripOut(sout, pre_file))
 			moveCursor(tw, int(getErrorLine(sout)))
 			raise
 
@@ -177,7 +180,7 @@ def compile(tw, id, output, notify):
 		compline.append("-lm")
 		(run, sout) = misc.runProg(compline)
 		if run == False:
-			printError(notify, output, sout.stripOut(pre_file))
+			printError(notify, output, stripOut(sout, pre_file))
 			raise
 		compline=[i for i in eep]
 		compline.append(tempobj+".elf")

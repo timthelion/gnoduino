@@ -200,7 +200,7 @@ def compile(tw, id, output, notify):
 		notify.pop(context)
 		notify.push(context, _("Done compilling."))
 
-		printMessage(output, _("Binary sketch size: %s bytes (of a %d bytes maximum)") % (size, COMPILE_MAX_SIZE))
+		misc.printMessage(output, _("Binary sketch size: %s bytes (of a %d bytes maximum)") % (size, COMPILE_MAX_SIZE))
 	except StandardError as e:
 		print "Error: %s" % e
 	except:

@@ -1,4 +1,3 @@
-#!/usr/bin/python -t
 # gnoduino - Python Arduino IDE implementation
 # Copyright (C) 2010  Lucian Langa
 #
@@ -16,11 +15,11 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
+import os
+import sys
 import hashlib
 import time
 import tempfile
-import os
-import sys
 import glib
 import gobject
 import gtk
@@ -30,7 +29,6 @@ import shutil
 
 import gettext
 _ = lambda x: gettext.ldgettext(NAME, x)
-
 
 import compiler
 import misc
@@ -294,59 +292,65 @@ buttons = [
 		("serial", "serial.png", None)
 	]
 
-try:
-	id = makeWorkdir()
-	#p = popup()
-	#p.show("popup text")
-	ser = serialio.sconsole()
-	sertime = None
-	gui = gtk.Builder()
+def run():
 	try:
-		gui.add_from_file(os.path.join(os.getcwd(), "ui", "main.ui"))
-	except:
+		global mainwin
+		global sb2
+		global ser
+		global id
+		id = makeWorkdir()
+		ser = serialio.sconsole()
+		sertime = None
+		gui = gtk.Builder()
 		try:
-			gui.add_from_file(os.path.join(sys.prefix, "share", "gnoduino", "ui", "main.ui"))
-		except Exception,e:
-			print(e)
-			raise SystemExit(_("Cannot load ui file"))
-	mainwin = gui.get_object("top_win");
-	vbox = gui.get_object("vpan");
-	sb = gui.get_object("statusbar1");
-	sb2 = gui.get_object("statusbar2");
-	menu(gui)
-
-	nb = gtk.Notebook()
-	nb.connect("switch-page", setupPage)
-	sv = createPage(nb)
-	vbox.add(nb)
-
-	(con, tw) = createCon()
-	(scon,sctw) = createScon()
-	vbox.add(con)
-
-
-	mainwin.set_focus(sv)
-	mainwin.show_all()
-	mainwin.set_title("Arduino")
-	mainwin.connect("destroy", quit)
-	gui.get_object("serial").connect("clicked", cserial, sertime, sctw)
-	gui.get_object("upload").connect("clicked", upload, ser)
-	for i in buttons:
-		w = gtk.Image()
-		try:
-			w.set_from_file(os.path.join(os.getcwd(), "pixmaps", i[1]))
+			gui.add_from_file(os.path.join(os.getcwd(), "ui", "main.ui"))
 		except:
 			try:
-				w.set_from_file(os.path.join(sys.prefix, 'share', 'gnoduino', "pixmaps", i[1]))
+				gui.add_from_file(os.path.join(sys.prefix, "share", "gnoduino", "ui", "main.ui"))
 			except Exception,e:
 				print(e)
-				raise SystemExit(_("Cannot load pixmap files"))
-		o = gui.get_object(i[0])
-		o.set_icon_widget(w)
-		o.show_all()
-		if i[2] != None:
-			o.connect("clicked", i[2])
-	gtk.main()
-except KeyboardInterrupt:
-	print "\nExit on user cancel."
-	sys.exit(1)
+				raise SystemExit(_("Cannot load ui file"))
+		mainwin = gui.get_object("top_win");
+		vbox = gui.get_object("vpan");
+		sb = gui.get_object("statusbar1");
+		sb2 = gui.get_object("statusbar2");
+		menu(gui)
+
+		nb = gtk.Notebook()
+		nb.connect("switch-page", setupPage)
+		sv = createPage(nb)
+		vbox.add(nb)
+
+		(con, tw) = createCon()
+		(scon,sctw) = createScon()
+		vbox.add(con)
+
+		mainwin.set_focus(sv)
+		mainwin.show_all()
+		mainwin.set_title("Arduino")
+		mainwin.connect("destroy", quit)
+		gui.get_object("serial").connect("clicked", cserial, sertime, sctw)
+		gui.get_object("upload").connect("clicked", upload, ser)
+		for i in buttons:
+			w = gtk.Image()
+			try:
+				if (os.path.exists(os.path.join(os.getcwd(), "pixmaps", i[1]))):
+					w.set_from_file(os.path.join(os.getcwd(), "pixmaps", i[1]))
+				else: raise
+			except:
+				try:
+					if os.path.exists((os.path.join(sys.prefix, 'share', 'gnoduino', "pixmaps", i[1]))):
+						w.set_from_file(os.path.join(sys.prefix, 'share', 'gnoduino', "pixmaps", i[1]))
+					else: raise
+				except Exception,e:
+					print(e)
+					raise SystemExit(_("Cannot load pixmap files"))
+			o = gui.get_object(i[0])
+			o.set_icon_widget(w)
+			o.show_all()
+			if i[2] != None:
+				o.connect("clicked", i[2])
+		gtk.main()
+	except KeyboardInterrupt:
+		print "\nExit on user cancel."
+		sys.exit(1)

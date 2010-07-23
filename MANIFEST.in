@@ -1,0 +1,2 @@
+include pixmaps/*.png
+include ui/*.ui

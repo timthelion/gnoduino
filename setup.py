@@ -14,6 +14,7 @@ setup(name='gnoduino',
 	author_email='lucilanga@gnome.org',
 	url='http://gnome.eu.org/evo/index.php/Gnoduino',
 	license='GPL',
+	platforms='linux',
 
 	data_files = [('share/gnoduino/ui', ['ui/main.ui']),
 			('share/gnoduino/pixmaps', glob.glob('pixmaps/*.png'))

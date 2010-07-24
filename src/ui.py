@@ -309,6 +309,9 @@ def run():
 		global tw
 		global sb
 		global sertime
+		global vbox
+		global con
+		global scon
 		id = misc.makeWorkdir()
 		ser = serialio.sconsole()
 		sertime = None

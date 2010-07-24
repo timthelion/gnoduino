@@ -30,10 +30,11 @@ import hashlib
 #gettext.textdomain('myapplication')
 _ = gettext.gettext
 
-COMPILE_MAX_SIZE = 7168
 LOG_FILENAME = 'arduino.out'
 logging.basicConfig(filename=LOG_FILENAME,level=logging.DEBUG)
 
+import board
+import config
 import misc
 import preproc
 
@@ -66,8 +67,6 @@ defc = [
 	"-Os",
 	"-ffunction-sections",
 	"-fdata-sections",
-	"-mmcu=atmega8",
-	"-DF_CPU=16000000L"
 	]
 
 defcpp = [
@@ -79,8 +78,6 @@ defcpp = [
 	"-fno-exceptions",
 	"-ffunction-sections",
 	"-fdata-sections",
-	"-mmcu=atmega8",
-	"-DF_CPU=16000000L"
 	]
 
 defar = [
@@ -92,7 +89,6 @@ link = [
 	"/usr/bin/avr-gcc",
 	"-Os",
 	"-Wl,--gc-sections",
-	"-mmcu=atmega8"
 	]
 
 eep = [
@@ -127,6 +123,7 @@ def compile(tw, id, output, notify):
 	misc.clearConsole(output)
 	tmpdir = id
 	tempobj = tempfile.mktemp("", "Tempobj", id)
+	b = board.Board()
 	#compile inter c objects
 	try:
 		"""preproces pde"""
@@ -134,6 +131,8 @@ def compile(tw, id, output, notify):
 		"""compile C targets"""
 		for i in cobj:
 			compline=[j for j in defc]
+			compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
+			compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
 			compline.append("-I"+os.getcwd()+"/"+arduino_path)
 			compline.append(os.getcwd()+"/"+arduino_path+"/"+i)
 			compline.append("-o"+id+"/"+i+".o")
@@ -144,6 +143,8 @@ def compile(tw, id, output, notify):
 		"""compile C++ targets"""
 		for i in cppobj:
 			compline = [j for j in defcpp]
+			compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
+			compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
 			compline.append("-I"+os.getcwd()+"/"+arduino_path)
 			compline.append(os.getcwd()+"/"+arduino_path+"/"+i)
 			compline.append("-o"+id+"/"+i+".o")
@@ -162,6 +163,8 @@ def compile(tw, id, output, notify):
 				raise
 		"""precompile pde"""
 		compline=[j for j in defcpp]
+		compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
+		compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
 		compline.append("-I"+os.getcwd()+"/"+arduino_path)
 		compline.append(pre_file)
 		compline.append("-o"+pre_file+".o")
@@ -173,6 +176,7 @@ def compile(tw, id, output, notify):
 
 		"""compile all objects"""
 		compline = [i for i in link]
+		compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
 		compline.append("-o"+tempobj+".elf")
 		compline.append(pre_file+".o")
 		compline.append(id+"/core.a")
@@ -181,26 +185,26 @@ def compile(tw, id, output, notify):
 		(run, sout) = misc.runProg(compline)
 		if run == False:
 			misc.printError(notify, output, stripOut(sout, pre_file))
-			raise
+			raise NameError('linking-error')
 		compline=[i for i in eep]
 		compline.append(tempobj+".elf")
 		compline.append(tempobj+".eep")
 		(run, sout) = misc.runProg(compline)
 		if run == False:
-			misc.printError(notify, output, sout)
+			misc.printError(notify, output, stripOut(sout, pre_file))
 			raise
 		compline=[i for i in hex]
 		compline.append(tempobj+".elf")
 		compline.append(tempobj+".hex")
 		(run, sout) = misc.runProg(compline)
 		if run == False:
-			misc.printError(notify, output, sout)
+			misc.printError(notify, output, stripOut(sout, pre_file))
 			raise
 		size = computeSize(tempobj+".hex")
 		notify.pop(context)
 		notify.push(context, _("Done compilling."))
 
-		misc.printMessage(output, _("Binary sketch size: %s bytes (of a %d bytes maximum)") % (size, COMPILE_MAX_SIZE))
+		misc.printMessage(output, _("Binary sketch size: %s bytes (of a %s bytes maximum)") % (size, b.getBoardMemory(b.getBoard())))
 	except StandardError as e:
 		print "Error: %s" % e
 	except:

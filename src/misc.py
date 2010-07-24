@@ -82,6 +82,32 @@ def printMessage(console, message):
 	b.delete(b.get_start_iter(), b.get_end_iter())
 	b.set_text(message)
 
+def getBoards():
+	res = []
+	config = ConfigParser.RawConfigParser()
+	config.read('BOARDS')
+	for i in config.sections():
+		print i
+		res.append([i, config.get(i, 'size')])
+	return res;
+#float = config.getfloat('Section1', 'float')
+#int = config.getint('Section1', 'int')
+#print float + int
+#	f = open("BOARDS")
+#	for i in f:
+#		print i.split(",")
+
+
+
+# getfloat() raises an exception if the value is not a float
+# getint() and getboolean() also do this for their respective types
+
+# Notice that the next output does not interpolate '%(bar)s' or '%(baz)s'.
+# This is because we are using a RawConfigParser().
+#if config.getboolean('Section1', 'bool'):
+#    print config.get('Section1', 'foo')
+
+
 class MessageBox:
 
 	def __init__(self):

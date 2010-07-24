@@ -28,6 +28,7 @@ import shutil
 import gettext
 _ = lambda x: gettext.ldgettext(NAME, x)
 
+import board
 import compiler
 import misc
 import uploader
@@ -215,12 +216,16 @@ def cserial(w, st, data=None):
 		vbox.remove(scon)
 		vbox.add(con)
 
+def avrisp(w, data=None):
+	print "avrisp"
+
 menus = [
 		("menu-new", cnew, (ord('n'), gtk.gdk.CONTROL_MASK)),
 		("menu-open", copen, (ord('o'), gtk.gdk.CONTROL_MASK)),
 		("menu-save", csave, (ord('s'), gtk.gdk.CONTROL_MASK)),
 		("menu-save-as", csave_as, (ord('s'), gtk.gdk.CONTROL_MASK|gtk.gdk.SHIFT_MASK)),
 		("menu-quit", quit, (ord('q'), gtk.gdk.CONTROL_MASK)),
+		("avrisp", avrisp, (ord('a'), gtk.gdk.CONTROL_MASK)),
 	]
 
 def menu(gui):
@@ -291,6 +296,9 @@ buttons = [
 		("serial", "serial.png", None)
 	]
 
+def selectBoard(w, id):
+	b.setBoard(id)
+
 def run():
 	try:
 		global mainwin
@@ -300,6 +308,7 @@ def run():
 		global nb
 		global tw
 		global sb
+		global b
 		id = misc.makeWorkdir()
 		ser = serialio.sconsole()
 		sertime = None
@@ -317,6 +326,16 @@ def run():
 		sb = gui.get_object("statusbar1");
 		sb2 = gui.get_object("statusbar2");
 		menu(gui)
+		sub = gtk.Menu()
+		b = board.Board()
+		for i in b.getBoards():
+			menuItem = gtk.RadioMenuItem(None, i[2])
+			if i[0] == b.getBoard() + 1:
+				menuItem.set_active(True)
+			menuItem.connect('activate', selectBoard, i[0])
+			sub.append(menuItem)
+
+		gui.get_object("board").set_submenu(sub)
 
 		nb = gtk.Notebook()
 		nb.connect("switch-page", setupPage)

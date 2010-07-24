@@ -1,0 +1,88 @@
+[Arduino Duemilanove or Nano w/ ATmega 328]
+name = atmega328
+protocol = stk500
+max_size = 30720
+speed = 57600
+mcu = atmega328p
+f_cpu = 16000000L
+
+[Arduino Diecimila, Duemilanove, or Nano w/ ATmega168]
+name = diecimila
+protocol = stk500
+max_size = 14336
+speed = 19200
+mcu = atmega168
+f_cpu = 16000000L
+
+[Arduino Mega]
+name = mega
+protocol = stk500
+max_size = 126976
+speed = 57600
+mcu = atmega1280
+f_cpu = 16000000L
+
+[Arduino Mini]
+name = mini
+protocol = stk500
+max_size = 14336
+speed = 19200
+mcu = atmega168
+f_cpu = 16000000L
+
+[Arduino BT]
+name = bt
+protocol = stk500
+max_size = 14336
+speed = 19200
+mcu = atmega168
+f_cpu = 16000000L
+
+[LilyPad Arduino w/ ATmega328]
+name = lilipad328
+protocol = stk500
+max_size = 30720
+speed = 57600
+mcu = atmega328p
+f_cpu = 8000000L
+
+[LilyPad Arduino w/ ATmega168]
+name = lilypad
+protocol = stk500
+max_size = 14336
+speed = 19200
+mcu = atmega168
+f_cpu = 8000000L
+
+[Arduino Pro or Pro Mini (3.3V, 8MHz) w/ ATmega328]
+name = pro328
+protocol = stk500
+max_size = 30720
+speed = 57600
+mcu = atmega328p
+f_cpu = 8000000L
+
+[Arduino Pro or Pro Mini (3.3V, 8MHz) w/ ATmega168]
+name = pro
+protocol = stk500
+max_size = 14336
+speed = 19200
+mcu = atmega168
+f_cpu = 8000000L
+
+[Arduino NG or older w/ ATmega168]
+name = atmega168
+protocol = stk500
+max_size = 14336
+speed = 19200
+mcu = atmega168
+f_cpu = 16000000L
+
+[Arduino NG or older w/ ATmega8]
+name = atmega8
+protocol = stk500
+max_size = 7168
+mcu = atmega8
+speed = 19200
+mcu = atmega8
+f_cpu = 16000000L

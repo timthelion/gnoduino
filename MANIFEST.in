@@ -1,2 +1,4 @@
 include pixmaps/*.png
 include ui/*.ui
+include BOARDS
+include hardware/arduino/cores/arduino/*

@@ -308,7 +308,7 @@ def run():
 		global nb
 		global tw
 		global sb
-		global b
+		global sertime
 		id = misc.makeWorkdir()
 		ser = serialio.sconsole()
 		sertime = None

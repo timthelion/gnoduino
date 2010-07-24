@@ -24,7 +24,7 @@ import misc
 
 avr = [
 	"avrdude",
-	"-Chardware/tools/avrdude.conf",
+#	"-Chardware/tools/avrdude.conf",
 	"-v",
 	"-v",
 	"-v",

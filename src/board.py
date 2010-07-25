@@ -20,15 +20,14 @@ class Board(object):
 		self.defaults = []
 		conf = ConfigParser.RawConfigParser()
 		conf.read('BOARDS')
-		print "init boards"
 		c = 1
 		for i in conf.sections():
 			self.boards.append([c, conf.get(i, "name"), i, conf.get(i, 'max_size'), conf.get(i, 'mcu'), conf.get(i, "f_cpu")])
 			c = c + 1
-		print self.boards
-		print "done"
+		#print self.boards
 		p = prefs.preferences()
-		config.cur_board = self.getBoardIdByName(p.getValue("board")) - 1
+		if config.cur_board == -1:
+			config.cur_board = self.getBoardIdByName(p.getValue("board")) - 1
 
 	def getBoards(self):
 		return self.boards

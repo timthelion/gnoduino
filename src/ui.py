@@ -190,7 +190,6 @@ def quit(widget, data=None):
 def compile(widget, data=file):
 	page = nb.get_nth_page(nb.get_current_page())
 	obj = compiler.compile(page.get_data("view"), id, tw, sb) #page.get_data("buffer")
-	print obj
 	return obj
 
 def upload(widget, serial, data=file):
@@ -333,6 +332,7 @@ def run():
 		global con
 		global scon
 		global p
+		global b
 		id = misc.makeWorkdir()
 		ser = serialio.sconsole()
 		p = prefs.preferences()
@@ -353,11 +353,12 @@ def run():
 		menu(gui)
 		sub = gtk.Menu()
 		b = board.Board()
+		maingroup = gtk.RadioMenuItem(None, None)
 		for i in b.getBoards():
-			menuItem = gtk.RadioMenuItem(None, i[2])
+			menuItem = gtk.RadioMenuItem(maingroup, i[2])
 			if i[0] == b.getBoard() + 1:
 				menuItem.set_active(True)
-			menuItem.connect('activate', selectBoard, i[0])
+			menuItem.connect('toggled', selectBoard, i[0])
 			sub.append(menuItem)
 
 		gui.get_object("board").set_submenu(sub)

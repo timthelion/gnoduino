@@ -49,7 +49,9 @@ def get_lang_for_content(content):
 				return lang
 
 def instext(b, iter, text, len) :
-	b.set_language(get_lang_for_content(text))
+	lang = get_lang_for_content(text)
+	if lang != None:
+		b.set_language(lang)
 
 def updatePos(buffer, sb):
 	sb.pop(1)

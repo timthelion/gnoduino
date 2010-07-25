@@ -21,6 +21,7 @@ import fnmatch
 import gtksourceview2
 import gnomevfs
 import misc
+import prefs
 
 def get_lang_for_file(f):
 	manager = gtksourceview2.language_manager_get_default()
@@ -74,7 +75,8 @@ def createsrcview(status, f=None):
 		sbuffer.set_language(get_lang_for_content(content))
 		sbuffer.set_text(content)
 	sv = gtksourceview2.View(sbuffer)
-	misc.set_widget_font(sv, "Monospace 8")
+	p = prefs.preferences()
+	misc.set_widget_font(sv, p.getValue("editor.font").replace(",", " "))
 	manager = gtksourceview2.StyleSchemeManager()
 #	for i in gtksourceview2.StyleSchemeManager.get_scheme_ids(manager):
 #		print i

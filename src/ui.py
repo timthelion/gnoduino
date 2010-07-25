@@ -31,6 +31,7 @@ _ = lambda x: gettext.ldgettext(NAME, x)
 import board
 import compiler
 import misc
+import prefs
 import uploader
 import srcview
 import serialio
@@ -196,6 +197,20 @@ def upload(widget, serial, data=file):
 	obj = compile(widget, data)
 	uploader.upload(obj, serial, tw, sb)
 
+def menuUpload(widget, data=None):
+	upload(widget, ser, data)
+
+def about(widget, data=None):
+	about = gui.get_object("about")
+	about.show_all()
+
+def preferences(widget, data=None):
+	pref = gui.get_object("preferences")
+	fs = gui.get_object("fontsize")
+	p = prefs.preferences()
+	print p.getValue("editor.font")
+	fs.set_value(10)
+	pref.show_all()
 
 def stop(widget, data=None):
 	print "stop"
@@ -225,6 +240,10 @@ menus = [
 		("menu-save", csave, (ord('s'), gtk.gdk.CONTROL_MASK)),
 		("menu-save-as", csave_as, (ord('s'), gtk.gdk.CONTROL_MASK|gtk.gdk.SHIFT_MASK)),
 		("menu-quit", quit, (ord('q'), gtk.gdk.CONTROL_MASK)),
+		("menu-compile", compile, (ord('r'), gtk.gdk.CONTROL_MASK)),
+		("menu-preferences", preferences, (ord(','), gtk.gdk.CONTROL_MASK)),
+		("menu-upload", menuUpload, (ord('u'), gtk.gdk.CONTROL_MASK)),
+		("menu-about", about, (ord('a'), gtk.gdk.CONTROL_MASK)),
 		("avrisp", avrisp, (ord('a'), gtk.gdk.CONTROL_MASK)),
 	]
 
@@ -245,7 +264,7 @@ def createCon():
 	tw.set_buffer(twbuf)
 	tw.modify_base(gtk.STATE_NORMAL, gtk.gdk.Color(0,0,0))
 	tw.modify_text(gtk.STATE_NORMAL, gtk.gdk.Color("#ffffff"))
-	misc.set_widget_font(tw, font);
+	misc.set_widget_font(tw, p.getValue("editor.font").replace(",", " "))
 	sw.add(tw)
 	sw.show_all()
 	return (sw,tw)
@@ -261,7 +280,7 @@ def createScon():
 	tw.set_buffer(twbuf)
 	tw.modify_base(gtk.STATE_NORMAL, gtk.gdk.Color(0,0,0))
 	tw.modify_text(gtk.STATE_NORMAL, gtk.gdk.Color("#ffffff"))
-	misc.set_widget_font(tw, font);
+	misc.set_widget_font(tw, p.getValue("editor.font").replace(",", " "))
 	sw.add(tw)
 	hbox = gtk.HBox(False, 0)
 	s = gtk.Button("Send")
@@ -301,6 +320,7 @@ def selectBoard(w, id):
 
 def run():
 	try:
+		global gui
 		global mainwin
 		global sb2
 		global ser
@@ -312,8 +332,10 @@ def run():
 		global vbox
 		global con
 		global scon
+		global p
 		id = misc.makeWorkdir()
 		ser = serialio.sconsole()
+		p = prefs.preferences()
 		sertime = None
 		gui = gtk.Builder()
 		try:
@@ -324,10 +346,10 @@ def run():
 			except Exception,e:
 				print(e)
 				raise SystemExit(_("Cannot load ui file"))
-		mainwin = gui.get_object("top_win");
-		vbox = gui.get_object("vpan");
-		sb = gui.get_object("statusbar1");
-		sb2 = gui.get_object("statusbar2");
+		mainwin = gui.get_object("top_win")
+		vbox = gui.get_object("vpan")
+		sb = gui.get_object("statusbar1")
+		sb2 = gui.get_object("statusbar2")
 		menu(gui)
 		sub = gtk.Menu()
 		b = board.Board()

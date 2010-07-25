@@ -11,5 +11,5 @@ class preferences(object):
 
 	def getValue(self, value):
 		for i in self.defaults:
-			if i[0] == 'board':
+			if i[0] == value:
 				return i[1]

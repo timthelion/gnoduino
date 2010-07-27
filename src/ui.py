@@ -194,6 +194,8 @@ def compile(widget, data=file):
 
 def upload(widget, serial, data=file):
 	obj = compile(widget, data)
+	while (gtk.events_pending()):
+		gtk.main_iteration()
 	uploader.upload(obj, serial, tw, sb)
 
 def menuUpload(widget, data=None):

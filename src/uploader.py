@@ -30,9 +30,7 @@ avr = [
 	"-v",
 	"-F",	#force write to ignore signature check
 	"-pm8",
-	"-cstk500v1",
 	"-P/dev/ttyS0",
-	"-b19200",
 	"-D"
 ]
 
@@ -40,8 +38,11 @@ def upload(obj, serial, output, notify):
 	context = notify.get_context_id("main")
 	notify.pop(context)
 	notify.push(context, _("Flashing..."))
+	b = board.Board()
 	serial.resetBoard()
 	compline=[i for i in avr]
+	compline.append("-c"+b.getPGM(b.getBoard()))
+	compline.append("-b"+b.getPGMSpeed(b.getBoard()))
 	compline.append("-Uflash:w:"+obj+".hex:i")
 	print compline
 	(run, sout) = misc.runProg(compline)

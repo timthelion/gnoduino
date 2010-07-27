@@ -22,7 +22,10 @@ class Board(object):
 		conf.read('BOARDS')
 		c = 1
 		for i in conf.sections():
-			self.boards.append([c, conf.get(i, "name"), i, conf.get(i, 'max_size'), conf.get(i, 'mcu'), conf.get(i, "f_cpu")])
+			self.boards.append([c, conf.get(i, "name"), i, \
+			conf.get(i, 'max_size'), conf.get(i, 'mcu'), \
+			conf.get(i, "f_cpu"), conf.get(i, "protocol"), \
+			conf.get(i, "speed")])
 			c = c + 1
 		#print self.boards
 		p = prefs.preferences()
@@ -44,9 +47,16 @@ class Board(object):
 	def getBoardFCPU(self, id):
 		return self.boards[id][5]
 
+	def getPGM(self, id):
+		return self.boards[id][6]
+
+	def getPGMSpeed(self, id):
+		return self.boards[id][7]
+
 	def setBoard(self, id):
 		print "set board %d" % (id -1)
 		config.cur_board = (id - 1)
+
 
 	def getBoardIdByName(self, name):
 		for i in self.boards:

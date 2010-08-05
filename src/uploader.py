@@ -20,6 +20,7 @@ _ = gettext.gettext
 import misc
 import time
 
+import board
 import misc
 
 avr = [

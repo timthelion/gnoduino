@@ -34,6 +34,14 @@ def firstStatement(instr):
 	if not m: return 0
 	return m.end(0)
 
+def findPrototype(instr):
+	res = ""
+	m = re.findall("\w+\s+\w+\s*\(\w*\s*\w*,*\s*\w*\s*\w*\)[\s*//*\w*,*]*{", instr)
+	for z in m:
+		q = re.findall("\w+\s+\w+\s*\(\w*\s*\w*,*\s*\w*\s*\w*\)", z)
+		res = res + q[0]+";\n";
+	return res
+
 def makeBufferTempfile(buffer):
 	pass
 
@@ -41,8 +49,9 @@ def makeBufferTempfile(buffer):
 def add_headers(path, b):
 	cont = b.get_text(b.get_start_iter(), b.get_end_iter())
 	fs = firstStatement(cont)
+	findPrototype(cont)
 	if fs != None:
-		result = cont[:fs:]+"\n#include \"WProgram.h\"\n"+cont[fs:]+"\n\n"
+		result = cont[:fs:]+"\n#include \"WProgram.h\"\n"+ findPrototype(cont) + cont[fs:]+"\n\n"
 	else:
 		result = "#include \"WProgram.h\"\n"+cont+"\n\n"
 	of = tempfile.mktemp(".cpp", "", path)

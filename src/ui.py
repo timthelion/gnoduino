@@ -235,6 +235,12 @@ def cserial(w, st, data=None):
 def avrisp(w, data=None):
 	print "avrisp"
 
+def setBaud(w, data=None):
+	ser.resetBoard()
+	ser.serial.close()
+	ser.serial.baudrate = baud[w.get_active()]
+	ser.serial.open()
+
 menus = [
 		("menu-new", cnew, (ord('n'), gtk.gdk.CONTROL_MASK)),
 		("menu-open", copen, (ord('o'), gtk.gdk.CONTROL_MASK)),
@@ -271,6 +277,7 @@ def createCon():
 	return (sw,tw)
 
 def createScon():
+	global baud
 	sw = gtk.ScrolledWindow()
 	sw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
 	sw.set_shadow_type(gtk.SHADOW_IN)
@@ -291,6 +298,7 @@ def createScon():
 	b = gtk.combo_box_new_text()
 	baud = ["300", "1200", "2400", "4800", "9600", "14400", "19200", "28800", "38400", "57600", "115200"]
 	[b.append_text(i) for i in baud]
+	b.connect("changed", setBaud)
 	b.set_active(4)
 	text = gtk.Entry()
 	hbox.pack_start(text, False, False, 3)

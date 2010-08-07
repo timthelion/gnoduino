@@ -250,8 +250,9 @@ menus = [
 		("menu-compile", compile, (ord('r'), gtk.gdk.CONTROL_MASK)),
 		("menu-preferences", preferences, (ord(','), gtk.gdk.CONTROL_MASK)),
 		("menu-upload", menuUpload, (ord('u'), gtk.gdk.CONTROL_MASK)),
-		("about", about, (ord('1'), gtk.gdk.CONTROL_MASK)),
-		("avrisp", avrisp, (ord('1'), gtk.gdk.CONTROL_MASK)),
+		("menu-about", about, (ord('.'), gtk.gdk.CONTROL_MASK)),
+		("avrisp", avrisp, (ord('.'), gtk.gdk.CONTROL_MASK)),
+
 	]
 
 def menu(gui):

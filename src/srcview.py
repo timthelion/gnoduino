@@ -76,6 +76,9 @@ def createsrcview(status, f=None):
 		content = file(f).read()
 		sbuffer.set_language(get_lang_for_content(content))
 		sbuffer.set_text(content)
+	else:
+		manager = gtksourceview2.language_manager_get_default()
+		sbuffer.set_language(manager.get_language("c"))
 	sv = gtksourceview2.View(sbuffer)
 	p = prefs.preferences()
 	misc.set_widget_font(sv, p.getValue("editor.font").replace(",", " "))

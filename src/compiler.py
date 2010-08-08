@@ -32,6 +32,7 @@ _ = gettext.gettext
 
 LOG_FILENAME = 'arduino.out'
 logging.basicConfig(filename=LOG_FILENAME,level=logging.DEBUG)
+_debug = 0
 
 import board
 import config
@@ -120,6 +121,7 @@ def compile(tw, id, output, notify):
 	context = notify.get_context_id("main")
 	notify.pop(context)
 	notify.push(context, _("Compilling..."))
+	if _debug: sys.stderr.write('start compile\n')
 	misc.clearConsole(output)
 	tmpdir = id
 	tempobj = tempfile.mktemp("", "Tempobj", id)
@@ -129,6 +131,7 @@ def compile(tw, id, output, notify):
 		"""preproces pde"""
 		pre_file = preproc.add_headers(id, tw.get_buffer())
 		"""compile C targets"""
+		if _debug: sys.stderr.write('process C targets\n')
 		for i in cobj:
 			compline=[j for j in defc]
 			compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
@@ -136,11 +139,13 @@ def compile(tw, id, output, notify):
 			compline.append("-I"+os.getcwd()+"/"+arduino_path)
 			compline.append(os.getcwd()+"/"+arduino_path+"/"+i)
 			compline.append("-o"+id+"/"+i+".o")
+			if _debug: sys.stderr.write(' '.join(compline)+"\n")
 			(run, sout) = misc.runProg(compline)
 			if run == False:
 				misc.printError(notify, output, stripOut(sout, pre_file))
 				raise
 		"""compile C++ targets"""
+		if _debug: sys.stderr.write('process C++ targets\n')
 		for i in cppobj:
 			compline = [j for j in defcpp]
 			compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
@@ -148,26 +153,31 @@ def compile(tw, id, output, notify):
 			compline.append("-I"+os.getcwd()+"/"+arduino_path)
 			compline.append(os.getcwd()+"/"+arduino_path+"/"+i)
 			compline.append("-o"+id+"/"+i+".o")
+			if _debug: sys.stderr.write(' '.join(compline)+"\n")
 			(run, sout) = misc.runProg(compline)
 			if run == False:
 				misc.printError(notify, output, sout)
 				raise
 		"""generate archive objects"""
+		if _debug: sys.stderr.write('gen ar obj\n')
 		for i in cobj+cppobj:
 			compline = [j for j in defar]
 			compline.append(id+"/core.a")
 			compline.append(id+"/"+i+".o")
+			if _debug: sys.stderr.write(' '.join(compline)+"\n")
 			(run, sout) = misc.runProg(compline)
 			if run == False:
 				misc.printError(notify, output, stripOut(sout, pre_file))
 				raise
 		"""precompile pde"""
+		if _debug: sys.stderr.write('pde compile\n')
 		compline=[j for j in defcpp]
 		compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
 		compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
 		compline.append("-I"+os.getcwd()+"/"+arduino_path)
 		compline.append(pre_file)
 		compline.append("-o"+pre_file+".o")
+		if _debug: sys.stderr.write(' '.join(compline)+"\n")
 		(run, sout) = misc.runProg(compline)
 		if run == False:
 			misc.printError(notify, output, stripOut(sout, pre_file))
@@ -175,6 +185,7 @@ def compile(tw, id, output, notify):
 			raise
 
 		"""compile all objects"""
+		if _debug: sys.stderr.write('compile objects\n')
 		compline = [i for i in link]
 		compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
 		compline.append("-o"+tempobj+".elf")
@@ -182,6 +193,7 @@ def compile(tw, id, output, notify):
 		compline.append(id+"/core.a")
 		compline.append("-L"+id)
 		compline.append("-lm")
+		if _debug: sys.stderr.write(' '.join(compline)+"\n")
 		(run, sout) = misc.runProg(compline)
 		if run == False:
 			misc.printError(notify, output, stripOut(sout, pre_file))
@@ -189,6 +201,7 @@ def compile(tw, id, output, notify):
 		compline=[i for i in eep]
 		compline.append(tempobj+".elf")
 		compline.append(tempobj+".eep")
+		if _debug: sys.stderr.write(' '.join(compline)+"\n")
 		(run, sout) = misc.runProg(compline)
 		if run == False:
 			misc.printError(notify, output, stripOut(sout, pre_file))
@@ -196,6 +209,7 @@ def compile(tw, id, output, notify):
 		compline=[i for i in hex]
 		compline.append(tempobj+".elf")
 		compline.append(tempobj+".hex")
+		if _debug: sys.stderr.write(' '.join(compline)+"\n")
 		(run, sout) = misc.runProg(compline)
 		if run == False:
 			misc.printError(notify, output, stripOut(sout, pre_file))
@@ -203,6 +217,7 @@ def compile(tw, id, output, notify):
 		size = computeSize(tempobj+".hex")
 		notify.pop(context)
 		notify.push(context, _("Done compilling."))
+		if _debug: sys.stderr.write("compile done.\n")
 
 		misc.printMessage(output, _("Binary sketch size: %s bytes (of a %s bytes maximum)") % (size, b.getBoardMemory(b.getBoard())))
 	except StandardError as e:

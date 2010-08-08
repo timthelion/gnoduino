@@ -36,9 +36,9 @@ def firstStatement(instr):
 
 def findPrototype(instr):
 	res = ""
-	m = re.findall("\w+\s+\w+\s*\(\w*\s*\w*,*\s*\w*\s*\w*\)[\s*//*\w*,*]*{", instr)
+	m = re.findall(r"^\w+\s+\w+\([^)]*\)[\s+/*\w*\s+]*{", instr, re.M)
 	for z in m:
-		q = re.findall("\w+\s+\w+\s*\(\w*\s*\w*,*\s*\w*\s*\w*\)", z)
+		q = re.findall("\w+\s+\w+\([^)]*\)", z)
 		res = res + q[0]+";\n";
 	return res
 
@@ -49,7 +49,6 @@ def makeBufferTempfile(buffer):
 def add_headers(path, b):
 	cont = b.get_text(b.get_start_iter(), b.get_end_iter())
 	fs = firstStatement(cont)
-	findPrototype(cont)
 	if fs != None:
 		result = cont[:fs:]+"\n#include \"WProgram.h\"\n"+ findPrototype(cont) + cont[fs:]+"\n\n"
 	else:

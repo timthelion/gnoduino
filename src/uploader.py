@@ -30,9 +30,23 @@ avr = [
 	"-v",
 	"-v",
 	"-F",	#force write to ignore signature check
-	"-pm8",
 	"-P/dev/ttyS0",
 	"-D"
+]
+
+avr_bl = [
+	"avrdude"
+#	"-Chardware/tools/avrdude.conf",
+	"-v",
+	"-v",
+	"-v",
+	"-patmega8",
+	"-cdapa",
+	"-F",
+	"-e",
+	"-Ulock:w:0x3F:m",
+	"-Uhfuse:w:0xca:m",
+	"-Ulfuse:w:0xdf:m"
 ]
 
 def upload(obj, serial, output, notify):
@@ -42,8 +56,12 @@ def upload(obj, serial, output, notify):
 	b = board.Board()
 	serial.resetBoard()
 	compline=[i for i in avr]
-	compline.append("-c"+b.getPGM(b.getBoard()))
-	compline.append("-b"+b.getPGMSpeed(b.getBoard()))
+	# avrdude wants "stk500v1" to distinguish it from stk500v2
+	protocol = b.getPGM(b.getBoard())
+	if protocol == "stk500": protocol = "stk500v1"
+	compline.append("-c" + protocol)
+	compline.append("-b" + b.getPGMSpeed(b.getBoard()))
+	compline.append("-p" + b.getBoardMCU(b.getBoard()))
 	compline.append("-Uflash:w:"+obj+".hex:i")
 	print compline
 	(run, sout) = misc.runProg(compline)

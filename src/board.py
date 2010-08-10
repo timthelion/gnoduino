@@ -101,7 +101,7 @@ class Board(object):
 		config.cur_board = (id - 1)
 
 	def getBoardIdByName(self, name):
-		if name == None: return 0
+		if name == None: return 1
 		for i in self.boards:
 			if i['name'] == name:
 				return i['id']

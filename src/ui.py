@@ -352,10 +352,15 @@ def run():
 		sertime = None
 		gui = gtk.Builder()
 		try:
-			gui.add_from_file(os.path.join(os.getcwd(), "ui", "main.ui"))
+			path = os.path.join(os.getcwd(), "ui", "main.ui")
+			if os.path.exists(path):
+				gui.add_from_file(path)
+			else: raise
 		except:
 			try:
-				gui.add_from_file(os.path.join(sys.prefix, "share", "gnoduino", "ui", "main.ui"))
+				path = os.path.join(sys.prefix, "share", "gnoduino", "ui", "main.ui")
+				if os.path.exists(path):
+					gui.add_from_file(path)
 			except Exception,e:
 				print(e)
 				raise SystemExit(_("Cannot load ui file"))

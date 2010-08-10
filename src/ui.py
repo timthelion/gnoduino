@@ -29,6 +29,7 @@ import gettext
 _ = lambda x: gettext.ldgettext(NAME, x)
 
 import board
+import programmer
 import compiler
 import misc
 import prefs
@@ -217,7 +218,6 @@ def stop(widget, data=None):
 	print "stop"
 
 def cserial(w, st, data=None):
-
 	global sertime
 	#compiler.clearConsole(data)
 	if (sertime == None):
@@ -235,6 +235,9 @@ def cserial(w, st, data=None):
 def avrisp(w, data=None):
 	print "avrisp"
 
+def burnBootloader(w, id):
+	uploader.burnBootloader(ser, tw, sb, id)
+
 def setBaud(w, data=None):
 	ser.resetBoard()
 	ser.serial.close()
@@ -248,17 +251,16 @@ menus = [
 		("menu-save-as", csave_as, (ord('s'), gtk.gdk.CONTROL_MASK|gtk.gdk.SHIFT_MASK)),
 		("menu-quit", quit, (ord('q'), gtk.gdk.CONTROL_MASK)),
 		("menu-compile", compile, (ord('r'), gtk.gdk.CONTROL_MASK)),
-		("menu-preferences", preferences, (ord(','), gtk.gdk.CONTROL_MASK)),
+		("menu-preferences", preferences, (None, None)),
 		("menu-upload", menuUpload, (ord('u'), gtk.gdk.CONTROL_MASK)),
-		("menu-about", about, (ord('.'), gtk.gdk.CONTROL_MASK)),
-		("avrisp", avrisp, (ord('.'), gtk.gdk.CONTROL_MASK)),
+		("menu-about", about, (None, None)),
 
 	]
 
 def menu(gui):
 	[gui.get_object(i[0]).connect("activate", i[1]) for i in menus]
 	accel = gtk.AccelGroup()
-	[gui.get_object(i[0]).add_accelerator("activate", accel, i[2][0], i[2][1], 0) for i in menus]
+	[gui.get_object(i[0]).add_accelerator("activate", accel, i[2][0], i[2][1], 0) for i in menus if i[2][0] != None]
 	mainwin.add_accel_group(accel)
 
 def createCon():
@@ -366,13 +368,21 @@ def run():
 		b = board.Board()
 		maingroup = gtk.RadioMenuItem(None, None)
 		for i in b.getBoards():
-			menuItem = gtk.RadioMenuItem(maingroup, i[2])
-			if i[0] == b.getBoard() + 1:
+			menuItem = gtk.RadioMenuItem(maingroup, i['desc'])
+			if i['id'] == b.getBoard() + 1:
 				menuItem.set_active(True)
-			menuItem.connect('toggled', selectBoard, i[0])
+			menuItem.connect('toggled', selectBoard, i['id'])
 			sub.append(menuItem)
-
 		gui.get_object("board").set_submenu(sub)
+
+		sub = gtk.Menu()
+		b = programmer.Programmer()
+		maingroup = gtk.RadioMenuItem(None, None)
+		for i in b.getProgrammers():
+			menuItem = gtk.MenuItem(i['desc'])
+			menuItem.connect('activate', burnBootloader, i['id'])
+			sub.append(menuItem)
+		gui.get_object("burn").set_submenu(sub)
 
 		nb = gtk.Notebook()
 		nb.connect("switch-page", setupPage)

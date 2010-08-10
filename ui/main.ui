@@ -167,7 +167,7 @@
               </object>
             </child>
             <child>
-              <object class="GtkMenuItem" id="menuitem5">
+              <object class="GtkMenuItem" id="tools">
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">Tools</property>
                 <property name="use_underline">True</property>
@@ -215,50 +215,10 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkMenuItem" id="menuitem13">
+                      <object class="GtkMenuItem" id="burn">
                         <property name="visible">True</property>
                         <property name="label" translatable="yes">Burn Bootloader</property>
                         <property name="use_underline">True</property>
-                        <child type="submenu">
-                          <object class="GtkMenu" id="menu7">
-                            <property name="visible">True</property>
-                            <child>
-                              <object class="GtkMenuItem" id="avrisp">
-                                <property name="visible">True</property>
-                                <property name="label" translatable="yes">w/ AVR ISP</property>
-                                <property name="use_underline">True</property>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkMenuItem" id="avrisp2">
-                                <property name="visible">True</property>
-                                <property name="label" translatable="yes">w/ AVRISP mkII</property>
-                                <property name="use_underline">True</property>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkMenuItem" id="menuitem18">
-                                <property name="visible">True</property>
-                                <property name="label" translatable="yes">w/ USBtinyISP</property>
-                                <property name="use_underline">True</property>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkMenuItem" id="menuitem19">
-                                <property name="visible">True</property>
-                                <property name="label" translatable="yes">w/ Parallel Programmer</property>
-                                <property name="use_underline">True</property>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkMenuItem" id="menuitem16">
-                                <property name="visible">True</property>
-                                <property name="label" translatable="yes">w/ Arduino as ISP</property>
-                                <property name="use_underline">True</property>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
                       </object>
                     </child>
                   </object>

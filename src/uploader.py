@@ -21,6 +21,7 @@ import misc
 import time
 
 import board
+import programmer
 import misc
 
 avr = [
@@ -35,19 +36,55 @@ avr = [
 ]
 
 avr_bl = [
-	"avrdude"
+	"avrdude",
 #	"-Chardware/tools/avrdude.conf",
 	"-v",
 	"-v",
 	"-v",
-	"-patmega8",
-	"-cdapa",
-	"-F",
-	"-e",
-	"-Ulock:w:0x3F:m",
-	"-Uhfuse:w:0xca:m",
-	"-Ulfuse:w:0xdf:m"
+	"-v",
 ]
+
+def burnBootloader(serial, output, notify, id):
+	context = notify.get_context_id("main")
+	notify.pop(context)
+	notify.push(context, _("Burning bootloader..."))
+	b = board.Board()
+	serial.resetBoard()
+	pgm = programmer.Programmer()
+	"""De-fuse and erase board"""
+	compline=[i for i in avr_bl]
+	compline.append("-c" + pgm.getProtocol(id))
+	compline.append("-p" + b.getBoardMCU(b.getBoard()))
+	compline.append("-e")
+	if pgm.getForce(id) == 'true':
+		compline.append("-F")
+	compline.append("-Ulock:w:" + b.getFuseUnlock(b.getBoard()) + ":m")
+	compline.append("-Uhfuse:w:" + b.getFuseHigh(b.getBoard()) + ":m")
+	compline.append("-Ulfuse:w:" + b.getFuseLow(b.getBoard()) + ":m")
+	print compline
+	(run, sout) = misc.runProg(compline)
+	print sout
+	if run == False:
+		misc.printError(notify, output, sout)
+		raise
+	"""Burn and fuse board"""
+	compline=[i for i in avr_bl]
+	compline.append("-c" + pgm.getProtocol(id))
+	compline.append("-p" + b.getBoardMCU(b.getBoard()))
+	compline.append("-e")
+	if pgm.getForce(id) == 'true':
+		compline.append("-F")
+	compline.append("-Uflash:w:" + "hardware/arduino/bootloaders/" + \
+		b.getPath(b.getBoard()) + "/" + b.getBootloader(b.getBoard()) + ":i")
+	compline.append("-Ulock:w:" + b.getFuseLock(b.getBoard()) + ":m")
+	print compline
+	(run, sout) = misc.runProg(compline)
+	print sout
+	if run == False:
+		misc.printError(notify, output, sout)
+		raise
+	notify.pop(context)
+	notify.push(context, _("Burn complete."))
 
 def upload(obj, serial, output, notify):
 	context = notify.get_context_id("main")

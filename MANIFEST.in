@@ -1,4 +1,5 @@
+include scripts/*.py
 include pixmaps/*.png
 include ui/*.ui
-include BOARDS
-include hardware/arduino/cores/arduino/*
+include preferences.txt
+recursive-include hardware/arduino/ *

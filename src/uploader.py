@@ -71,6 +71,7 @@ def burnBootloader(serial, output, notify, id):
 	except:
 		notify.pop(context)
 		notify.push(context, _("Burn error."))
+		"""figure out what we should do in case of failure. Stop ?"""
 	"""Burn and fuse board"""
 	compline=[i for i in avr_bl]
 	compline.append("-c" + pgm.getProtocol(id))

@@ -1,13 +1,55 @@
 #!/usr/bin/python
+#
+# Arduino python implementation
+# Copyright (C) 2010  Lucian Langa <cooly@gnome.eu.org>
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
 
 import glob
-import misc
+import logging
+import subprocess
 from distutils.core import setup
 
-compline = "./gen_boards.py"
-(run, sout) = misc.runProg(compline)
-compline = "./gen_programmers.py"
-(run, sout) = misc.runProg(compline)
+def runProg(cmdline):
+	sout = ""
+	serr = ""
+	logging.debug("CMD:-%s", cmdline)
+	try:
+		p = subprocess.Popen(cmdline,
+			stdout = subprocess.PIPE,
+			stderr = subprocess.STDOUT,
+			stdin = subprocess.PIPE,
+			close_fds = True)
+		poll = select.poll()
+		poll.register(p.stdout, select.POLLIN)
+		while gtk.events_pending():
+			gtk.main_iteration()
+		(sout,serr) = p.communicate()
+		while gtk.events_pending():
+			gtk.main_iteration()
+		if p.poll()==1: raise
+	except:
+		logging.debug("ERR:%s", sout)
+		return (False, sout)
+	return (True, sout)
+
+compline = "scripts/gen_boards.py"
+(run, sout) = runProg(compline)
+compline = "scripts/gen_programmers.py"
+(run, sout) = runProg(compline)
 
 setup(name='gnoduino',
 	version='0.1.0',
@@ -24,7 +66,8 @@ setup(name='gnoduino',
 
 	data_files = [('share/gnoduino/ui', ['ui/main.ui']),
 			('share/gnoduino/', ['BOARDS', 'PROGRAMMERS', 'preferences.txt']),
-			('share/gnoduino/pixmaps', glob.glob('pixmaps/*.png'))
+			('share/gnoduino/pixmaps', glob.glob('pixmaps/*.png')),
+			('share/gnoduino/scripts', ['scripts/gen_boards.py', 'scripts/gen_programmers.py'])
 	]
 )
 

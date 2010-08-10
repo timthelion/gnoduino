@@ -1,7 +1,13 @@
 #!/usr/bin/python
 
 import glob
+import misc
 from distutils.core import setup
+
+compline = "./gen_boards.py"
+(run, sout) = misc.runProg(compline)
+compline = "./gen_programmers.py"
+(run, sout) = misc.runProg(compline)
 
 setup(name='gnoduino',
 	version='0.1.0',
@@ -17,6 +23,7 @@ setup(name='gnoduino',
 	platforms='linux',
 
 	data_files = [('share/gnoduino/ui', ['ui/main.ui']),
+			('share/gnoduino/', ['BOARDS', 'PROGRAMMERS']),
 			('share/gnoduino/pixmaps', glob.glob('pixmaps/*.png'))
 	]
 )

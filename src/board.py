@@ -17,18 +17,13 @@
 #
 
 import os
+import sys
 import ConfigParser
 import config
 import prefs
 
-def readRefaults():
-	f = open(os.path.expanduser('~/.arduino/preferences.txt'))
-	for i in f:
-		self.defaults.append(i.split("="))
-	for i in self.defaults:
-		if i[0] == 'board':
-			print i
-
+import gettext
+_ = gettext.gettext
 
 class Board(object):
 	def __init__(self):
@@ -37,7 +32,20 @@ class Board(object):
 		self.programmers = []
 		self.defaults = []
 		conf = ConfigParser.RawConfigParser()
-		conf.read('BOARDS')
+		try:
+			path = os.path.join(os.getcwd(), "BOARDS")
+			if os.path.exists(path):
+				conf.read(path)
+			else: raise
+		except:
+			try:
+				path = os.path.join(sys.prefix, "share", "gnoduino", "BOARDS")
+				if os.path.exists(path):
+					conf.read(path)
+				else: raise
+			except Exception,e:
+				print e
+				raise SystemExit(_("Cannot load BOARDS file. Exiting."))
 		c = 1
 		for i in conf.sections():
 			v = dict(conf.items(i))
@@ -93,6 +101,7 @@ class Board(object):
 		config.cur_board = (id - 1)
 
 	def getBoardIdByName(self, name):
+		if name == None: return 0
 		for i in self.boards:
 			if i['name'] == name:
 				return i['id']

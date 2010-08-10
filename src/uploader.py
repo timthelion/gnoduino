@@ -21,6 +21,7 @@ import misc
 import time
 
 import board
+import config
 import programmer
 import misc
 
@@ -31,7 +32,6 @@ avr = [
 	"-v",
 	"-v",
 	"-F",	#force write to ignore signature check
-	"-P/dev/ttyS0",
 	"-D"
 ]
 
@@ -62,11 +62,15 @@ def burnBootloader(serial, output, notify, id):
 	compline.append("-Uhfuse:w:" + b.getFuseHigh(b.getBoard()) + ":m")
 	compline.append("-Ulfuse:w:" + b.getFuseLow(b.getBoard()) + ":m")
 	print compline
-	(run, sout) = misc.runProg(compline)
-	print sout
-	if run == False:
-		misc.printError(notify, output, sout)
-		raise
+	try:
+		(run, sout) = misc.runProg(compline)
+		print sout
+		if run == False:
+			misc.printError(notify, output, sout)
+			raise
+	except:
+		notify.pop(context)
+		notify.push(context, _("Burn error."))
 	"""Burn and fuse board"""
 	compline=[i for i in avr_bl]
 	compline.append("-c" + pgm.getProtocol(id))
@@ -78,11 +82,16 @@ def burnBootloader(serial, output, notify, id):
 		b.getPath(b.getBoard()) + "/" + b.getBootloader(b.getBoard()) + ":i")
 	compline.append("-Ulock:w:" + b.getFuseLock(b.getBoard()) + ":m")
 	print compline
-	(run, sout) = misc.runProg(compline)
-	print sout
-	if run == False:
-		misc.printError(notify, output, sout)
-		raise
+	try:
+		(run, sout) = misc.runProg(compline)
+		print sout
+		if run == False:
+			misc.printError(notify, output, sout)
+			raise
+	except:
+		notify.pop(context)
+		notify.push(context, _("Burn error."))
+		return
 	notify.pop(context)
 	notify.push(context, _("Burn complete."))
 
@@ -97,15 +106,21 @@ def upload(obj, serial, output, notify):
 	protocol = b.getPGM(b.getBoard())
 	if protocol == "stk500": protocol = "stk500v1"
 	compline.append("-c" + protocol)
+	compline.append("-P" + config.cur_serial_port)
 	compline.append("-b" + b.getPGMSpeed(b.getBoard()))
 	compline.append("-p" + b.getBoardMCU(b.getBoard()))
 	compline.append("-Uflash:w:"+obj+".hex:i")
 	print compline
-	(run, sout) = misc.runProg(compline)
-	print sout
-	if run == False:
-		misc.printError(notify, output, sout)
+	try:
+		(run, sout) = misc.runProg(compline)
+		print sout
+		if run == False:
+			misc.printError(notify, output, sout)
 		raise
+	except:
+		notify.pop(context)
+		notify.push(context, _("Flashing error."))
+		return
 	notify.pop(context)
 	notify.push(context, _("Flashing complete."))
 

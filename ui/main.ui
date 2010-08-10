@@ -189,29 +189,10 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkMenuItem" id="menuitem12">
+                      <object class="GtkMenuItem" id="serial_port">
                         <property name="visible">True</property>
                         <property name="label" translatable="yes">Serial Port</property>
                         <property name="use_underline">True</property>
-                        <child type="submenu">
-                          <object class="GtkMenu" id="menu6">
-                            <property name="visible">True</property>
-                            <child>
-                              <object class="GtkMenuItem" id="menuitem14">
-                                <property name="visible">True</property>
-                                <property name="label" translatable="yes">/dev/ttyS0</property>
-                                <property name="use_underline">True</property>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkMenuItem" id="menuitem15">
-                                <property name="visible">True</property>
-                                <property name="label" translatable="yes">/dev/ttyS1</property>
-                                <property name="use_underline">True</property>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
                       </object>
                     </child>
                     <child>

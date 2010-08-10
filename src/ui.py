@@ -26,11 +26,12 @@ import select
 import shutil
 
 import gettext
-_ = lambda x: gettext.ldgettext(NAME, x)
+_ = gettext.gettext
 
 import board
-import programmer
+import config
 import compiler
+import programmer
 import misc
 import prefs
 import uploader
@@ -232,9 +233,6 @@ def cserial(w, st, data=None):
 		vbox.remove(scon)
 		vbox.add(con)
 
-def avrisp(w, data=None):
-	print "avrisp"
-
 def burnBootloader(w, id):
 	uploader.burnBootloader(ser, tw, sb, id)
 
@@ -330,6 +328,9 @@ buttons = [
 def selectBoard(w, id):
 	b.setBoard(id)
 
+def setSerial(w, id):
+	config.cur_serial_port = id
+
 def run():
 	try:
 		global gui
@@ -369,6 +370,7 @@ def run():
 		sb = gui.get_object("statusbar1")
 		sb2 = gui.get_object("statusbar2")
 		menu(gui)
+		"""build menus"""
 		sub = gtk.Menu()
 		b = board.Board()
 		maingroup = gtk.RadioMenuItem(None, None)
@@ -381,8 +383,22 @@ def run():
 		gui.get_object("board").set_submenu(sub)
 
 		sub = gtk.Menu()
-		b = programmer.Programmer()
 		maingroup = gtk.RadioMenuItem(None, None)
+		for i in ser.scan():
+			menuItem = gtk.RadioMenuItem(maingroup, i)
+			if i == p.getValue("serial.port"):
+				menuItem.set_active(True)
+			else:
+				if i == "/dev/ttyS0":
+					if config.cur_serial_port == -1:
+						config.cur_serial_port = "/dev/ttyS0"
+					menuItem.set_active(True)
+			menuItem.connect('activate', setSerial, i)
+			sub.append(menuItem)
+		gui.get_object("serial_port").set_submenu(sub)
+
+		sub = gtk.Menu()
+		b = programmer.Programmer()
 		for i in b.getProgrammers():
 			menuItem = gtk.MenuItem(i['desc'])
 			menuItem.connect('activate', burnBootloader, i['id'])
@@ -407,13 +423,15 @@ def run():
 		for i in buttons:
 			w = gtk.Image()
 			try:
-				if (os.path.exists(os.path.join(os.getcwd(), "pixmaps", i[1]))):
-					w.set_from_file(os.path.join(os.getcwd(), "pixmaps", i[1]))
+				path = os.path.join(os.getcwd(), "pixmaps", i[1])
+				if os.path.exists(path):
+					w.set_from_file(path)
 				else: raise
 			except:
 				try:
-					if os.path.exists((os.path.join(sys.prefix, 'share', 'gnoduino', "pixmaps", i[1]))):
-						w.set_from_file(os.path.join(sys.prefix, 'share', 'gnoduino', "pixmaps", i[1]))
+					path = os.path.join(sys.prefix, 'share', 'gnoduino', "pixmaps", i[1])
+					if os.path.exists(path):
+						w.set_from_file(path)
 					else: raise
 				except Exception,e:
 					print(e)

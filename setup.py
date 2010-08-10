@@ -23,7 +23,7 @@ setup(name='gnoduino',
 	platforms='linux',
 
 	data_files = [('share/gnoduino/ui', ['ui/main.ui']),
-			('share/gnoduino/', ['BOARDS', 'PROGRAMMERS']),
+			('share/gnoduino/', ['BOARDS', 'PROGRAMMERS', 'preferences.txt']),
 			('share/gnoduino/pixmaps', glob.glob('pixmaps/*.png'))
 	]
 )

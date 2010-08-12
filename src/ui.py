@@ -189,6 +189,11 @@ def quit(widget, data=None):
 	shutil.rmtree(id, True)
 	gtk.main_quit()
 
+def find(w, data=None):
+	find = gui.get_object("find")
+	find.connect("close", lambda w: find.hide_all())
+	find.show_all()
+
 def compile(widget, data=file):
 	page = nb.get_nth_page(nb.get_current_page())
 	obj = compiler.compile(page.get_data("view"), id, tw, sb) #page.get_data("buffer")
@@ -242,12 +247,17 @@ def setBaud(w, data=None):
 	ser.serial.baudrate = baud[w.get_active()]
 	ser.serial.open()
 
+def serSendText(w, data=None):
+	ser.serial.write(w.get_text())
+	w.set_text("")
+
 menus = [
 		("menu-new", cnew, (ord('n'), gtk.gdk.CONTROL_MASK)),
 		("menu-open", copen, (ord('o'), gtk.gdk.CONTROL_MASK)),
 		("menu-save", csave, (ord('s'), gtk.gdk.CONTROL_MASK)),
 		("menu-save-as", csave_as, (ord('s'), gtk.gdk.CONTROL_MASK|gtk.gdk.SHIFT_MASK)),
 		("menu-quit", quit, (ord('q'), gtk.gdk.CONTROL_MASK)),
+		("menu-find", find, (ord('f'), gtk.gdk.CONTROL_MASK)),
 		("menu-compile", compile, (ord('r'), gtk.gdk.CONTROL_MASK)),
 		("menu-preferences", preferences, (None, None)),
 		("menu-upload", menuUpload, (ord('u'), gtk.gdk.CONTROL_MASK)),
@@ -295,18 +305,18 @@ def createScon():
 	s = gtk.Button("Send")
 	c = gtk.Button("Clear")
 	c.connect("clicked", ser.clearConsole, tw)
-	l = gtk.Label("Baud:")
 	b = gtk.combo_box_new_text()
-	baud = ["300", "1200", "2400", "4800", "9600", "14400", "19200", "28800", "38400", "57600", "115200"]
-	[b.append_text(i) for i in baud]
+	baud = ["300", "1200", "2400", "4800", "9600", "14400", "19200", \
+		"28800", "38400", "57600", "115200"]
+	[b.append_text(i+" baud") for i in baud]
 	b.connect("changed", setBaud)
 	b.set_active(4)
 	text = gtk.Entry()
-	hbox.pack_start(text, False, False, 3)
+	text.connect("activate", serSendText)
+	hbox.pack_start(b, False, False, 3)
+	hbox.pack_start(text, True, True, 3)
 	hbox.pack_start(s, False, False, 3)
 	hbox.pack_start(c, False, False, 3)
-	hbox.pack_start(l, False, False, 3)
-	hbox.pack_start(b, False, False, 3)
 	vbox = gtk.VBox(False, 0)
 	vbox.pack_start(hbox, False, False, 3)
 	vbox.pack_start(sw, False, False, 3)
@@ -388,10 +398,12 @@ def run():
 			menuItem = gtk.RadioMenuItem(maingroup, i)
 			if i == p.getValue("serial.port"):
 				menuItem.set_active(True)
+				if config.cur_serial_port == -1:
+					config.cur_serial_port = i
 			else:
 				if i == "/dev/ttyS0":
 					if config.cur_serial_port == -1:
-						config.cur_serial_port = "/dev/ttyS0"
+						config.cur_serial_port = i
 					menuItem.set_active(True)
 			menuItem.connect('activate', setSerial, i)
 			sub.append(menuItem)

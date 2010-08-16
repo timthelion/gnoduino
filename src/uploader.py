@@ -80,7 +80,7 @@ def burnBootloader(serial, output, notify, id):
 	if pgm.getForce(id) == 'true':
 		compline.append("-F")
 	compline.append("-Uflash:w:" + "hardware/arduino/bootloaders/" + \
-		b.getPath(b.getBoard()) + "/" + b.getBootloader(b.getBoard()) + ":i")
+		b.getPath(b.getBoard()) + "/" + b.getBootloader(b.getBoard()) + ".hex:i")
 	compline.append("-Ulock:w:" + b.getFuseLock(b.getBoard()) + ":m")
 	print compline
 	try:

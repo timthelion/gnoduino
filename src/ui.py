@@ -191,8 +191,8 @@ def quit(widget, data=None):
 
 def find(w, data=None):
 	find = gui.get_object("find")
-	find.connect("close", lambda w: find.hide_all())
-	find.show_all()
+	find.run()
+	find.hide()
 
 def compile(widget, data=file):
 	page = nb.get_nth_page(nb.get_current_page())
@@ -210,7 +210,8 @@ def menuUpload(widget, data=None):
 
 def about(widget, data=None):
 	about = gui.get_object("about")
-	about.show_all()
+	about.run()
+	about.hide()
 
 def preferences(widget, data=None):
 	pref = gui.get_object("preferences")
@@ -218,7 +219,8 @@ def preferences(widget, data=None):
 	p = prefs.preferences()
 	print p.getValue("editor.font")
 	fs.set_value(10)
-	pref.show_all()
+	pref.run()
+	pref.hide()
 
 def stop(widget, data=None):
 	print "stop"

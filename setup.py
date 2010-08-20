@@ -17,7 +17,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-
+import os
 import glob
 import logging
 import subprocess
@@ -50,6 +50,15 @@ compline = "scripts/gen_boards.py"
 (run, sout) = runProg(compline)
 compline = "scripts/gen_programmers.py"
 (run, sout) = runProg(compline)
+data_files = [('share/gnoduino/ui', ['ui/main.ui']),
+		('share/gnoduino/', ['BOARDS', 'PROGRAMMERS', 'preferences.txt']),
+		('share/gnoduino/pixmaps', glob.glob('pixmaps/*.png')),
+		('share/gnoduino/scripts', ['scripts/gen_boards.py', 'scripts/gen_programmers.py']),
+]
+for r,d,f in os.walk("hardware"):
+	if ".git" not in r and f:
+		data_files.append([os.path.join("share", "gnoduino", r), [os.path.join(r,i) for i in f]])
+print data_files
 
 setup(name='gnoduino',
 	version='0.1.0',
@@ -63,11 +72,6 @@ setup(name='gnoduino',
 	url='http://gnome.eu.org/evo/index.php/Gnoduino',
 	license='GPL',
 	platforms='linux',
-
-	data_files = [('share/gnoduino/ui', ['ui/main.ui']),
-			('share/gnoduino/', ['BOARDS', 'PROGRAMMERS', 'preferences.txt']),
-			('share/gnoduino/pixmaps', glob.glob('pixmaps/*.png')),
-			('share/gnoduino/scripts', ['scripts/gen_boards.py', 'scripts/gen_programmers.py'])
-	]
+	data_files = data_files
 )
 

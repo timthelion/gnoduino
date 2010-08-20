@@ -109,8 +109,6 @@ hex = [
 	"-R .eeprom"
 	]
 
-arduino_path = "hardware/arduino/cores/arduino"
-
 def stripOut(sout, pre):
 	sout = sout.replace(pre+":", '').split(" ", 1)
 	print len(sout)
@@ -136,8 +134,8 @@ def compile(tw, id, output, notify):
 			compline=[j for j in defc]
 			compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
 			compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
-			compline.append("-I"+os.getcwd()+"/"+arduino_path)
-			compline.append(os.getcwd()+"/"+arduino_path+"/"+i)
+			compline.append("-I"+misc.getArduinoPath())
+			compline.append(misc.getArduinoPath()+"/"+i)
 			compline.append("-o"+id+"/"+i+".o")
 			if _debug: sys.stderr.write(' '.join(compline)+"\n")
 			(run, sout) = misc.runProg(compline)
@@ -150,8 +148,8 @@ def compile(tw, id, output, notify):
 			compline = [j for j in defcpp]
 			compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
 			compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
-			compline.append("-I"+os.getcwd()+"/"+arduino_path)
-			compline.append(os.getcwd()+"/"+arduino_path+"/"+i)
+			compline.append("-I" + misc.getArduinoPath())
+			compline.append(misc.getArduinoPath() + "/"+i)
 			compline.append("-o"+id+"/"+i+".o")
 			if _debug: sys.stderr.write(' '.join(compline)+"\n")
 			(run, sout) = misc.runProg(compline)
@@ -174,7 +172,7 @@ def compile(tw, id, output, notify):
 		compline=[j for j in defcpp]
 		compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
 		compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
-		compline.append("-I"+os.getcwd()+"/"+arduino_path)
+		compline.append("-I" + misc.getArduinoPath())
 		compline.append(pre_file)
 		compline.append("-o"+pre_file+".o")
 		if _debug: sys.stderr.write(' '.join(compline)+"\n")

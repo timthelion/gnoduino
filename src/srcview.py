@@ -119,14 +119,18 @@ def findText(widget, event, data=None):
 						config.cur_iter, search, flags, limit=None)
 					config.cur_iter = e
 			except:
-				iter = b.get_iter_at_offset(-1)
-				config.cur_iter = iter
 				if backwards:
+					iter = b.get_iter_at_offset(-1)
+					config.cur_iter = iter
 					s, e = gtksourceview2.iter_backward_search( \
 						config.cur_iter, search, flags, limit=None)
+					config.cur_iter = s
 				else:
+					iter = b.get_iter_at_offset(0)
+					config.cur_iter = iter
 					s, e = gtksourceview2.iter_forward_search( \
 						config.cur_iter, search, flags, limit=None)
+					config.cur_iter = e
 		else:
 			if backwards:
 				try:

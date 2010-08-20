@@ -25,10 +25,28 @@ import pango
 import time
 import tempfile
 import gettext
+import sys
 _ = gettext.gettext
 
 LOG_FILENAME = 'arduino.out'
 logging.basicConfig(filename=LOG_FILENAME,level=logging.DEBUG)
+
+arduino_path = "hardware/arduino/cores/arduino"
+
+def getArduinoPath():
+	try:
+		path = os.path.join(os.getcwd(), arduino_path)
+		if os.path.exists(path):
+			return path
+		else: raise
+	except:
+		try:
+			path = os.path.join(sys.prefix, "share", "gnoduino", arduino_path)
+			if os.path.exists(path):
+				return path
+		except Exception,e:
+			print(e)
+	raise SystemExit(_("Cannot find path"))
 
 def makeWorkdir():
 	return tempfile.mkdtemp("", os.path.join(tempfile.gettempdir(), "build"+str(time.time())))

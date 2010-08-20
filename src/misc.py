@@ -16,6 +16,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 import os
+import glib
 import gtk
 import logging
 import select
@@ -81,6 +82,10 @@ def printMessage(console, message):
 	b = console.get_buffer()
 	b.delete(b.get_start_iter(), b.get_end_iter())
 	b.set_text(message)
+
+def statusMessage(w, text):
+	w.push(1, text)
+	glib.timeout_add(1000, lambda x: w.pop(1), 0)
 
 def getBoards():
 	res = []

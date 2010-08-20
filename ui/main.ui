@@ -645,8 +645,14 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkComboBoxEntry" id="comboboxentry1">
+                  <object class="GtkComboBoxEntry" id="find-text">
                     <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="has_focus">True</property>
+                    <property name="is_focus">True</property>
+                    <property name="can_default">True</property>
+                    <property name="has_default">True</property>
+                    <property name="receives_default">True</property>
                     <property name="button_sensitivity">on</property>
                   </object>
                   <packing>
@@ -678,7 +684,7 @@
                           <object class="GtkCheckButton" id="checkbutton2">
                             <property name="label" translatable="yes">Match entire word only</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">True</property>
+                            <property name="can_focus">False</property>
                             <property name="receives_default">False</property>
                             <property name="draw_indicator">True</property>
                           </object>
@@ -690,8 +696,9 @@
                           <object class="GtkCheckButton" id="checkbutton4">
                             <property name="label" translatable="yes">Warp around</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">True</property>
+                            <property name="can_focus">False</property>
                             <property name="receives_default">False</property>
+                            <property name="active">True</property>
                             <property name="draw_indicator">True</property>
                           </object>
                           <packing>
@@ -702,7 +709,7 @@
                           <object class="GtkCheckButton" id="checkbutton1">
                             <property name="label" translatable="yes">Match case</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">True</property>
+                            <property name="can_focus">False</property>
                             <property name="receives_default">False</property>
                             <property name="draw_indicator">True</property>
                           </object>
@@ -714,7 +721,7 @@
                           <object class="GtkCheckButton" id="checkbutton3">
                             <property name="label" translatable="yes">Search backwards</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">True</property>
+                            <property name="can_focus">False</property>
                             <property name="receives_default">False</property>
                             <property name="draw_indicator">True</property>
                           </object>
@@ -761,7 +768,7 @@
               <object class="GtkButton" id="button4">
                 <property name="label">gtk-ok</property>
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
+                <property name="can_focus">False</property>
                 <property name="receives_default">True</property>
                 <property name="use_stock">True</property>
               </object>
@@ -782,7 +789,7 @@
     </child>
     <action-widgets>
       <action-widget response="0">button2</action-widget>
-      <action-widget response="0">button4</action-widget>
+      <action-widget response="1">button4</action-widget>
     </action-widgets>
   </object>
 </interface>

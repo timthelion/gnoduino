@@ -18,10 +18,18 @@
 import os
 import gtk
 import fnmatch
+
+import gettext
+_ = gettext.gettext
+
 import gtksourceview2
 import gnomevfs
 import misc
 import prefs
+import time
+
+import config
+import ui
 
 def get_lang_for_file(f):
 	manager = gtksourceview2.language_manager_get_default()
@@ -61,6 +69,15 @@ def updatePos(buffer, sb):
 	msg = "Ln %d, Col %d" % (row+1, col+1)
 	sb.push(1, msg);
 
+def moveCursorOffset(view, offset):
+	b = view.get_buffer()
+	mark = b.get_insert()
+	iter = b.get_iter_at_mark(mark)
+	iter.set_offset(offset);
+	b.place_cursor(iter)
+	b.ensure_highlight(b.get_iter_at_offset(offset), b.get_iter_at_offset(offset + 10))
+	view.scroll_mark_onscreen(mark)
+
 def markCb(buffer, iter, mark, data):
 	updatePos(buffer, data)
 
@@ -69,6 +86,71 @@ def resetCursor(buffer):
 	iter = buffer.get_iter_at_mark(mark)
 	iter.set_line(0);
 	buffer.place_cursor(iter)
+
+def findText(widget, event, data=None):
+	if event.type == gtk.gdk.KEY_RELEASE and \
+	gtk.gdk.keyval_name(event.keyval) == 'Return':
+		page = ui.getCurrentPage()
+		view = page.get_data("view")
+		b = view.get_buffer()
+		mark = b.get_insert()
+		iter = b.get_iter_at_mark(mark)
+		search = widget.get_active_text()
+		flags = 0
+		if data[0].get_active() == True:
+			flags = gtksourceview2.SEARCH_CASE_INSENSITIVE
+		backwards = False
+		if data[2].get_active() == True:
+			backwards = True
+		warp = False
+		if data[3].get_active() == True:
+			warp = True
+		if config.cur_iter == -1:
+			config.cur_iter = iter
+		sb = ui.getGui().get_object("statusbar1")
+		if warp:
+			try:
+				if backwards:
+					s, e = gtksourceview2.iter_backward_search( \
+						config.cur_iter, search, flags, limit=None)
+					config.cur_iter = s
+				else:
+					s, e = gtksourceview2.iter_forward_search( \
+						config.cur_iter, search, flags, limit=None)
+					config.cur_iter = e
+			except:
+				iter = b.get_iter_at_offset(-1)
+				config.cur_iter = iter
+				if backwards:
+					s, e = gtksourceview2.iter_backward_search( \
+						config.cur_iter, search, flags, limit=None)
+				else:
+					s, e = gtksourceview2.iter_forward_search( \
+						config.cur_iter, search, flags, limit=None)
+		else:
+			if backwards:
+				try:
+					s, e = gtksourceview2.iter_backward_search( \
+						config.cur_iter, search, flags, limit=None)
+					config.cur_iter = s
+				except:
+					s = e = b.get_start_iter()
+					b.select_range(s, e)
+					misc.statusMessage(sb, _("'%s' not found.") % search)
+					return
+			else:
+				try:
+					s, e = gtksourceview2.iter_forward_search( \
+						config.cur_iter, search, flags, limit=None)
+					config.cur_iter = e
+				except:
+					s = e = b.get_end_iter()
+					b.select_range(s, e)
+					misc.statusMessage(sb, _("'%s' not found.") % search)
+					return
+		b.place_cursor(s)
+		b.select_range(s, e)
+		view.scroll_to_iter(s,0)
 
 def createsrcview(status, f=None):
 	sbuffer = gtksourceview2.Buffer()

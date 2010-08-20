@@ -38,6 +38,7 @@ import uploader
 import srcview
 import serialio
 
+import gtksourceview2
 font = "Monospace 10"
 
 def setupPage(w, page, p):
@@ -58,7 +59,7 @@ def destroyPage(w, b):
 		createPage(nb)
 
 def updatePageTitle(w, status):
-	page = nb.get_nth_page(nb.get_current_page())
+	page = getCurrentPage()
 	f = page.get_data("file")
 	l = page.get_data("label")
 	nh = hashlib.sha224(w.get_text(w.get_start_iter(), w.get_end_iter())).hexdigest()
@@ -134,7 +135,7 @@ def processFile(w):
 	if searchFile(nb, w.get_filename()) == True:
 		w.destroy()
 		return
-	page = nb.get_nth_page(nb.get_current_page())
+	page = getCurrentPage()
 	createPage(nb, w.get_filename())
 	if page.get_data("label").get_text() == "Untitled":
 		replacePage(page)
@@ -166,7 +167,7 @@ def csave_as(w, data=None):
 	csave(w, True)
 
 def csave(w, data=None):
-	page = nb.get_nth_page(nb.get_current_page())
+	page = getCurrentPage()
 	l = page.get_data("label")
 	b = page.get_data("buffer")
 	f = page.get_data("file")
@@ -189,13 +190,17 @@ def quit(widget, data=None):
 	shutil.rmtree(id, True)
 	gtk.main_quit()
 
-def find(w, data=None):
+def find(widget, data=None):
 	find = gui.get_object("find")
+	find_text = gui.get_object("find-text")
+	cbs = ["checkbutton1", "checkbutton2","checkbutton3", "checkbutton4"]
+	find_text.connect("key-release-event", srcview.findText, [gui.get_object(i) for i in cbs])
+	find.set_default_response(gtk.RESPONSE_OK)
 	find.run()
 	find.hide()
 
 def compile(widget, data=file):
-	page = nb.get_nth_page(nb.get_current_page())
+	page = getCurrentPage()
 	obj = compiler.compile(page.get_data("view"), id, tw, sb) #page.get_data("buffer")
 	return obj
 
@@ -252,6 +257,7 @@ def setBaud(w, data=None):
 def serSendText(w, data=None):
 	ser.serial.write(w.get_text())
 	w.set_text("")
+
 
 menus = [
 		("menu-new", cnew, (ord('n'), gtk.gdk.CONTROL_MASK)),
@@ -342,6 +348,12 @@ def selectBoard(w, id):
 
 def setSerial(w, id):
 	config.cur_serial_port = id
+
+def getCurrentPage():
+	return nb.get_nth_page(nb.get_current_page())
+
+def getGui():
+	return gui
 
 def run():
 	try:

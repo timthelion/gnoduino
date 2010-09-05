@@ -42,6 +42,9 @@ import gtksourceview2
 font = "Monospace 10"
 
 def setupPage(w, page, p):
+	print "|%s|" % config.cur_font
+	misc.set_widget_font(getCurrentView(), config.cur_font)
+	getCurrentView().queue_draw()
 	pg = w.get_nth_page(p)
 	cl = pg.get_data("close");
 	if cl == None: return
@@ -49,6 +52,8 @@ def setupPage(w, page, p):
 	cl.add_accelerator("activate", accel, ord("w"), gtk.gdk.CONTROL_MASK, 0)
 	mainwin.add_accel_group(accel)
 	srcview.updatePos(pg.get_data("buffer"), sb2)
+	print config.cur_font
+
 
 def replacePage(page):
 	nb.remove_page(nb.page_num(page))
@@ -196,7 +201,9 @@ def find(widget, data=None):
 	cbs = ["checkbutton1", "checkbutton2","checkbutton3", "checkbutton4"]
 	find_text.connect("key-release-event", srcview.findText, [gui.get_object(i) for i in cbs])
 	find.set_default_response(gtk.RESPONSE_OK)
-	find.run()
+	r =  find.run()
+	print r
+	if r == 1: return
 	find.hide()
 
 def compile(widget, data=file):
@@ -222,9 +229,18 @@ def preferences(widget, data=None):
 	pref = gui.get_object("preferences")
 	fs = gui.get_object("fontsize")
 	p = prefs.preferences()
-	print p.getValue("editor.font")
-	fs.set_value(10)
-	pref.run()
+	if config.cur_font != -1:
+		fs.set_value(float(config.cur_font.split(",")[2]))
+	else:
+		fs.set_value(float(p.getValue("editor.font").split(",")[2]))
+	r = pref.run()
+	if r == 1:
+		config.cur_font =  p.getValue("editor.font").split(",")[0] + \
+			"," + p.getValue("editor.font").split(",")[1] + \
+			"," + str(int(fs.get_value()))
+		misc.set_widget_font(tw, config.cur_font)
+		misc.set_widget_font(sctw, config.cur_font)
+		misc.set_widget_font(getCurrentView(), config.cur_font)
 	pref.hide()
 
 def stop(widget, data=None):
@@ -283,36 +299,36 @@ def createCon():
 	sw = gtk.ScrolledWindow()
 	sw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
 	sw.set_shadow_type(gtk.SHADOW_IN)
-	tw = gtk.TextView()
-	tw.set_size_request(-1, 150)
-	tw.set_editable(False)
+	tmp = gtk.TextView()
+	tmp.set_size_request(-1, 150)
+	tmp.set_editable(False)
 	twbuf = gtk.TextBuffer()
-	tw.set_buffer(twbuf)
-	tw.modify_base(gtk.STATE_NORMAL, gtk.gdk.Color(0,0,0))
-	tw.modify_text(gtk.STATE_NORMAL, gtk.gdk.Color("#ffffff"))
-	misc.set_widget_font(tw, p.getValue("editor.font").replace(",", " "))
-	sw.add(tw)
+	tmp.set_buffer(twbuf)
+	tmp.modify_base(gtk.STATE_NORMAL, gtk.gdk.Color(0,0,0))
+	tmp.modify_text(gtk.STATE_NORMAL, gtk.gdk.Color("#ffffff"))
+	misc.set_widget_font(tmp, p.getValue("editor.font").replace(",", " "))
+	sw.add(tmp)
 	sw.show_all()
-	return (sw,tw)
+	return (sw, tmp)
 
 def createScon():
 	global baud
 	sw = gtk.ScrolledWindow()
 	sw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
 	sw.set_shadow_type(gtk.SHADOW_IN)
-	tw = gtk.TextView()
-	tw.set_size_request(-1, 150)
-	tw.set_editable(False)
+	tmp = gtk.TextView()
+	tmp.set_size_request(-1, 150)
+	tmp.set_editable(False)
 	twbuf = gtk.TextBuffer()
-	tw.set_buffer(twbuf)
-	tw.modify_base(gtk.STATE_NORMAL, gtk.gdk.Color(0,0,0))
-	tw.modify_text(gtk.STATE_NORMAL, gtk.gdk.Color("#ffffff"))
-	misc.set_widget_font(tw, p.getValue("editor.font").replace(",", " "))
-	sw.add(tw)
+	tmp.set_buffer(twbuf)
+	tmp.modify_base(gtk.STATE_NORMAL, gtk.gdk.Color(0,0,0))
+	tmp.modify_text(gtk.STATE_NORMAL, gtk.gdk.Color("#ffffff"))
+	misc.set_widget_font(tmp, p.getValue("editor.font").replace(",", " "))
+	sw.add(tmp)
 	hbox = gtk.HBox(False, 0)
 	s = gtk.Button("Send")
 	c = gtk.Button("Clear")
-	c.connect("clicked", ser.clearConsole, tw)
+	c.connect("clicked", ser.clearConsole, tmp)
 	b = gtk.combo_box_new_text()
 	baud = ["300", "1200", "2400", "4800", "9600", "14400", "19200", \
 		"28800", "38400", "57600", "115200"]
@@ -329,7 +345,7 @@ def createScon():
 	vbox.pack_start(hbox, False, False, 3)
 	vbox.pack_start(sw, False, False, 3)
 	vbox.show_all()
-	return (vbox, tw)
+	return (vbox, tmp)
 
 buttons = [
 		("compile", "compile.png", compile),
@@ -352,6 +368,11 @@ def setSerial(w, id):
 def getCurrentPage():
 	return nb.get_nth_page(nb.get_current_page())
 
+def getCurrentView():
+	p = nb.get_nth_page(nb.get_current_page())
+	return p.get_data("view")
+
+
 def getGui():
 	return gui
 
@@ -364,6 +385,7 @@ def run():
 		global id
 		global nb
 		global tw
+		global sctw
 		global sb
 		global sertime
 		global vbox
@@ -393,6 +415,7 @@ def run():
 		vbox = gui.get_object("vpan")
 		sb = gui.get_object("statusbar1")
 		sb2 = gui.get_object("statusbar2")
+		config.cur_font = p.getValue("editor.font")
 		menu(gui)
 		"""build menus"""
 		sub = gtk.Menu()
@@ -424,8 +447,8 @@ def run():
 		gui.get_object("serial_port").set_submenu(sub)
 
 		sub = gtk.Menu()
-		b = programmer.Programmer()
-		for i in b.getProgrammers():
+		pgm = programmer.Programmer()
+		for i in pgm.getProgrammers():
 			menuItem = gtk.MenuItem(i['desc'])
 			menuItem.connect('activate', burnBootloader, i['id'])
 			sub.append(menuItem)

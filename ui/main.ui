@@ -209,6 +209,13 @@
                       </object>
                     </child>
                     <child>
+                      <object class="GtkMenuItem" id="ser_monitor">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">Serial Monitor</property>
+                        <property name="use_underline">True</property>
+                      </object>
+                    </child>
+                    <child>
                       <object class="GtkMenuItem" id="board">
                         <property name="visible">True</property>
                         <property name="label" translatable="yes">Board</property>
@@ -610,7 +617,7 @@
     </child>
     <action-widgets>
       <action-widget response="0">pref_close</action-widget>
-      <action-widget response="0">button3</action-widget>
+      <action-widget response="1">button3</action-widget>
     </action-widgets>
   </object>
   <object class="GtkAdjustment" id="fontsize">

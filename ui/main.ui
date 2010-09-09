@@ -223,6 +223,13 @@
                       </object>
                     </child>
                     <child>
+                      <object class="GtkMenuItem" id="menu-reset">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">Reset Board</property>
+                        <property name="use_underline">True</property>
+                      </object>
+                    </child>
+                    <child>
                       <object class="GtkMenuItem" id="menu-clear-cache">
                         <property name="visible">True</property>
                         <property name="label" translatable="yes">Clear library cache</property>

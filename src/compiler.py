@@ -17,6 +17,7 @@
 #
 
 import os
+import glob
 import gtk
 import logging
 import select
@@ -127,7 +128,7 @@ def compile(tw, id, output, notify):
 	#compile inter c objects
 	try:
 		"""preproces pde"""
-		pre_file = preproc.add_headers(id, tw.get_buffer())
+		pre_file = preproc.addHeaders(id, tw.get_buffer())
 		"""compile C targets"""
 		if _debug: sys.stderr.write('process C targets\n')
 		for i in cobj:
@@ -135,7 +136,7 @@ def compile(tw, id, output, notify):
 			compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
 			compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
 			compline.append("-I"+misc.getArduinoPath())
-			compline.append(misc.getArduinoPath()+"/"+i)
+			compline.append(os.path.join(misc.getArduinoPath(), i))
 			compline.append("-o"+id+"/"+i+".o")
 			if _debug: sys.stderr.write(' '.join(compline)+"\n")
 			(run, sout) = misc.runProg(compline)
@@ -149,7 +150,7 @@ def compile(tw, id, output, notify):
 			compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
 			compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
 			compline.append("-I" + misc.getArduinoPath())
-			compline.append(misc.getArduinoPath() + "/"+i)
+			compline.append(os.path.join(misc.getArduinoPath(), i))
 			compline.append("-o"+id+"/"+i+".o")
 			if _debug: sys.stderr.write(' '.join(compline)+"\n")
 			(run, sout) = misc.runProg(compline)
@@ -173,8 +174,10 @@ def compile(tw, id, output, notify):
 		compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
 		compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
 		compline.append("-I" + misc.getArduinoPath())
+		compline.extend(preproc.generateCFlags(id, tw.get_buffer()))
 		compline.append(pre_file)
 		compline.append("-o"+pre_file+".o")
+		print compline
 		if _debug: sys.stderr.write(' '.join(compline)+"\n")
 		(run, sout) = misc.runProg(compline)
 		if run == False:
@@ -188,6 +191,9 @@ def compile(tw, id, output, notify):
 		compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
 		compline.append("-o"+tempobj+".elf")
 		compline.append(pre_file+".o")
+		for i in preproc.generateLibs(id, tw.get_buffer()):
+			print i
+			compline.extend(validateLib(i))
 		compline.append(id+"/core.a")
 		compline.append("-L"+id)
 		compline.append("-lm")
@@ -217,15 +223,59 @@ def compile(tw, id, output, notify):
 		notify.push(context, _("Done compilling."))
 		if _debug: sys.stderr.write("compile done.\n")
 
-		misc.printMessage(output, _("Binary sketch size: %s bytes (of a %s bytes maximum)") % (size, b.getBoardMemory(b.getBoard())))
+		misc.printMessage(output, \
+			_("Binary sketch size: %s bytes (of a %s bytes maximum)") % (size, b.getBoardMemory(b.getBoard())))
 	except StandardError as e:
 		print "Error: %s" % e
 	except:
 		print "Error compiling. Op aborted!"
 	return tempobj
 
+"""checks whether library exists (it has been compiled and tries to compile it otherwise"""
+"""@returns a list of compiled objects"""
+def validateLib(library):
+	"""compile library also try to compile every cpp under libdir"""
+	b = board.Board()
+	"""compile library c modules"""
+	for i in glob.glob(os.path.join(misc.getArduinoLibsPath(), os.path.dirname(library), "*.c")):
+		if os.path.exists(i.replace(".c", ".o")):
+			continue
+		else:
+			compline = [j for j in defc]
+			compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
+			compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
+			compline.append("-I" + misc.getArduinoPath())
+			compline.append(os.path.join(misc.getArduinoLibsPath(), i))
+			compline.append("-o"+i.replace(".c", ".o"))
+			if _debug: sys.stderr.write(' '.join(compline)+"\n")
+			(run, sout) = misc.runProg(compline)
+			if run == False:
+				misc.printError(notify, output, sout)
+#				raise
+	"""compile library cpp modules"""
+	for i in glob.glob(os.path.join(misc.getArduinoLibsPath(), os.path.dirname(library), "*.cpp")):
+		if os.path.exists(i.replace(".cpp", ".o")):
+			continue
+		else:
+			compline = [j for j in defcpp]
+			compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
+			compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
+			compline.append("-I" + misc.getArduinoPath())
+			compline.append(os.path.join(misc.getArduinoLibsPath(), i))
+			compline.append("-o"+i.replace(".cpp", ".o"))
+			if _debug: sys.stderr.write(' '.join(compline)+"\n")
+			(run, sout) = misc.runProg(compline)
+			if run == False:
+				misc.printError(notify, output, sout)
+#				raise
+	return glob.glob(os.path.join(misc.getArduinoLibsPath(), \
+		os.path.dirname(library), "*.o"))
+
 def getErrorLine(buffer):
-	return int(buffer.splitlines()[1].split(":")[1])-1-2; # -2 added by preprocesor
+	try:
+		return int(buffer.splitlines()[1].split(":")[1])-1-4; # -4 added by preprocesor
+	except:
+		return int(buffer.splitlines()[0].split(":")[1])-1-4; # -4 added by preprocesor
 
 def moveCursor(view, line):
 	b = view.get_buffer()

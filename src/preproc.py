@@ -42,11 +42,16 @@ def findPrototype(instr):
 		res = res + q[0]+";\n";
 	return res
 
+def findIncludes(instr):
+	res = ""
+	m = re.findall(r"^#include\s+[\w+\".<>]+", instr, re.M)
+	return [z.split()[1].strip('<>"').split('.')[0] for z in m]
+
 def makeBufferTempfile(buffer):
 	pass
 
 
-def add_headers(path, b):
+def addHeaders(path, b):
 	cont = b.get_text(b.get_start_iter(), b.get_end_iter())
 	fs = firstStatement(cont)
 	if fs != None:
@@ -58,3 +63,11 @@ def add_headers(path, b):
 	w.write(result)
 	w.close()
 	return of
+
+def generateCFlags(path, b):
+	cont = b.get_text(b.get_start_iter(), b.get_end_iter())
+	return ["-Ihardware/libraries/"+i for i in findIncludes(cont)]
+
+def generateLibs(path, b):
+	cont = b.get_text(b.get_start_iter(), b.get_end_iter())
+	return [i+"/"+i for i in findIncludes(cont)]

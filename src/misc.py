@@ -32,6 +32,7 @@ LOG_FILENAME = 'arduino.out'
 logging.basicConfig(filename=LOG_FILENAME,level=logging.DEBUG)
 
 arduino_path = "hardware/arduino/cores/arduino"
+arduino_libs_path = "hardware/libraries"
 
 def getArduinoPath():
 	try:
@@ -42,6 +43,21 @@ def getArduinoPath():
 	except:
 		try:
 			path = os.path.join(sys.prefix, "share", "gnoduino", arduino_path)
+			if os.path.exists(path):
+				return path
+		except Exception,e:
+			print(e)
+	raise SystemExit(_("Cannot find path"))
+
+def getArduinoLibsPath():
+	try:
+		path = os.path.join(os.getcwd(), arduino_libs_path)
+		if os.path.exists(path):
+			return path
+		else: raise
+	except:
+		try:
+			path = os.path.join(sys.prefix, "share", "gnoduino", arduino_libs_path)
 			if os.path.exists(path):
 				return path
 		except Exception,e:
@@ -75,6 +91,7 @@ def runProg(cmdline):
 	return (True, sout)
 
 def set_widget_font(widget, font):
+	if widget == None: return
 	context = widget.get_pango_context()
 	font_desc = context.get_font_description()
 	cur_font = pango.FontDescription(font)

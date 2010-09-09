@@ -203,6 +203,8 @@ def find(widget, data=None):
 	find.hide()
 
 def compile(widget, data=file):
+	#createCon()
+	cserial(None, 0, sctw)
 	page = getCurrentPage()
 	obj = compiler.compile(page.get_data("view"), id, tw, sb) #page.get_data("buffer")
 	return obj
@@ -228,6 +230,9 @@ def about(widget, data=None):
 	about.run()
 	about.hide()
 
+def menuResetBoard(widget, data=None):
+	ser.resetBoard()
+
 def preferences(widget, data=None):
 	pref = gui.get_object("preferences")
 	fs = gui.get_object("fontsize")
@@ -251,7 +256,14 @@ def stop(widget, data=None):
 
 def cserial(w, st, data=None):
 	global sertime
-	#compiler.clearConsole(data)
+	"""inhibit function"""
+	if st == 0:
+		if sertime:
+			glib.source_remove(sertime)
+			sertime = None
+			vbox.remove(scon)
+			vbox.add(con)
+		return
 	if (sertime == None):
 		sertime = glib.timeout_add(1000,
 			ser.updateConsole,
@@ -287,6 +299,7 @@ menus = [
 		("menu-find", find, (ord('f'), gtk.gdk.CONTROL_MASK)),
 		("menu-compile", compile, (ord('r'), gtk.gdk.CONTROL_MASK)),
 		("menu-clear-cache", clear_libs, (ord('k'), gtk.gdk.CONTROL_MASK)),
+		("menu-reset-board", menuResetBoard, (ord('z'), gtk.gdk.CONTROL_MASK)),
 		("menu-preferences", preferences, (None, None)),
 		("menu-upload", menuUpload, (ord('u'), gtk.gdk.CONTROL_MASK)),
 		("menu-about", about, (None, None)),

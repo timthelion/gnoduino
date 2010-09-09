@@ -42,9 +42,8 @@ import gtksourceview2
 font = "Monospace 10"
 
 def setupPage(w, page, p):
-	print "|%s|" % config.cur_font
 	misc.set_widget_font(getCurrentView(), config.cur_font)
-	getCurrentView().queue_draw()
+	getCurrentPage().queue_resize()
 	pg = w.get_nth_page(p)
 	cl = pg.get_data("close");
 	if cl == None: return
@@ -52,8 +51,6 @@ def setupPage(w, page, p):
 	cl.add_accelerator("activate", accel, ord("w"), gtk.gdk.CONTROL_MASK, 0)
 	mainwin.add_accel_group(accel)
 	srcview.updatePos(pg.get_data("buffer"), sb2)
-	print config.cur_font
-
 
 def replacePage(page):
 	nb.remove_page(nb.page_num(page))
@@ -202,7 +199,6 @@ def find(widget, data=None):
 	find_text.connect("key-release-event", srcview.findText, [gui.get_object(i) for i in cbs])
 	find.set_default_response(gtk.RESPONSE_OK)
 	r =  find.run()
-	print r
 	if r == 1: return
 	find.hide()
 
@@ -210,6 +206,13 @@ def compile(widget, data=file):
 	page = getCurrentPage()
 	obj = compiler.compile(page.get_data("view"), id, tw, sb) #page.get_data("buffer")
 	return obj
+
+def clear_libs(widget, data=None):
+	for r,d,f in os.walk(misc.getArduinoLibsPath()):
+		for i in f:
+			if i.__contains__(".o"):
+				print "Removing %s" % os.path.join(r, i)
+				os.unlink(os.path.join(r, i))
 
 def upload(widget, serial, data=file):
 	obj = compile(widget, data)
@@ -283,6 +286,7 @@ menus = [
 		("menu-quit", quit, (ord('q'), gtk.gdk.CONTROL_MASK)),
 		("menu-find", find, (ord('f'), gtk.gdk.CONTROL_MASK)),
 		("menu-compile", compile, (ord('r'), gtk.gdk.CONTROL_MASK)),
+		("menu-clear-cache", clear_libs, (ord('k'), gtk.gdk.CONTROL_MASK)),
 		("menu-preferences", preferences, (None, None)),
 		("menu-upload", menuUpload, (ord('u'), gtk.gdk.CONTROL_MASK)),
 		("menu-about", about, (None, None)),

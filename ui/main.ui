@@ -216,6 +216,20 @@
                       </object>
                     </child>
                     <child>
+                      <object class="GtkMenuItem" id="menuitem5">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">Import Library</property>
+                        <property name="use_underline">True</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkMenuItem" id="menu-clear-cache">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">Clear library cache</property>
+                        <property name="use_underline">True</property>
+                      </object>
+                    </child>
+                    <child>
                       <object class="GtkMenuItem" id="board">
                         <property name="visible">True</property>
                         <property name="label" translatable="yes">Board</property>

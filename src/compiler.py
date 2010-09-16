@@ -191,7 +191,7 @@ def compile(tw, id, output, notify):
 		compline.append("-o"+tempobj+".elf")
 		compline.append(pre_file+".o")
 		for i in preproc.generateLibs(id, tw.get_buffer()):
-			compline.extend(validateLib(i))
+			compline.extend(validateLib(i, tempobj, output, notify))
 		compline.append(id+"/core.a")
 		compline.append("-L"+id)
 		compline.append("-lm")

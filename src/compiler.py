@@ -177,7 +177,6 @@ def compile(tw, id, output, notify):
 		compline.extend(preproc.generateCFlags(id, tw.get_buffer()))
 		compline.append(pre_file)
 		compline.append("-o"+pre_file+".o")
-		print compline
 		if _debug: sys.stderr.write(' '.join(compline)+"\n")
 		(run, sout) = misc.runProg(compline)
 		if run == False:
@@ -192,13 +191,14 @@ def compile(tw, id, output, notify):
 		compline.append("-o"+tempobj+".elf")
 		compline.append(pre_file+".o")
 		for i in preproc.generateLibs(id, tw.get_buffer()):
-			print i
 			compline.extend(validateLib(i))
 		compline.append(id+"/core.a")
 		compline.append("-L"+id)
 		compline.append("-lm")
+		print compline
 		if _debug: sys.stderr.write(' '.join(compline)+"\n")
 		(run, sout) = misc.runProg(compline)
+		print sout
 		if run == False:
 			misc.printError(notify, output, stripOut(sout, pre_file))
 			raise NameError('linking-error')
@@ -233,43 +233,49 @@ def compile(tw, id, output, notify):
 
 """checks whether library exists (it has been compiled and tries to compile it otherwise"""
 """@returns a list of compiled objects"""
-def validateLib(library):
+def validateLib(library, tempobj, output, notify):
 	"""compile library also try to compile every cpp under libdir"""
 	b = board.Board()
-	"""compile library c modules"""
-	for i in glob.glob(os.path.join(misc.getArduinoLibsPath(), os.path.dirname(library), "*.c")):
-		if os.path.exists(i.replace(".c", ".o")):
-			continue
-		else:
+	res = []
+	try:
+		"""compile library c modules"""
+		for i in glob.glob(os.path.join(library, "*.c")):
 			compline = [j for j in defc]
 			compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
 			compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
 			compline.append("-I" + misc.getArduinoPath())
 			compline.append(os.path.join(misc.getArduinoLibsPath(), i))
-			compline.append("-o"+i.replace(".c", ".o"))
+			compline.append("-o"+os.path.join(os.path.dirname(tempobj), \
+				os.path.basename(i.replace(".c", ".o"))))
 			if _debug: sys.stderr.write(' '.join(compline)+"\n")
 			(run, sout) = misc.runProg(compline)
 			if run == False:
 				misc.printError(notify, output, sout)
-#				raise
-	"""compile library cpp modules"""
-	for i in glob.glob(os.path.join(misc.getArduinoLibsPath(), os.path.dirname(library), "*.cpp")):
-		if os.path.exists(i.replace(".cpp", ".o")):
-			continue
-		else:
+				raise
+			res.append(os.path.join(os.path.dirname(tempobj), \
+				os.path.basename(i.replace(".c", ".o"))))
+	except StandardError as e:
+		print "Error: %s" % e
+	try:
+		"""compile library cpp modules"""
+		for i in glob.glob(os.path.join(library, "*.cpp")):
 			compline = [j for j in defcpp]
 			compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
 			compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
 			compline.append("-I" + misc.getArduinoPath())
 			compline.append(os.path.join(misc.getArduinoLibsPath(), i))
-			compline.append("-o"+i.replace(".cpp", ".o"))
+			compline.append("-o"+os.path.join(os.path.dirname(tempobj), \
+				os.path.basename(i.replace(".cpp", ".o"))))
 			if _debug: sys.stderr.write(' '.join(compline)+"\n")
 			(run, sout) = misc.runProg(compline)
 			if run == False:
 				misc.printError(notify, output, sout)
-#				raise
-	return glob.glob(os.path.join(misc.getArduinoLibsPath(), \
-		os.path.dirname(library), "*.o"))
+				raise
+			res.append(os.path.join(os.path.dirname(tempobj), \
+				os.path.basename(i.replace(".cpp", ".o"))))
+	except StandardError as e:
+		print "Error: %s" % e
+	return res
 
 def getErrorLine(buffer):
 	try:

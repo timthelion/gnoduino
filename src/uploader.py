@@ -49,7 +49,8 @@ def burnBootloader(serial, output, notify, id):
 	notify.pop(context)
 	notify.push(context, _("Burning bootloader..."))
 	b = board.Board()
-	serial.resetBoard()
+	ser = serialio.sconsole()
+	ser.resetBoard()
 	pgm = programmer.Programmer()
 	"""De-fuse and erase board"""
 	compline=[i for i in avr_bl]

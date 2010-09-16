@@ -50,7 +50,7 @@ class sconsole:
 		if cont:
 			print "%s" % cont
 		if cont != None:
-			if len(cont) > 1:
+			if b and len(cont) > 1:
 				b.insert(b.get_end_iter(), cont)
 				console.scroll_mark_onscreen(b.get_insert())
 		return True

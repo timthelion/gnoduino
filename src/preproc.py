@@ -20,6 +20,7 @@
 import re
 import os
 import tempfile
+import misc
 
 MAIN = "hardware/arduino/cores/arduino/main.cpp"
 
@@ -44,8 +45,20 @@ def findPrototype(instr):
 
 def findIncludes(instr):
 	res = ""
-	m = re.findall(r"^#include\s+[\w+\".<>]+", instr, re.M)
-	return [z.split()[1].strip('<>"').split('.')[0] for z in m]
+	m = re.findall(r"^#include\s+[\w+\".<>\-]+", instr, re.M)
+	l = [z.split()[1].strip('<>"') for z in m]
+	my = []
+	for z in l:
+		if os.path.exists(os.path.join(misc.getArduinoLibsPath(), z.strip(".h"))):
+			my.append(os.path.join(misc.getArduinoLibsPath(), z.strip(".h")))
+	if len(my) == 0:
+		for z in l:
+			for r, d, f in os.walk(misc.getArduinoLibsPath()):
+				if len(f)>0:
+					my.extend([r for file in f if file == z])
+					for file in f:
+						if file == z: break
+	return list(set(my))
 
 def makeBufferTempfile(buffer):
 	pass
@@ -66,8 +79,12 @@ def addHeaders(path, b):
 
 def generateCFlags(path, b):
 	cont = b.get_text(b.get_start_iter(), b.get_end_iter())
-	return ["-Ihardware/libraries/"+i for i in findIncludes(cont)]
+	try:
+		return ["-I"+os.path.join(misc.getArduinoLibsPath(), i) for i in findIncludes(cont)]
+	except:
+		print "search for file"
+		return ["www", "www"]
 
 def generateLibs(path, b):
 	cont = b.get_text(b.get_start_iter(), b.get_end_iter())
-	return [i+"/"+i for i in findIncludes(cont)]
+	return [i for i in findIncludes(cont)]

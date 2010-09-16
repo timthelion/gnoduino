@@ -17,7 +17,6 @@
 
 import os
 import sys
-import hashlib
 import glib
 import gobject
 import gtk
@@ -64,15 +63,13 @@ def updatePageTitle(w, status):
 	page = getCurrentPage()
 	f = page.get_data("file")
 	l = page.get_data("label")
-	nh = hashlib.sha224(w.get_text(w.get_start_iter(), w.get_end_iter())).hexdigest()
 	if f != None:
-		fh = hashlib.sha224(file(f).read()).hexdigest()
 		name = os.path.basename(f)
 	else:
 		fh = 0
 		name = "Untitled"
 
-	if (nh != fh):
+	if (misc.bufferModified(w, f)):
 		l.set_text(name+"*")
 	else:
 		l.set_text(name)

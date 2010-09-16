@@ -55,6 +55,13 @@ def replacePage(page):
 	nb.remove_page(nb.page_num(page))
 
 def destroyPage(w, b):
+	f = b.get_data("file")
+	buf = b.get_data("buffer")
+	if misc.bufferModified(buf, f) is True:
+		save = misc.createPopup("Save document", mainwin, \
+			_("Save changes to document\n%s\n before closing?" % f))
+		if save == gtk.RESPONSE_YES:
+			csave(None, False)
 	nb.remove_page(nb.page_num(b))
 	if nb.get_n_pages() < 1:
 		createPage(nb)

@@ -138,6 +138,17 @@ def getBoards():
 		print i
 		res.append([i, config.get(i, 'size')])
 	return res;
+
+def createPopup(title, parent, msg):
+	dialog = gtk.MessageDialog(parent,
+			gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
+			gtk.MESSAGE_WARNING,
+			gtk.BUTTONS_YES_NO,
+			msg)
+	response = dialog.run()
+	dialog.destroy()
+	return response
+
 #float = config.getfloat('Section1', 'float')
 #int = config.getint('Section1', 'int')
 #print float + int

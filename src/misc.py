@@ -33,7 +33,7 @@ LOG_FILENAME = 'arduino.out'
 logging.basicConfig(filename=LOG_FILENAME,level=logging.DEBUG)
 
 arduino_path = "hardware/arduino/cores/arduino"
-arduino_libs_path = "hardware/libraries"
+arduino_libs_path = "libraries"
 
 def getArduinoPath():
 	try:
@@ -53,17 +53,14 @@ def getArduinoPath():
 def getArduinoLibsPath():
 	try:
 		path = os.path.join(os.getcwd(), arduino_libs_path)
-		if os.path.exists(path):
-			return path
-		else: raise
+		if os.path.exists(path) is False: raise
 	except:
 		try:
 			path = os.path.join(sys.prefix, "share", "gnoduino", arduino_libs_path)
-			if os.path.exists(path):
-				return path
-		except Exception,e:
-			print(e)
-	raise SystemExit(_("Cannot find path"))
+			if os.path.exists(path) is False: raise
+		except: path = ""
+	finally: return path
+
 
 def makeWorkdir():
 	return tempfile.mkdtemp("", os.path.join(tempfile.gettempdir(), "build"+str(time.time())))
@@ -135,7 +132,6 @@ def getBoards():
 	config = ConfigParser.RawConfigParser()
 	config.read('BOARDS')
 	for i in config.sections():
-		print i
 		res.append([i, config.get(i, 'size')])
 	return res;
 

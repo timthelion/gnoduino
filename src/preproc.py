@@ -78,12 +78,9 @@ def addHeaders(path, b):
 	return of
 
 def generateCFlags(path, b):
-	cont = b.get_text(b.get_start_iter(), b.get_end_iter())
-	try:
-		return ["-I"+os.path.join(misc.getArduinoLibsPath(), i) for i in findIncludes(cont)]
-	except:
-		print "search for file"
-		return ["www", "www"]
+	#cont = b.get_text(b.get_start_iter(), b.get_end_iter())
+	cont = b
+	return ["-I"+os.path.join(misc.getArduinoLibsPath(), i) for i in findIncludes(cont)]
 
 def generateLibs(path, b):
 	cont = b.get_text(b.get_start_iter(), b.get_end_iter())

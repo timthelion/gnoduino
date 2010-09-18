@@ -122,7 +122,10 @@ def statusMessage(w, text):
 
 def bufferModified(w, f):
 	buf = hashlib.sha224(w.get_text(w.get_start_iter(), w.get_end_iter())).hexdigest()
-	fbuf = hashlib.sha224(file(f).read()).hexdigest()
+	if f:
+		fbuf = hashlib.sha224(file(f).read()).hexdigest()
+	else:
+		fbuf = hashlib.sha224("").hexdigest()
 	if buf != fbuf: return True
 	else: return False
 

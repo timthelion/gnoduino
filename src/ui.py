@@ -367,7 +367,7 @@ def createScon():
 	hbox.pack_start(c, False, False, 3)
 	vbox = gtk.VBox(False, 0)
 	vbox.pack_start(hbox, False, False, 3)
-	vbox.pack_start(sw, False, False, 3)
+	vbox.pack_start(sw, True, True, 3)
 	vbox.show_all()
 	return (vbox, tmp)
 

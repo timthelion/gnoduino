@@ -33,7 +33,7 @@ _ = gettext.gettext
 
 LOG_FILENAME = 'arduino.out'
 logging.basicConfig(filename=LOG_FILENAME,level=logging.DEBUG)
-_debug = 0
+_debug = 1
 
 import board
 import config
@@ -201,8 +201,10 @@ def compile(tw, id, output, notify):
 		compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
 		compline.append("-o"+tempobj+".elf")
 		compline.append(pre_file+".o")
+		tmplibs = []
 		for i in preproc.generateLibs(id, tw.get_buffer()):
-			compline.extend(validateLib(i, tempobj, output, notify))
+			tmplibs.extend(validateLib(i, tempobj, output, notify))
+		compline.extend(list(set(tmplibs)))
 		compline.extend(["-I" + os.path.join(i, "utility") for i in preproc.generateLibs(id, tw.get_buffer())])
 		compline.append(id+"/core.a")
 		compline.append("-L"+id)
@@ -297,7 +299,7 @@ def validateLib(library, tempobj, output, notify):
 					os.path.basename(i.replace(".cpp", ".o"))))
 		except StandardError as e:
 			print "Error: %s" % e
-	return res
+	return list(set(res))
 
 def getErrorLine(buffer):
 	try:

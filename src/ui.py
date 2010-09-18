@@ -123,6 +123,9 @@ def createPage(nb, f=None):
 	mainwin.add_accel_group(accel)
 	sv.grab_focus()
 	b.connect("clicked", destroyPage, sw)
+	accel = gtk.AccelGroup()
+	b.add_accelerator("activate", accel, ord("w"), gtk.gdk.CONTROL_MASK, 0)
+	mainwin.add_accel_group(accel)
 	srcview.updatePos(sbuf, sb2)
 	return sv
 

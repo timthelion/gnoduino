@@ -117,6 +117,9 @@ def stripOut(sout, pre):
 	else: return sout
 
 def compile(tw, id, output, notify):
+	buf =  tw.get_buffer()
+	cont = buf.get_text(buf.get_start_iter(), buf.get_end_iter())
+	if cont is "": return
 	context = notify.get_context_id("main")
 	notify.pop(context)
 	notify.push(context, _("Compilling..."))
@@ -130,7 +133,7 @@ def compile(tw, id, output, notify):
 	#compile inter c objects
 	try:
 		"""preproces pde"""
-		pre_file = preproc.addHeaders(id, tw.get_buffer())
+		pre_file = preproc.addHeaders(id, buf)
 		"""compile C targets"""
 		if p.getValue("build.verbose"): sys.stderr.write('process C targets\n')
 		for i in cobj:
@@ -180,10 +183,8 @@ def compile(tw, id, output, notify):
 		compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
 		compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
 		compline.append("-I" + misc.getArduinoPath())
-		buf = tw.get_buffer()
-		cont = buf.get_text(buf.get_start_iter(), buf.get_end_iter())
 		compline.extend(preproc.generateCFlags(id, cont))
-		compline.extend(["-I" + os.path.join(i, "utility") for i in preproc.generateLibs(id, tw.get_buffer())])
+		compline.extend(["-I" + os.path.join(i, "utility") for i in preproc.generateLibs(id, buf)])
 		compline.append(pre_file)
 		compline.append("-o"+pre_file+".o")
 		if p.getValue("build.verbose"): sys.stderr.write(' '.join(compline)+"\n")
@@ -202,10 +203,10 @@ def compile(tw, id, output, notify):
 		compline.append("-o"+tempobj+".elf")
 		compline.append(pre_file+".o")
 		tmplibs = []
-		for i in preproc.generateLibs(id, tw.get_buffer()):
+		for i in preproc.generateLibs(id, buf):
 			tmplibs.extend(validateLib(i, tempobj, output, notify))
 		compline.extend(list(set(tmplibs)))
-		compline.extend(["-I" + os.path.join(i, "utility") for i in preproc.generateLibs(id, tw.get_buffer())])
+		compline.extend(["-I" + os.path.join(i, "utility") for i in preproc.generateLibs(id, buf)])
 		compline.append(id+"/core.a")
 		compline.append("-L"+id)
 		compline.append("-lm")

@@ -249,12 +249,10 @@ def preferences(widget, data=None):
 	else:
 		fs.set_value(float(p.getValue("editor.font").split(",")[2]))
 	bv = gui.get_object("build.verbose")
-	if p.getValue("build.verbose") == "true":
-		bv.set_active(True)
-	else:
-		bv.set_active(False)
 	if config.build_verbose != -1:
-		bv.set
+		bv.set_active(bool(config.build_verbose))
+	else:
+		bv.set_active(bool(p.getValue("build.verbose")))
 	r = pref.run()
 	if r == 1:
 		config.cur_font =  p.getValue("editor.font").split(",")[0] + \

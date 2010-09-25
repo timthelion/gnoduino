@@ -248,6 +248,13 @@ def preferences(widget, data=None):
 		fs.set_value(float(config.cur_font.split(",")[2]))
 	else:
 		fs.set_value(float(p.getValue("editor.font").split(",")[2]))
+	bv = gui.get_object("build.verbose")
+	if p.getValue("build.verbose") == "true":
+		bv.set_active(True)
+	else:
+		bv.set_active(False)
+	if config.build_verbose != -1:
+		bv.set
 	r = pref.run()
 	if r == 1:
 		config.cur_font =  p.getValue("editor.font").split(",")[0] + \
@@ -440,6 +447,7 @@ def run():
 		sb = gui.get_object("statusbar1")
 		sb2 = gui.get_object("statusbar2")
 		config.cur_font = p.getValue("editor.font")
+		config.build_verbose = p.getValue("build.verbose")
 		menu(gui)
 		"""build menus"""
 		sub = gtk.Menu()

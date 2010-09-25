@@ -133,7 +133,7 @@ def compile(tw, id, output, notify):
 	#compile inter c objects
 	try:
 		"""preproces pde"""
-		pre_file = preproc.addHeaders(id, buf)
+		(pre_file, lines) = preproc.addHeaders(id, buf)
 		"""compile C targets"""
 		if p.getValue("build.verbose"): sys.stderr.write('process C targets\n')
 		for i in cobj:
@@ -192,8 +192,8 @@ def compile(tw, id, output, notify):
 		if p.getValue("build.verbose"): sys.stderr.write(sout+"\n")
 		if run == False:
 			misc.printError(notify, output, stripOut(sout, pre_file))
-			moveCursor(tw, int(getErrorLine(sout)))
-			raise
+			moveCursor(tw, int(getErrorLine(sout, lines)))
+			raise NameError('compile-error')
 
 		"""compile all objects"""
 		if _debug: sys.stderr.write('compile objects\n')
@@ -302,11 +302,11 @@ def validateLib(library, tempobj, output, notify):
 			print "Error: %s" % e
 	return list(set(res))
 
-def getErrorLine(buffer):
+def getErrorLine(buffer, offset=0):
 	try:
-		return int(buffer.splitlines()[1].split(":")[1])-1-4; # -4 added by preprocesor
+		return int(buffer.splitlines()[1].split(":")[1])-offset-3 # substract added lines by preprocesor
 	except:
-		return int(buffer.splitlines()[0].split(":")[1])-1-4; # -4 added by preprocesor
+		return int(buffer.splitlines()[0].split(":")[1])-offset-3 # substract added lines by preprocesor
 
 def moveCursor(view, line):
 	b = view.get_buffer()

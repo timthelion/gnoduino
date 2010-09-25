@@ -65,17 +65,20 @@ def makeBufferTempfile(buffer):
 
 
 def addHeaders(path, b):
+	line = 0
 	cont = b.get_text(b.get_start_iter(), b.get_end_iter())
 	fs = firstStatement(cont)
 	if fs != None:
-		result = cont[:fs:]+"\n#include \"WProgram.h\"\n"+ findPrototype(cont) + cont[fs:]+"\n\n"
+		proto = findPrototype(cont)
+		result = cont[:fs:]+"\n#include \"WProgram.h\"\n" + proto + cont[fs:]+"\n\n"
 	else:
-		result = "#include \"WProgram.h\"\n"+cont+"\n\n"
+		result = "\n#include \"WProgram.h\"\n"+cont+"\n\n"
 	of = tempfile.mktemp(".cpp", "", path)
 	w = file(of, "w")
 	w.write(result)
 	w.close()
-	return of
+	for l in proto.splitlines(): line += 1
+	return (of, line)
 
 def generateCFlags(path, b):
 	#cont = b.get_text(b.get_start_iter(), b.get_end_iter())

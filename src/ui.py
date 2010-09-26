@@ -304,12 +304,12 @@ def serSendText(w, data=None):
 def undo(w, data=None):
 	page = getCurrentPage()
 	b = page.get_data("buffer")
-	b.undo()
+	if b.can_undo(): b.undo()
 
 def redo(w, data=None):
 	page = getCurrentPage()
 	b = page.get_data("buffer")
-	b.redo()
+	if b.can_redo(): b.redo()
 
 menus = [
 		("menu-new", cnew, (ord('n'), gtk.gdk.CONTROL_MASK)),

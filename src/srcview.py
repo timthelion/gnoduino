@@ -161,7 +161,8 @@ def createsrcview(status, f=None):
 	if f:
 		content = file(f).read()
 		sbuffer.set_language(get_lang_for_content(content))
-		sbuffer.set_text(content)
+		text = unicode(content, 'utf-8', 'ignore')
+		sbuffer.set_text(text)
 	else:
 		manager = gtksourceview2.language_manager_get_default()
 		sbuffer.set_language(manager.get_language("c"))

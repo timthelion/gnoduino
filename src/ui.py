@@ -202,6 +202,7 @@ def quit(widget, data=None):
 def find(widget, data=None):
 	find = gui.get_object("find")
 	find_text = gui.get_object("find-text")
+	find_text.child.select_region(0, -1)
 	cbs = ["checkbutton1", "checkbutton2","checkbutton3", "checkbutton4"]
 	find_text.connect("key-release-event", srcview.findText, [gui.get_object(i) for i in cbs])
 	find.set_default_response(gtk.RESPONSE_OK)

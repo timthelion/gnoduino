@@ -301,6 +301,15 @@ def serSendText(w, data=None):
 	ser.serial.write(w.get_text())
 	w.set_text("")
 
+def undo(w, data=None):
+	page = getCurrentPage()
+	b = page.get_data("buffer")
+	b.undo()
+
+def redo(w, data=None):
+	page = getCurrentPage()
+	b = page.get_data("buffer")
+	b.redo()
 
 menus = [
 		("menu-new", cnew, (ord('n'), gtk.gdk.CONTROL_MASK)),
@@ -309,9 +318,11 @@ menus = [
 		("menu-save-as", csave_as, (ord('s'), gtk.gdk.CONTROL_MASK|gtk.gdk.SHIFT_MASK)),
 		("menu-quit", quit, (ord('q'), gtk.gdk.CONTROL_MASK)),
 		("menu-find", find, (ord('f'), gtk.gdk.CONTROL_MASK)),
+		("menu-undo", undo, (ord('z'), gtk.gdk.CONTROL_MASK)),
+		("menu-redo", redo, (ord('z'), gtk.gdk.CONTROL_MASK|gtk.gdk.SHIFT_MASK)),
 		("menu-compile", compile, (ord('r'), gtk.gdk.CONTROL_MASK)),
 		("menu-clear-cache", clear_libs, (ord('k'), gtk.gdk.CONTROL_MASK)),
-		("menu-reset-board", menuResetBoard, (ord('z'), gtk.gdk.CONTROL_MASK)),
+		("menu-reset-board", menuResetBoard, (ord('m'), gtk.gdk.CONTROL_MASK)),
 		("menu-preferences", preferences, (None, None)),
 		("menu-upload", menuUpload, (ord('u'), gtk.gdk.CONTROL_MASK)),
 		("menu-about", about, (None, None)),

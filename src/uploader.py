@@ -18,12 +18,14 @@
 import gettext
 _ = gettext.gettext
 import misc
+import sys
 import time
 
 import board
 import config
 import programmer
 import misc
+import prefs
 
 avr = [
 	"avrdude",
@@ -98,6 +100,7 @@ def burnBootloader(serial, output, notify, id):
 	notify.push(context, _("Burn complete."))
 
 def upload(obj, serial, output, notify):
+	p = prefs.preferences()
 	context = notify.get_context_id("main")
 	notify.pop(context)
 	notify.push(context, _("Flashing..."))
@@ -112,17 +115,22 @@ def upload(obj, serial, output, notify):
 	compline.append("-b" + b.getPGMSpeed(b.getBoard()))
 	compline.append("-p" + b.getBoardMCU(b.getBoard()))
 	compline.append("-Uflash:w:"+obj+".hex:i")
-	print compline
+	print "dud"
 	try:
+		if p.getValue("build.verbose"): sys.stderr.write(' '.join(compline)+"\n")
+		print compline
 		(run, sout) = misc.runProg(compline)
-		print sout
+		if p.getValue("build.verbose"): sys.stderr.write(sout+"\n")
 		if run == False:
 			misc.printError(notify, output, sout)
 		raise
 	except:
+		if p.getValue("build.verbose"): sys.stderr.write(sout+"\n")
 		notify.pop(context)
 		notify.push(context, _("Flashing error."))
 		return
 	notify.pop(context)
 	notify.push(context, _("Flashing complete."))
+	misc.printMessage(output, \
+		"flash ok");
 

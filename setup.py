@@ -17,8 +17,9 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-import os
 import glob
+import os
+import re
 import logging
 import subprocess
 from distutils.core import setup
@@ -46,6 +47,11 @@ def runProg(cmdline):
 		return (False, sout)
 	return (True, sout)
 
+def get_gnoduino_version():
+	"""Get version from src/__init__.py."""
+	text = open(os.path.join("src", "__init__.py"), "r").read()
+	return re.search(r"__version__ *= *['\"](.*?)['\"]", text).group(1)
+
 compline = "scripts/gen_boards.py"
 (run, sout) = runProg(compline)
 compline = "scripts/gen_programmers.py"
@@ -61,7 +67,7 @@ for r,d,f in os.walk("hardware"):
 print data_files
 
 setup(name='gnoduino',
-	version='0.1.9',
+	version=get_gnoduino_version(),
 	description='Gnome Arduino IDE implementation',
 	package_dir={'gnoduino': 'src'},
 	packages = ['gnoduino'],

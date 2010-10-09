@@ -34,8 +34,9 @@ import programmer
 import misc
 import prefs
 import uploader
-import srcview
 import serialio
+import srcview
+import gnoduino
 
 import gtksourceview2
 font = "Monospace 10"
@@ -235,6 +236,7 @@ def menuUpload(widget, data=None):
 
 def about(widget, data=None):
 	about = gui.get_object("about")
+	about.set_version(gnoduino.__version__)
 	about.run()
 	about.hide()
 

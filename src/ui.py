@@ -189,10 +189,11 @@ def csave(w, data=None):
 		f = saveAs()
 		if f == None: return
 		else:
-			p = misc.MessageBox()
-			res = p.show("""<b>A file named %s already exists. Do you want to replace it?</b>""" % f,
-			"The file already exists in \"%s\". Replacing it will overwrite its contents." % os.path.dirname(f))
-			if not res: return
+			if os.path.exists(f):
+				p = misc.MessageBox()
+				res = p.show("""<b>A file named %s already exists. Do you want to replace it?</b>""" % f,
+				"The file already exists in \"%s\". Replacing it will overwrite its contents." % os.path.dirname(f))
+				if not res: return
 			l.set_text(os.path.basename(f))
 			page.set_data("file", f)
 	F = open(f, "w")

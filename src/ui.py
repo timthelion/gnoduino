@@ -89,11 +89,11 @@ def switchPage(page, a, b, c):
 def createPage(nb, f=None):
 	hbox = gtk.HBox(False, 0)
 	flabel = gtk.Label(os.path.basename(f) if f else "Untitled")
-	hbox.pack_start(flabel, False, False, 3)
+	hbox.pack_start(flabel, True, False, 3)
 	b = gtk.Button()
 	img = gtk.Image()
 	img.set_from_icon_name(gtk.STOCK_CLOSE, gtk.ICON_SIZE_MENU)
-	img.set_pixel_size(8)
+	img.set_pixel_size(11)
 	b.set_image(img)
 	b.set_relief(gtk.RELIEF_NONE)
 	hbox.pack_start(b, True, True)

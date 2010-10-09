@@ -115,22 +115,16 @@ def upload(obj, serial, output, notify):
 	compline.append("-b" + b.getPGMSpeed(b.getBoard()))
 	compline.append("-p" + b.getBoardMCU(b.getBoard()))
 	compline.append("-Uflash:w:"+obj+".hex:i")
-	print "dud"
 	try:
 		if p.getValue("build.verbose"): sys.stderr.write(' '.join(compline)+"\n")
-		print compline
-		(run, sout) = misc.runProg(compline)
-		if p.getValue("build.verbose"): sys.stderr.write(sout+"\n")
-		if run == False:
-			misc.printError(notify, output, sout)
-		raise
+		run = misc.runProgOutput(output, compline)
+		if run == False: raise
 	except:
-		if p.getValue("build.verbose"): sys.stderr.write(sout+"\n")
 		notify.pop(context)
 		notify.push(context, _("Flashing error."))
 		return
 	notify.pop(context)
 	notify.push(context, _("Flashing complete."))
 	misc.printMessage(output, \
-		"flash ok");
+		"Flash OK.");
 

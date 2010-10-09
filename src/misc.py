@@ -29,6 +29,8 @@ import gettext
 import sys
 _ = gettext.gettext
 
+import prefs
+
 LOG_FILENAME = 'arduino.out'
 logging.basicConfig(filename=LOG_FILENAME,level=logging.DEBUG)
 
@@ -67,7 +69,6 @@ def makeWorkdir():
 
 def runProg(cmdline):
 	sout = ""
-	serr = ""
 	logging.debug("CMD:-%s", cmdline)
 	try:
 		p = subprocess.Popen(cmdline,
@@ -79,14 +80,45 @@ def runProg(cmdline):
 		poll.register(p.stdout, select.POLLIN)
 		while gtk.events_pending():
 			gtk.main_iteration()
-		(sout,serr) = p.communicate()
-		while gtk.events_pending():
-			gtk.main_iteration()
+		while True:
+			o = p.stdout.readline()
+			if o == '' and p.poll() != None: break
+			while gtk.events_pending():
+				gtk.main_iteration()
+			sout += o
 		if p.poll()==1: raise
 	except:
 		logging.debug("ERR:%s", sout)
 		return (False, sout)
 	return (True, sout)
+
+def runProgOutput(console, cmdline):
+	sout = ""
+	logging.debug("CMD:-%s", cmdline)
+	try:
+		p = subprocess.Popen(cmdline,
+			stdout = subprocess.PIPE,
+			stderr = subprocess.STDOUT,
+			stdin = subprocess.PIPE,
+			close_fds = True)
+		poll = select.poll()
+		poll.register(p.stdout, select.POLLIN)
+		while gtk.events_pending():
+			gtk.main_iteration()
+		while True:
+			o = p.stdout.readline()
+			if o == '' and p.poll() != None: break
+			printMessageLn(console, o)
+			pr = prefs.preferences()
+			if pr.getValue("build.verbose"): sys.stderr.write(o)
+			sout += o
+		while gtk.events_pending():
+			gtk.main_iteration()
+		if p.poll()==1: raise
+	except:
+		logging.debug("ERR:%s", sout)
+		return False
+	return True
 
 def set_widget_font(widget, font):
 	if widget == None: return
@@ -115,6 +147,16 @@ def printMessage(console, message):
 	b = console.get_buffer()
 	b.delete(b.get_start_iter(), b.get_end_iter())
 	b.set_text(message)
+
+def printMessageLn(console, message):
+	console.modify_text(gtk.STATE_NORMAL, gtk.gdk.Color("#ffffff"))
+	b = console.get_buffer()
+	b.insert(b.get_end_iter(), message)
+	b.place_cursor(b.get_end_iter())
+	mark = b.get_insert()
+	console.scroll_mark_onscreen(mark)
+	while gtk.events_pending():
+		gtk.main_iteration()
 
 def statusMessage(w, text):
 	w.push(1, text)

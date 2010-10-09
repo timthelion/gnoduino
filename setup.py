@@ -61,7 +61,7 @@ for r,d,f in os.walk("hardware"):
 print data_files
 
 setup(name='gnoduino',
-	version='0.1.0',
+	version='0.1.9',
 	description='Gnome Arduino IDE implementation',
 	package_dir={'gnoduino': 'src'},
 	packages = ['gnoduino'],

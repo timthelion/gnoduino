@@ -17,6 +17,7 @@
 
 import os
 import sys
+import gconf
 import glib
 import gobject
 import gtk
@@ -40,6 +41,9 @@ import gnoduino
 
 import gtksourceview2
 font = "Monospace 10"
+
+MW = "/apps/gnoduino/width"
+MH = "/apps/gnoduino/height"
 
 def setupPage(w, page, p):
 	misc.set_widget_font(getCurrentView(), config.cur_font)
@@ -419,6 +423,10 @@ def getCurrentView():
 def getGui():
 	return gui
 
+def cb_configure_event(widget, event):
+	client.set_int(MW, event.width)
+	client.set_int(MH, event.height)
+
 def run():
 	try:
 		global gui
@@ -436,6 +444,8 @@ def run():
 		global scon
 		global p
 		global b
+		global client
+		client = gconf.client_get_default()
 		id = misc.makeWorkdir()
 		ser = serialio.sconsole()
 		p = prefs.preferences()
@@ -455,6 +465,8 @@ def run():
 				print(e)
 				raise SystemExit(_("Cannot load ui file"))
 		mainwin = gui.get_object("top_win")
+		mainwin.set_default_size(client.get_int(MW), client.get_int(MH))
+		mainwin.connect("configure-event", cb_configure_event)
 		vbox = gui.get_object("vpan")
 		sb = gui.get_object("statusbar1")
 		sb2 = gui.get_object("statusbar2")

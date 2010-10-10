@@ -45,6 +45,11 @@ def get_lang_for_file(f):
 
 def get_lang_for_content(content):
 	mime = gnomevfs.get_mime_type_for_data(content)
+	"""try harder to guess mime type"""
+	"""sometimes helps to trim leading newlines"""
+	if mime == "text/plain":
+		tmpmime = gnomevfs.get_mime_type_for_data(content.strip("\n"))
+		if mime is not None: mime = tmpmime
 	manager = gtksourceview2.language_manager_get_default()
 	languages = gtksourceview2.LanguageManager.get_language_ids(manager)
 	for l in languages:

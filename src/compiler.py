@@ -264,7 +264,10 @@ def validateLib(library, tempobj, output, notify):
 				compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
 				compline.append("-I" + misc.getArduinoPath())
 				compline.extend(preproc.generateCFlags(id, open(i).read()))
-				compline.append(os.path.join(misc.getArduinoLibsPath(), i))
+				if (os.path.exists(os.path.join(misc.getArduinoLibsPath(), i))):
+					compline.append(os.path.join(misc.getArduinoLibsPath(), i))
+				else:
+					compline.append(i)
 				compline.append("-I" + os.path.join(misc.getArduinoLibsPath(), library, "utility"))
 				compline.append("-o"+os.path.join(os.path.dirname(tempobj), \
 					os.path.basename(i.replace(".c", ".o"))))
@@ -286,7 +289,10 @@ def validateLib(library, tempobj, output, notify):
 				compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
 				compline.append("-I" + misc.getArduinoPath())
 				compline.extend(preproc.generateCFlags(id, open(i).read()))
-				compline.append(os.path.join(misc.getArduinoLibsPath(), i))
+				if (os.path.exists(os.path.join(misc.getArduinoLibsPath(), i))):
+					compline.append(os.path.join(misc.getArduinoLibsPath(), i))
+				else:
+					compline.append(i)
 				compline.append("-I" + os.path.join(misc.getArduinoLibsPath(), library, "utility"))
 				compline.append("-o"+os.path.join(os.path.dirname(tempobj), \
 					os.path.basename(i.replace(".cpp", ".o"))))

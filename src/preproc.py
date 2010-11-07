@@ -43,7 +43,7 @@ def findPrototype(instr):
 		res = res + q[0]+";\n";
 	return res
 
-def findIncludes(instr):
+def findIncludes(instr, local=False):
 	res = ""
 	m = re.findall(r"^#include\s+[\w+\".<>\-]+", instr, re.M)
 	l = [z.split()[1].strip('<>"') for z in m]
@@ -51,6 +51,8 @@ def findIncludes(instr):
 	for z in l:
 		if os.path.exists(os.path.join(misc.getArduinoLibsPath(), z.strip(".h"))):
 			my.append(os.path.join(misc.getArduinoLibsPath(), z.strip(".h")))
+		if local and os.path.exists(os.path.join(z.strip(".h"))):
+			my.append(z.strip(".h"))
 	if len(my) == 0:
 		for z in l:
 			for r, d, f in os.walk(misc.getArduinoLibsPath()):
@@ -83,8 +85,11 @@ def addHeaders(path, b):
 def generateCFlags(path, b):
 	#cont = b.get_text(b.get_start_iter(), b.get_end_iter())
 	cont = b
-	return ["-I"+os.path.join(misc.getArduinoLibsPath(), i) for i in findIncludes(cont)]
+	result = []
+	result.extend(["-I"+os.path.join(misc.getArduinoLibsPath(), i) for i in findIncludes(cont)])
+	result.extend(["-I"+i for i in findIncludes(cont, True)])
+	return result
 
 def generateLibs(path, b):
 	cont = b.get_text(b.get_start_iter(), b.get_end_iter())
-	return [i for i in findIncludes(cont)]
+	return [i for i in findIncludes(cont, True)]

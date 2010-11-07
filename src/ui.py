@@ -223,13 +223,6 @@ def compile(widget, data=file):
 	obj = compiler.compile(page.get_data("view"), id, tw, sb) #page.get_data("buffer")
 	return obj
 
-def clear_libs(widget, data=None):
-	for r,d,f in os.walk(misc.getArduinoLibsPath()):
-		for i in f:
-			if i.__contains__(".o"):
-				print "Removing %s" % os.path.join(r, i)
-				os.unlink(os.path.join(r, i))
-
 def upload(widget, serial, data=file):
 	obj = compile(widget, data)
 	while (gtk.events_pending()):
@@ -329,7 +322,6 @@ menus = [
 		("menu-undo", undo, (ord('z'), gtk.gdk.CONTROL_MASK)),
 		("menu-redo", redo, (ord('z'), gtk.gdk.CONTROL_MASK|gtk.gdk.SHIFT_MASK)),
 		("menu-compile", compile, (ord('r'), gtk.gdk.CONTROL_MASK)),
-		("menu-clear-cache", clear_libs, (ord('k'), gtk.gdk.CONTROL_MASK)),
 		("menu-reset-board", menuResetBoard, (ord('m'), gtk.gdk.CONTROL_MASK)),
 		("menu-preferences", preferences, (None, None)),
 		("menu-upload", menuUpload, (ord('u'), gtk.gdk.CONTROL_MASK)),
@@ -524,6 +516,7 @@ def run():
 		mainwin.show_all()
 		mainwin.set_title("Arduino")
 		mainwin.connect("destroy", quit)
+		gui.get_object("ser_monitor").connect("activate", cserial, sertime, sctw)
 		gui.get_object("serial").connect("clicked", cserial, sertime, sctw)
 		gui.get_object("upload").connect("clicked", upload, ser)
 		for i in buttons:

@@ -528,7 +528,6 @@
   <object class="GtkAboutDialog" id="about">
     <property name="border_width">5</property>
     <property name="type_hint">normal</property>
-    <property name="has_separator">False</property>
     <property name="program_name">Gnoduino</property>
     <property name="version">0.1.0</property>
     <property name="copyright" translatable="yes">Lucian Langa &lt;cooly@gnome.eu.org&gt;</property>
@@ -577,7 +576,6 @@
   <object class="GtkDialog" id="preferences">
     <property name="border_width">5</property>
     <property name="type_hint">normal</property>
-    <property name="has_separator">False</property>
     <child internal-child="vbox">
       <object class="GtkVBox" id="dialog-vbox2">
         <property name="visible">True</property>
@@ -631,16 +629,18 @@
                 <child>
                   <object class="GtkLabel" id="label3">
                     <property name="visible">True</property>
-                    <property name="label" translatable="yes">Additional libs</property>
+                    <property name="label" translatable="yes">Additional libs:</property>
                   </object>
                   <packing>
+                    <property name="expand">False</property>
                     <property name="position">0</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkTextView" id="textview1">
+                  <object class="GtkEntry" id="user.library">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="invisible_char">●</property>
                   </object>
                   <packing>
                     <property name="position">1</property>
@@ -710,7 +710,6 @@
   <object class="GtkDialog" id="find">
     <property name="border_width">5</property>
     <property name="type_hint">normal</property>
-    <property name="has_separator">False</property>
     <child internal-child="vbox">
       <object class="GtkVBox" id="dialog-vbox3">
         <property name="visible">True</property>

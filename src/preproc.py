@@ -16,7 +16,8 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-
+import config
+import prefs
 import re
 import os
 import tempfile
@@ -51,6 +52,10 @@ def findIncludes(instr, local=False):
 	for z in l:
 		if os.path.exists(os.path.join(misc.getArduinoLibsPath(), z.strip(".h"))):
 			my.append(os.path.join(misc.getArduinoLibsPath(), z.strip(".h")))
+		if config.user_library:
+			for q in config.user_library.split(';'):
+				if os.path.exists(os.path.join(q.strip(), z.strip(".h"))):
+					my.append(os.path.join(q.strip(), z.strip(".h")))
 		if local and os.path.exists(os.path.join(z.strip(".h"))):
 			my.append(z.strip(".h"))
 	if len(my) == 0:
@@ -87,6 +92,7 @@ def generateCFlags(path, b):
 	cont = b
 	result = []
 	result.extend(["-I"+os.path.join(misc.getArduinoLibsPath(), i) for i in findIncludes(cont)])
+	result.extend(["-I"+os.path.join(config.user_library, i) for i in findIncludes(cont)])
 	result.extend(["-I"+i for i in findIncludes(cont, True)])
 	return result
 

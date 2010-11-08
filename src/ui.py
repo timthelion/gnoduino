@@ -44,6 +44,7 @@ font = "Monospace 10"
 
 MW = "/apps/gnoduino/width"
 MH = "/apps/gnoduino/height"
+user_library_key = "/apps/gnoduino/user_library"
 
 def setupPage(w, page, p):
 	misc.set_widget_font(getCurrentView(), config.cur_font)
@@ -242,6 +243,7 @@ def menuResetBoard(widget, data=None):
 	ser.resetBoard()
 
 def preferences(widget, data=None):
+	global client
 	pref = gui.get_object("preferences")
 	fs = gui.get_object("fontsize")
 	p = prefs.preferences()
@@ -254,6 +256,11 @@ def preferences(widget, data=None):
 		bv.set_active(bool(config.build_verbose))
 	else:
 		bv.set_active(bool(p.getValue("build.verbose")))
+	ul = gui.get_object("user.library")
+	if (config.user_library != None and config.user_library != -1):
+		ul.set_text(str(config.user_library))
+	else:
+		ul.set_text(str(client.get_string(user_library_key)) if client.get_string(user_library_key) != None else "")
 	r = pref.run()
 	if r == 1:
 		config.cur_font =  p.getValue("editor.font").split(",")[0] + \
@@ -262,6 +269,8 @@ def preferences(widget, data=None):
 		misc.set_widget_font(tw, config.cur_font)
 		misc.set_widget_font(sctw, config.cur_font)
 		misc.set_widget_font(getCurrentView(), config.cur_font)
+		config.user_library = ul.get_text()
+		client.set_string(user_library_key, config.user_library)
 	pref.hide()
 
 def stop(widget, data=None):
@@ -465,6 +474,7 @@ def run():
 		sb2 = gui.get_object("statusbar2")
 		config.cur_font = p.getValue("editor.font")
 		config.build_verbose = p.getValue("build.verbose")
+		config.user_library = client.get_string(user_library_key)
 		menu(gui)
 		"""build menus"""
 		sub = gtk.Menu()

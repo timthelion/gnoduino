@@ -204,7 +204,7 @@ def compile(tw, id, output, notify):
 		compline.append(pre_file+".o")
 		tmplibs = []
 		for i in preproc.generateLibs(id, buf):
-			tmplibs.extend(validateLib(i, tempobj, output, notify))
+			tmplibs.extend(validateLib(os.path.basename(i), tempobj, output, notify))
 		compline.extend(list(set(tmplibs)))
 		compline.extend(["-I" + os.path.join(i, "utility") for i in preproc.generateLibs(id, buf)])
 		compline.append(id+"/core.a")
@@ -252,60 +252,61 @@ def compile(tw, id, output, notify):
 def validateLib(library, tempobj, output, notify):
 	"""compile library also try to compile every cpp under libdir"""
 	"""also try to compile utility dir if present"""
+	paths = ["", misc.getArduinoPath()]
+	if config.user_library != None and config.user_library != -1:
+		paths.extend(i.strip() for i in config.user_library.split(';'))
 	dirs = ["", "utility"]
 	b = board.Board()
 	res = []
+	fl = []
 	for d in dirs:
-		try:
-			"""compile library c modules"""
-			for i in glob.glob(os.path.join(library, d, "*.c")):
-				compline = [j for j in defc]
-				compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
-				compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
-				compline.append("-I" + misc.getArduinoPath())
-				compline.extend(preproc.generateCFlags(id, open(i).read()))
-				if (os.path.exists(os.path.join(misc.getArduinoLibsPath(), i))):
-					compline.append(os.path.join(misc.getArduinoLibsPath(), i))
-				else:
-					compline.append(i)
-				compline.append("-I" + os.path.join(misc.getArduinoLibsPath(), library, "utility"))
-				compline.append("-o"+os.path.join(os.path.dirname(tempobj), \
-					os.path.basename(i.replace(".c", ".o"))))
-				if p.getValue("build.verbose"): sys.stderr.write(' '.join(compline)+"\n")
-				(run, sout) = misc.runProg(compline)
-				if p.getValue("build.verbose"): sys.stderr.write(sout+"\n")
-				if run == False:
-					misc.printError(notify, output, sout)
-					raise NameError('libs compile error')
-				res.append(os.path.join(os.path.dirname(tempobj), \
-					os.path.basename(i.replace(".c", ".o"))))
-		except StandardError as e:
-			print "Error: %s" % e
-		try:
-			"""compile library cpp modules"""
-			for i in glob.glob(os.path.join(library, d, "*.cpp")):
-				compline = [j for j in defcpp]
-				compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
-				compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
-				compline.append("-I" + misc.getArduinoPath())
-				compline.extend(preproc.generateCFlags(id, open(i).read()))
-				if (os.path.exists(os.path.join(misc.getArduinoLibsPath(), i))):
-					compline.append(os.path.join(misc.getArduinoLibsPath(), i))
-				else:
-					compline.append(i)
-				compline.append("-I" + os.path.join(misc.getArduinoLibsPath(), library, "utility"))
-				compline.append("-o"+os.path.join(os.path.dirname(tempobj), \
-					os.path.basename(i.replace(".cpp", ".o"))))
-				if p.getValue("build.verbose"): sys.stderr.write(' '.join(compline)+"\n")
-				(run, sout) = misc.runProg(compline)
-				if p.getValue("build.verbose"): sys.stderr.write(sout+"\n")
-				if run == False:
-					misc.printError(notify, output, sout)
-					raise NameError('libs compile error')
-				res.append(os.path.join(os.path.dirname(tempobj), \
-					os.path.basename(i.replace(".cpp", ".o"))))
-		except StandardError as e:
-			print "Error: %s" % e
+		for q in paths:
+			fl = os.path.join(q, library, d)
+			if os.path.exists(fl):
+				try:
+					for i in glob.glob(os.path.join(fl, "*.c")):
+						"""compile library c modules"""
+						compline = [j for j in defc]
+						compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
+						compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
+						compline.append("-I" + misc.getArduinoPath())
+						compline.append("-I" + os.path.join(misc.getArduinoLibsPath(), library, "utility"))
+						compline.extend(preproc.generateCFlags(id, open(i).read()))
+						compline.append(i)
+						compline.append("-o"+os.path.join(os.path.dirname(tempobj), \
+							os.path.basename(i.replace(".c", ".o"))))
+						if p.getValue("build.verbose"): sys.stderr.write(' '.join(compline)+"\n")
+						(run, sout) = misc.runProg(compline)
+						if p.getValue("build.verbose"): sys.stderr.write(sout+"\n")
+						if run == False:
+							misc.printError(notify, output, sout)
+							raise NameError('libs compile error')
+						res.append(os.path.join(os.path.dirname(tempobj), \
+							os.path.basename(i.replace(".c", ".o"))))
+				except StandardError as e:
+					print "Error: %s" % e
+				try:
+					for i in glob.glob(os.path.join(fl, "*.cpp")):
+						"""compile library cpp modules"""
+						compline = [j for j in defcpp]
+						compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
+						compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
+						compline.append("-I" + misc.getArduinoPath())
+						compline.extend(preproc.generateCFlags(id, open(i).read()))
+						compline.append(i)
+						compline.append("-I" + os.path.join(misc.getArduinoLibsPath(), library, "utility"))
+						compline.append("-o"+os.path.join(os.path.dirname(tempobj), \
+							os.path.basename(i.replace(".cpp", ".o"))))
+						if p.getValue("build.verbose"): sys.stderr.write(' '.join(compline)+"\n")
+						(run, sout) = misc.runProg(compline)
+						if p.getValue("build.verbose"): sys.stderr.write(sout+"\n")
+						if run == False:
+							misc.printError(notify, output, sout)
+							raise NameError('libs compile error')
+						res.append(os.path.join(os.path.dirname(tempobj), \
+							os.path.basename(i.replace(".cpp", ".o"))))
+				except StandardError as e:
+					print "Error: %s" % e
 	return list(set(res))
 
 def getErrorLine(buffer, offset=0):

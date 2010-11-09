@@ -120,22 +120,28 @@ def findText(widget, event, data=None):
 						config.cur_iter, search, flags, limit=None)
 					config.cur_iter = s
 				else:
-					s, e = gtksourceview2.iter_forward_search( \
-						config.cur_iter, search, flags, limit=None)
-					config.cur_iter = e
+					try:
+						s, e = gtksourceview2.iter_forward_search( \
+							config.cur_iter, search, flags, limit=None)
+						config.cur_iter = e
+					except: return
 			except:
 				if backwards:
 					iter = b.get_iter_at_offset(-1)
 					config.cur_iter = iter
-					s, e = gtksourceview2.iter_backward_search( \
-						config.cur_iter, search, flags, limit=None)
-					config.cur_iter = s
+					try:
+						s, e = gtksourceview2.iter_backward_search( \
+							config.cur_iter, search, flags, limit=None)
+						config.cur_iter = s
+					except: return
 				else:
 					iter = b.get_iter_at_offset(0)
 					config.cur_iter = iter
-					s, e = gtksourceview2.iter_forward_search( \
-						config.cur_iter, search, flags, limit=None)
-					config.cur_iter = e
+					try:
+						s, e = gtksourceview2.iter_forward_search( \
+							config.cur_iter, search, flags=0, limit=None)
+						config.cur_iter = e
+					except: return
 		else:
 			if backwards:
 				try:

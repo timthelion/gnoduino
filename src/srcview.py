@@ -93,8 +93,9 @@ def resetCursor(buffer):
 	buffer.place_cursor(iter)
 
 def findText(widget, event, data=None):
-	if event.type == gtk.gdk.KEY_RELEASE and \
-	gtk.gdk.keyval_name(event.keyval) == 'Return':
+	if event == -1 or (event.type == gtk.gdk.KEY_RELEASE and \
+	(gtk.gdk.keyval_name(event.keyval) == 'Return' or \
+	 gtk.gdk.keyval_name(event.keyval) == 'KP_Enter')):
 		page = ui.getCurrentPage()
 		view = page.get_data("view")
 		b = view.get_buffer()
@@ -120,11 +121,9 @@ def findText(widget, event, data=None):
 						config.cur_iter, search, flags, limit=None)
 					config.cur_iter = s
 				else:
-					try:
-						s, e = gtksourceview2.iter_forward_search( \
-							config.cur_iter, search, flags, limit=None)
-						config.cur_iter = e
-					except: return
+					s, e = gtksourceview2.iter_forward_search( \
+						config.cur_iter, search, flags, limit=None)
+					config.cur_iter = e
 			except:
 				if backwards:
 					iter = b.get_iter_at_offset(-1)

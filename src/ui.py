@@ -214,7 +214,8 @@ def find(widget, data=None):
 	find_text.connect("key-release-event", srcview.findText, [gui.get_object(i) for i in cbs])
 	find.set_default_response(gtk.RESPONSE_OK)
 	r =  find.run()
-	if r == 1: return
+	if r == 1:
+		srcview.findText(find_text, -1, [gui.get_object(i) for i in cbs])
 	find.hide()
 
 def compile(widget, data=file):

@@ -26,6 +26,7 @@ import config
 import programmer
 import misc
 import prefs
+import serialio
 
 avr = [
 	"avrdude",

@@ -112,8 +112,6 @@ def runProgOutput(console, cmdline):
 			pr = prefs.preferences()
 			if pr.getValue("build.verbose"): sys.stderr.write(o)
 			sout += o
-		while gtk.events_pending():
-			gtk.main_iteration()
 		if p.poll()==1: raise
 	except:
 		logging.debug("ERR:%s", sout)
@@ -155,8 +153,6 @@ def printMessageLn(console, message):
 	b.place_cursor(b.get_end_iter())
 	mark = b.get_insert()
 	console.scroll_mark_onscreen(mark)
-	while gtk.events_pending():
-		gtk.main_iteration()
 
 def statusMessage(w, text):
 	w.push(1, text)

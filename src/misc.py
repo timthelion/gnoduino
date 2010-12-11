@@ -35,6 +35,7 @@ LOG_FILENAME = 'arduino.out'
 logging.basicConfig(filename=LOG_FILENAME,level=logging.DEBUG)
 
 arduino_path = "hardware/arduino/cores/arduino"
+arduino_boot_path = "hardware/arduino/bootloaders"
 arduino_libs_path = "libraries"
 
 def getArduinoPath():
@@ -46,6 +47,21 @@ def getArduinoPath():
 	except:
 		try:
 			path = os.path.join(sys.prefix, "share", "gnoduino", arduino_path)
+			if os.path.exists(path):
+				return path
+		except Exception,e:
+			print(e)
+	raise SystemExit(_("Cannot find path"))
+
+def getArduinoBootPath():
+	try:
+		path = os.path.join(os.getcwd(), arduino_boot_path)
+		if os.path.exists(path):
+			return path
+		else: raise
+	except:
+		try:
+			path = os.path.join(sys.prefix, "share", "gnoduino", arduino_boot_path)
 			if os.path.exists(path):
 				return path
 		except Exception,e:

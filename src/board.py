@@ -97,6 +97,9 @@ class Board(object):
 	def getFuseLow(self, id):
 		return self.boards[id]['low_fuses']
 
+	def getFuseExtended(self, id):
+		return self.boards[id]['extended_fuses']
+
 	def getPath(self, id):
 		return self.boards[id]['path']
 

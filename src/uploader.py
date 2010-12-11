@@ -15,6 +15,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
+import os
 import gettext
 _ = gettext.gettext
 import misc
@@ -42,9 +43,6 @@ avr_bl = [
 	"avrdude",
 #	"-Chardware/tools/avrdude.conf",
 	"-v",
-	"-v",
-	"-v",
-	"-v",
 ]
 
 def burnBootloader(serial, output, notify, id):
@@ -63,6 +61,7 @@ def burnBootloader(serial, output, notify, id):
 	if pgm.getForce(id) == 'true':
 		compline.append("-F")
 	compline.append("-Ulock:w:" + b.getFuseUnlock(b.getBoard()) + ":m")
+	compline.append("-Uefuse:w:" + b.getFuseExtended(b.getBoard()) + ":m")
 	compline.append("-Uhfuse:w:" + b.getFuseHigh(b.getBoard()) + ":m")
 	compline.append("-Ulfuse:w:" + b.getFuseLow(b.getBoard()) + ":m")
 	print compline
@@ -83,12 +82,11 @@ def burnBootloader(serial, output, notify, id):
 	compline.append("-e")
 	if pgm.getForce(id) == 'true':
 		compline.append("-F")
-	compline.append("-Uflash:w:" + "hardware/arduino/bootloaders/" + \
-		b.getPath(b.getBoard()) + "/" + b.getBootloader(b.getBoard()) + ".hex:i")
+	compline.append("-Uflash:w:" + findBootLoader() + ":i")
 	compline.append("-Ulock:w:" + b.getFuseLock(b.getBoard()) + ":m")
 	print compline
 	try:
-		(run, sout) = misc.runProg(compline)
+		(run, sout) = misc.runProgOutput(output, compline)
 		print sout
 		if run == False:
 			misc.printError(notify, output, sout)
@@ -128,4 +126,9 @@ def upload(obj, serial, output, notify):
 	notify.push(context, _("Flashing complete."))
 	misc.printMessage(output, \
 		"Flash OK.");
+
+def findBootLoader():
+	b = board.Board()
+	return os.path.join(misc.getArduinoBootPath(), b.getPath(b.getBoard()), \
+		b.getBootloader(b.getBoard())+".hex")
 

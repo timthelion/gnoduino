@@ -22,12 +22,13 @@ import serial
 
 class sconsole:
 	def __init__(self):
+		"""9600 8N1"""
 		self.serial = serial.Serial(
 			port='/dev/ttyS0',
 			baudrate=9600,
-			parity=serial.PARITY_ODD,
-			stopbits=serial.STOPBITS_TWO,
-			bytesize=serial.SEVENBITS
+			parity=serial.PARITY_NONE,
+			stopbits=serial.STOPBITS_ONE,
+			bytesize=serial.EIGHTBITS
 		)
 		self.serial.open()
 		self.serial.isOpen()
@@ -37,21 +38,25 @@ class sconsole:
 
 	def scan(self):
 		"""scan for available ports. return a list of device names."""
-		return glob.glob('/dev/ttyS*') + glob.glob('/dev/ttyUSB*')
+		return glob.glob('/dev/ttyS*') + glob.glob('/dev/ttyUSB*') + glob.glob('/dev/ttyACM*')
 
 	def read(self):
 		while self.serial.inWaiting() > 0:
 			return self.serial.read(self.serial.inWaiting())
 		return None
 
+
 	def updateConsole(self, console):
 		b = console.get_buffer()
 		cont = self.read()
 		if cont:
-			print "%s" % cont
+			print cont
 		if cont != None:
 			if b and len(cont) > 1:
-				b.insert(b.get_end_iter(), cont)
+				cont = unicode(
+					cont.replace('\x00', '.').decode('utf-8', 'replace').encode('utf-8'))
+				b.insert(b.get_end_iter(), \
+					cont)
 				console.scroll_mark_onscreen(b.get_insert())
 		return True
 
@@ -64,3 +69,4 @@ class sconsole:
 		b = console.get_buffer()
 		b.delete(b.get_start_iter(), b.get_end_iter())
 		b.set_text("")
+

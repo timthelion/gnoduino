@@ -434,12 +434,14 @@ def selectBoard(w, id):
 
 def setSerial(w, id):
 	createBaudCombo(w, id)
-	config.cur_serial_port = id
-	ser.resetBoard()
-	ser.serial.close()
-	ser.serial.port = id
-	ser.serial.open()
-	client.set_string(serial_port_key, id)
+	try:
+		config.cur_serial_port = id
+		ser.resetBoard()
+		ser.serial.close()
+		ser.serial.port = id
+		ser.serial.open()
+		client.set_string(serial_port_key, id)
+	except: None
 
 def getCurrentPage():
 	return nb.get_nth_page(nb.get_current_page())

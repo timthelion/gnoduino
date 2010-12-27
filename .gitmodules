@@ -1,3 +1,3 @@
 [submodule "hardware"]
 	path = hardware
-	url = /work/gnoduino
+	url = git://mapes/hardware

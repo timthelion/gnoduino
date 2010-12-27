@@ -45,6 +45,8 @@ font = "Monospace 10"
 MW = "/apps/gnoduino/width"
 MH = "/apps/gnoduino/height"
 user_library_key = "/apps/gnoduino/user_library"
+serial_port_key = "/apps/gnoduino/serial_port"
+serial_baud_rate_key = "/apps/gnoduino/serial_baud_rate"
 
 def setupPage(w, page, p):
 	misc.set_widget_font(getCurrentView(), config.cur_font)
@@ -305,8 +307,16 @@ def burnBootloader(w, id):
 def setBaud(w, data=None):
 	ser.resetBoard()
 	ser.serial.close()
-	ser.serial.baudrate = baud[w.get_active()]
+	if config.serial_baud_rate == -1:
+		config.serial_baud_rate = client.get_string(serial_baud_rate_key)
+		if config.serial_baud_rate: defbaud = config.serial_baud_rate
+		else: defbaud = p.getValue("serial.debug_rate")
+	else:
+		if w: defbaud = ser.getBaudrates()[w.get_active()]
+	print "def:%s" % defbaud
+	ser.serial.baudrate = [i for i in ser.getBaudrates() if i == defbaud][0]
 	ser.serial.open()
+	client.set_string(serial_baud_rate_key, defbaud)
 
 def serSendText(w, data=None):
 	ser.serial.write(w.get_text())
@@ -342,7 +352,8 @@ menus = [
 def menu(gui):
 	[gui.get_object(i[0]).connect("activate", i[1]) for i in menus]
 	accel = gtk.AccelGroup()
-	[gui.get_object(i[0]).add_accelerator("activate", accel, i[2][0], i[2][1], 0) for i in menus if i[2][0] != None]
+	[gui.get_object(i[0]).add_accelerator("activate", \
+		accel, i[2][0], i[2][1], 0) for i in menus if i[2][0] != None]
 	mainwin.add_accel_group(accel)
 
 def createCon():
@@ -379,15 +390,11 @@ def createScon():
 	s = gtk.Button("Send")
 	c = gtk.Button("Clear")
 	c.connect("clicked", ser.clearConsole, tmp)
-	b = gtk.combo_box_new_text()
-	baud = ["300", "1200", "2400", "4800", "9600", "14400", "19200", \
-		"28800", "38400", "57600", "115200"]
-	[b.append_text(i+" baud") for i in baud]
-	b.connect("changed", setBaud)
-	b.set_active(4)
+	bb = gtk.HBox(False, 0)
+	gui.set_data("baudHBox", bb)
 	text = gtk.Entry()
 	text.connect("activate", serSendText)
-	hbox.pack_start(b, False, False, 3)
+	hbox.pack_start(bb, False, False, 3)
 	hbox.pack_start(text, True, True, 3)
 	hbox.pack_start(s, False, False, 3)
 	hbox.pack_start(c, False, False, 3)
@@ -395,6 +402,7 @@ def createScon():
 	vbox.pack_start(hbox, False, False, 3)
 	vbox.pack_start(sw, True, True, 3)
 	vbox.show_all()
+	createBaudCombo(None, config.cur_serial_port)
 	return (vbox, tmp)
 
 buttons = [
@@ -409,11 +417,30 @@ buttons = [
 		("serial", "serial.png", None)
 	]
 
+def createBaudCombo(w, port):
+	hb = gui.get_data("baudHBox")
+	if hb:
+		bw = gui.get_data("baudWidget")
+		if bw: bw.destroy()
+		b = gtk.combo_box_new_text()
+		[b.append_text(i+" baud") for i in ser.getBaudrates()]
+		b.connect("changed", setBaud)
+		b.set_active(ser.getBaudrates().index(config.serial_baud_rate))
+		hb.pack_start(b, False, False, 3)
+		gui.set_data("baudWidget", b)
+		hb.show_all()
+
 def selectBoard(w, id):
 	b.setBoard(id)
 
 def setSerial(w, id):
+	createBaudCombo(w, id)
 	config.cur_serial_port = id
+	ser.resetBoard()
+	ser.serial.close()
+	ser.serial.port = id
+	ser.serial.open()
+	client.set_string(serial_port_key, id)
 
 def getCurrentPage():
 	return nb.get_nth_page(nb.get_current_page())
@@ -491,19 +518,32 @@ def run():
 
 		sub = gtk.Menu()
 		maingroup = gtk.RadioMenuItem(None, None)
+		config.serial_port = client.get_string(serial_port_key)
 		for i in ser.scan():
 			menuItem = gtk.RadioMenuItem(maingroup, i)
-			if i == p.getValue("serial.port"):
-				menuItem.set_active(True)
-				if config.cur_serial_port == -1:
-					config.cur_serial_port = i
+			if config.serial_port: defport = config.serial_port
+			else: defport = p.getValue("serial.port")
+			if defport:
+				if i == defport:
+					menuItem.set_active(True)
+					if config.cur_serial_port == -1:
+						config.cur_serial_port = i
+					setSerial(None, i)
 			else:
 				if i == "/dev/ttyS0":
 					if config.cur_serial_port == -1:
 						config.cur_serial_port = i
 					menuItem.set_active(True)
+					setSerial(None, i)
 			menuItem.connect('activate', setSerial, i)
 			sub.append(menuItem)
+
+		if config.serial_baud_rate == -1:
+			config.serial_baud_rate = client.get_string(serial_baud_rate_key)
+			if config.serial_baud_rate: defbaud = config.serial_baud_rate
+			else: defbaud = p.getValue("serial.debug_rate")
+			config.serial_baud_rate = defbaud
+
 		gui.get_object("serial_port").set_submenu(sub)
 
 		sub = gtk.Menu()

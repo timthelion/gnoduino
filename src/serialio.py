@@ -70,3 +70,6 @@ class sconsole:
 		b.delete(b.get_start_iter(), b.get_end_iter())
 		b.set_text("")
 
+	def getBaudrates(self):
+		return [i[0] for i in self.serial.getSupportedBaudrates() if i[1] >= 300 and i[1] <= 1150000]
+

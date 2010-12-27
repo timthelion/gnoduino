@@ -313,7 +313,6 @@ def setBaud(w, data=None):
 		else: defbaud = p.getValue("serial.debug_rate")
 	else:
 		if w: defbaud = ser.getBaudrates()[w.get_active()]
-	print "def:%s" % defbaud
 	ser.serial.baudrate = [i for i in ser.getBaudrates() if i == defbaud][0]
 	ser.serial.open()
 	client.set_string(serial_baud_rate_key, defbaud)

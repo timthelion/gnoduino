@@ -56,8 +56,10 @@ compline = "scripts/gen_boards.py"
 (run, sout) = runProg(compline)
 compline = "scripts/gen_programmers.py"
 (run, sout) = runProg(compline)
+compline = "scripts/gitlog.sh"
+(run, sout) = runProg(compline)
 data_files = [('share/gnoduino/ui', ['ui/main.ui']),
-		('share/gnoduino/', ['BOARDS', 'PROGRAMMERS', 'preferences.txt']),
+		('share/gnoduino/', ['BOARDS', 'ChangeLog', 'NEWS', 'PROGRAMMERS', 'preferences.txt']),
 		('share/gnoduino/pixmaps', glob.glob('pixmaps/*.png')),
 		('share/gnoduino/scripts', ['scripts/gen_boards.py', 'scripts/gen_programmers.py']),
 ]

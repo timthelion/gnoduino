@@ -45,6 +45,16 @@ avr_bl = [
 	"-v",
 ]
 
+
+def getConfigSerialPort(notify, output):
+	if config.cur_serial_port == -1:
+		misc.printError(notify, output, \
+			_("Serial port not configured! Use Tools->Serial Port to configure port."))
+		return -1
+	else:
+		return config.cur_serial_port
+
+
 def burnBootloader(serial, output, notify, id):
 	context = notify.get_context_id("main")
 	notify.pop(context)
@@ -110,7 +120,9 @@ def upload(obj, serial, output, notify):
 	protocol = b.getPGM(b.getBoard())
 	if protocol == "stk500": protocol = "stk500v1"
 	compline.append("-c" + protocol)
-	compline.append("-P" + config.cur_serial_port)
+	port = getConfigSerialPort(notify, output)
+	if port == -1: raise
+	compline.append("-P" + port)
 	compline.append("-b" + b.getPGMSpeed(b.getBoard()))
 	compline.append("-p" + b.getBoardMCU(b.getBoard()))
 	compline.append("-Uflash:w:"+obj+".hex:i")
@@ -119,6 +131,7 @@ def upload(obj, serial, output, notify):
 		run = misc.runProgOutput(output, compline)
 		if run == False: raise
 	except:
+		print "Error: %s" % e
 		notify.pop(context)
 		notify.push(context, _("Flashing error."))
 		return

@@ -221,7 +221,6 @@ def find(widget, data=None):
 	find.hide()
 
 def compile(widget, data=file):
-	#createCon()
 	cserial(None, 0, sctw)
 	page = getCurrentPage()
 	obj = compiler.compile(page.get_data("view"), id, tw, sb) #page.get_data("buffer")
@@ -229,6 +228,7 @@ def compile(widget, data=file):
 
 def upload(widget, serial, data=file):
 	obj = compile(widget, data)
+	if obj == -1: return
 	while (gtk.events_pending()):
 		gtk.main_iteration()
 	uploader.upload(obj, serial, tw, sb)

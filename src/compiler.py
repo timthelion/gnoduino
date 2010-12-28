@@ -119,7 +119,7 @@ def stripOut(sout, pre):
 def compile(tw, id, output, notify):
 	buf =  tw.get_buffer()
 	cont = buf.get_text(buf.get_start_iter(), buf.get_end_iter())
-	if cont is "": return
+	if cont is "": return -1
 	context = notify.get_context_id("main")
 	notify.pop(context)
 	notify.push(context, _("Compilling..."))

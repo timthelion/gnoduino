@@ -29,6 +29,7 @@ import gettext
 import sys
 _ = gettext.gettext
 
+import config
 import prefs
 
 LOG_FILENAME = 'arduino.out'
@@ -169,6 +170,9 @@ def printMessageLn(console, message):
 	b.place_cursor(b.get_end_iter())
 	mark = b.get_insert()
 	console.scroll_mark_onscreen(mark)
+
+def printLogMessageLn(message):
+	if config.build_verbose: sys.stderr.write(message+"\n")
 
 def statusMessage(w, text):
 	w.push(1, text)

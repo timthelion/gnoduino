@@ -135,6 +135,14 @@ def runProgOutput(console, cmdline):
 		return False
 	return True
 
+def merge_font_name(widget, font):
+	if widget == None: return
+	context = widget.get_pango_context()
+	font_desc = context.get_font_description()
+	cur_font = pango.FontDescription(font)
+	font_desc.merge(cur_font, True)
+	return font_desc.to_string()
+
 def set_widget_font(widget, font):
 	if widget == None: return
 	context = widget.get_pango_context()

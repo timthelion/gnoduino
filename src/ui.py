@@ -253,8 +253,8 @@ def preferences(widget, data=None):
 	bv = gui.get_object("build.verbose")
 	ul = gui.get_object("user.library")
 	p = prefs.preferences()
-	fe.set_font_name(config.cur_editor_font)
-	fc.set_font_name(config.cur_console_font)
+	fe.set_font_name(misc.merge_font_name(fe, config.cur_editor_font))
+	fc.set_font_name(misc.merge_font_name(fc, config.cur_console_font))
 	if config.build_verbose != -1:
 		bv.set_active(bool(config.build_verbose))
 	else:
@@ -266,9 +266,10 @@ def preferences(widget, data=None):
 	r = pref.run()
 	if r == 1:
 		config.cur_editor_font = fe.get_font_name()
-		p.setValue("editor.font", config.cur_editor_font.replace(" ", ",plain,"))
+		print fe.get_font_name()
+		p.setValue("editor.font", config.cur_editor_font.replace(" ", ","))
 		config.cur_console_font = fc.get_font_name()
-		p.setValue("console.font", config.cur_console_font.replace(" ", ",plain,"))
+		p.setValue("console.font", config.cur_console_font.replace(" ", ","))
 		config.user_library = ul.get_text()
 		p.setValue("gnoduino.user_library", config.user_library)
 		config.build_verbose = bv.get_active()
@@ -370,7 +371,7 @@ def createCon():
 	tmp.set_buffer(twbuf)
 	tmp.modify_base(gtk.STATE_NORMAL, gtk.gdk.Color(0,0,0))
 	tmp.modify_text(gtk.STATE_NORMAL, gtk.gdk.Color("#ffffff"))
-	misc.set_widget_font(tmp, p.getValue("editor.font").replace(",", " "))
+	misc.set_widget_font(tmp, config.cur_console_font)
 	sw.add(tmp)
 	sw.show_all()
 	return (sw, tmp)
@@ -387,7 +388,7 @@ def createScon():
 	tmp.set_buffer(twbuf)
 	tmp.modify_base(gtk.STATE_NORMAL, gtk.gdk.Color(0,0,0))
 	tmp.modify_text(gtk.STATE_NORMAL, gtk.gdk.Color("#ffffff"))
-	misc.set_widget_font(tmp, p.getValue("editor.font").replace(",", " "))
+	misc.set_widget_font(tmp, config.cur_console_font)
 	sw.add(tmp)
 	hbox = gtk.HBox(False, 0)
 	s = gtk.Button("Send")
@@ -505,11 +506,8 @@ def run():
 		vbox = gui.get_object("vpan")
 		sb = gui.get_object("statusbar1")
 		sb2 = gui.get_object("statusbar2")
-		tmp = p.getSafeValue("editor.font", "Monospace,plain,12").split(",")
-		"""Not entirely sure of Monospaced->Monospace variation in family name"""
-		config.cur_editor_font = tmp[0].replace("Monospaced", "Monospace")+" "+tmp[2]
-		tmp = p.getSafeValue("console.font", "Sans,plain,12").split(",")
-		config.cur_console_font = tmp[0].replace("Monospaced", "Monospace")+" "+tmp[2]
+		config.cur_editor_font = p.getSafeValue("editor.font", "Monospace,12").replace(",", " ")
+		config.cur_console_font = p.getSafeValue("console.font", "Sans,12").replace(",", " ")
 		config.build_verbose = p.getSafeValue("build.verbose", False)
 		config.user_library = client.get_string(user_library_key)
 		menu(gui)

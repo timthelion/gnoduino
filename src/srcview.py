@@ -178,7 +178,7 @@ def createsrcview(status, f=None):
 		sbuffer.set_language(manager.get_language("c"))
 	sv = gtksourceview2.View(sbuffer)
 	p = prefs.preferences()
-	misc.set_widget_font(sv, p.getValue("editor.font").replace(",", " "))
+	misc.set_widget_font(sv, config.cur_editor_font)
 	manager = gtksourceview2.StyleSchemeManager()
 #	for i in gtksourceview2.StyleSchemeManager.get_scheme_ids(manager):
 #		print i

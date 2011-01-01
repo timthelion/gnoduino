@@ -49,7 +49,7 @@ serial_port_key = "/apps/gnoduino/serial_port"
 serial_baud_rate_key = "/apps/gnoduino/serial_baud_rate"
 
 def setupPage(w, page, p):
-	misc.set_widget_font(getCurrentView(), config.cur_font)
+	misc.set_widget_font(getCurrentView(), config.cur_editor_font)
 	getCurrentPage().queue_resize()
 	pg = w.get_nth_page(p)
 	cl = pg.get_data("close");
@@ -248,31 +248,35 @@ def menuResetBoard(widget, data=None):
 def preferences(widget, data=None):
 	global client
 	pref = gui.get_object("preferences")
-	fs = gui.get_object("fontsize")
-	p = prefs.preferences()
-	if config.cur_font != -1:
-		fs.set_value(float(config.cur_font.split(",")[2]))
-	else:
-		fs.set_value(float(p.getValue("editor.font").split(",")[2]))
+	fe = gui.get_object("fontbutton1")
+	fc = gui.get_object("fontbutton2")
 	bv = gui.get_object("build.verbose")
+	ul = gui.get_object("user.library")
+	p = prefs.preferences()
+	fe.set_font_name(config.cur_editor_font)
+	fc.set_font_name(config.cur_console_font)
 	if config.build_verbose != -1:
 		bv.set_active(bool(config.build_verbose))
 	else:
-		bv.set_active(bool(p.getValue("build.verbose")))
-	ul = gui.get_object("user.library")
+		bv.set_active(bool(p.getSafeValue("build.verbose", False)))
 	if (config.user_library != None and config.user_library != -1):
 		ul.set_text(str(config.user_library))
 	else:
 		ul.set_text(str(client.get_string(user_library_key)) if client.get_string(user_library_key) != None else "")
 	r = pref.run()
 	if r == 1:
-		config.cur_font =  p.getValue("editor.font").split(",")[0] + \
-			"," + p.getValue("editor.font").split(",")[1] + \
-			"," + str(int(fs.get_value()))
-		misc.set_widget_font(tw, config.cur_font)
-		misc.set_widget_font(sctw, config.cur_font)
-		misc.set_widget_font(getCurrentView(), config.cur_font)
+		config.cur_editor_font = fe.get_font_name()
+		p.setValue("editor.font", config.cur_editor_font.replace(" ", ",plain,"))
+		config.cur_console_font = fc.get_font_name()
+		p.setValue("console.font", config.cur_console_font.replace(" ", ",plain,"))
 		config.user_library = ul.get_text()
+		p.setValue("gnoduino.user_library", config.user_library)
+		config.build_verbose = bv.get_active()
+		p.setValue("build.verbose", config.build_verbose)
+		p.saveValues()
+		misc.set_widget_font(tw, config.cur_console_font)
+		misc.set_widget_font(sctw, config.cur_console_font)
+		misc.set_widget_font(getCurrentView(), config.cur_editor_font)
 		client.set_string(user_library_key, config.user_library)
 	pref.hide()
 
@@ -501,8 +505,12 @@ def run():
 		vbox = gui.get_object("vpan")
 		sb = gui.get_object("statusbar1")
 		sb2 = gui.get_object("statusbar2")
-		config.cur_font = p.getValue("editor.font")
-		config.build_verbose = p.getValue("build.verbose")
+		tmp = p.getSafeValue("editor.font", "Monospace,plain,12").split(",")
+		"""Not entirely sure of Monospaced->Monospace variation in family name"""
+		config.cur_editor_font = tmp[0].replace("Monospaced", "Monospace")+" "+tmp[2]
+		tmp = p.getSafeValue("console.font", "Sans,plain,12").split(",")
+		config.cur_console_font = tmp[0].replace("Monospaced", "Monospace")+" "+tmp[2]
+		config.build_verbose = p.getSafeValue("build.verbose", False)
 		config.user_library = client.get_string(user_library_key)
 		menu(gui)
 		"""build menus"""

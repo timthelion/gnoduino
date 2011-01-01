@@ -21,21 +21,21 @@ import sys
 
 import gettext
 _ = gettext.gettext
+defaultPath = os.path.expanduser('~/.arduino/preferences.txt')
 
 class preferences(object):
 
 	def __init__(self):
 		self.defaults = []
 		try:
-			path = os.path.expanduser('~/.arduino/preferences.txt')
-			if os.path.exists(path):
-				f = open(path)
+			if os.path.exists(defaultPath):
+				f = open(defaultPath)
 			else: raise
 		except:
 			try:
-				path = os.path.join(sys.prefix, "share", "gnoduino", "preferences.txt")
-				if os.path.exists(path):
-					f = open(path)
+				self.path = os.path.join(sys.prefix, "share", "gnoduino", "preferences.txt")
+				if os.path.exists(self.path):
+					f = open(self.path)
 				else: raise
 			except Exception,e:
 				print e
@@ -49,3 +49,25 @@ class preferences(object):
 			if i[0] == value:
 				return i[1]
 		return None
+
+	def getSafeValue(self, value, fail):
+		for i in self.defaults:
+			if i[0] == value:
+				return i[1]
+		return fail
+
+	def setValue(self, key, value):
+		update = False
+		for i in self.defaults:
+			if i[0] == key:
+				i[1] = str(value)
+				update = True
+
+		self.defaults.append([key, str(value)]) if update is not True else ""
+
+	def saveValues(self):
+		#fixme add backup copy in case things go wrong
+		w = open(defaultPath, "w")
+		for i in self.defaults:
+			w.write(i[0]+"="+i[1]+"\n")
+		w.close()

@@ -1,0 +1,24 @@
+Gnoduino 0.2.0
+==============
+
+- sync hardware target to arduino 0022 release
+- prompt on unconfigured serial port
+- do not crash if port cannot be open
+- add save support for port and baudrate
+- add support for ttyACM*
+- change serial default to 9600,8N1
+- escape control caracters in serial console
+- fix burning bootloader properly and support extended fuse support
+- reduce output updates as it slows things down
+- fix search dialog when no results
+- add support for user-specified libraries paths
+- add local directory in library search path
+- try harder to guess the correct mime type
+- fix overwrite dialog
+- remember board selection
+- remember mainwindow size
+- fix tab's close button size
+- update result window with uploader output
+- add verbose build option
+- add support for undo/redo actions
+- ignore wrong utf8 encoding in files

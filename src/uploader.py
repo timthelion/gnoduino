@@ -131,7 +131,6 @@ def upload(obj, serial, output, notify):
 		run = misc.runProgOutput(output, compline)
 		if run == False: raise
 	except:
-		print "Error: %s" % e
 		notify.pop(context)
 		notify.push(context, _("Flashing error."))
 		return

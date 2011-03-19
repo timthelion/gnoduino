@@ -35,9 +35,33 @@ import prefs
 LOG_FILENAME = 'arduino.out'
 logging.basicConfig(filename=LOG_FILENAME,level=logging.DEBUG)
 
+defaultPath = os.path.expanduser('~/.arduino')
 arduino_path = "hardware/arduino/cores/arduino"
 arduino_boot_path = "hardware/arduino/bootloaders"
 arduino_libs_path = "libraries"
+
+def getArduinoFile(filename):
+	path = None
+	try:
+		path = os.path.join(os.getcwd(), defaultPath, filename)
+		if os.path.exists(path):
+			return path
+		else: raise
+	except:
+		try:
+			path = os.path.join(sys.prefix, "local", "share", "gnoduino", filename)
+			if os.path.exists(path):
+				return path
+			else: raise
+		except:
+			try:
+				path = os.path.join(sys.prefix, "share", "gnoduino", filename)
+				if os.path.exists(path):
+					return path
+				else: raise
+			except Exception,e:
+				print(e)
+				return path
 
 def getArduinoPath():
 	try:

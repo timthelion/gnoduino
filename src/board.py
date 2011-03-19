@@ -22,6 +22,7 @@ import sys
 import ConfigParser
 import config
 import prefs
+import misc
 
 import gettext
 _ = gettext.gettext
@@ -38,20 +39,9 @@ class Board(object):
 		conf = ConfigParser.RawConfigParser()
 		client = gconf.client_get_default()
 		if client.get_int(BD_KEY): config.cur_board = client.get_int(BD_KEY)
-		try:
-			path = os.path.join(os.getcwd(), "BOARDS")
-			if os.path.exists(path):
-				conf.read(path)
-			else: raise
-		except:
-			try:
-				path = os.path.join(sys.prefix, "share", "gnoduino", "BOARDS")
-				if os.path.exists(path):
-					conf.read(path)
-				else: raise
-			except Exception,e:
-				print e
-				raise SystemExit(_("Cannot load BOARDS file. Exiting."))
+		path = misc.getArduinoFile("BOARDS")
+		if path is None: raise SystemExit(_("Cannot load BOARDS file. Exiting."))
+		conf.read(path)
 		c = 1
 		for i in conf.sections():
 			v = dict(conf.items(i))

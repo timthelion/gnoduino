@@ -19,6 +19,7 @@
 import os
 import sys
 import ConfigParser
+import misc
 import config
 import prefs
 
@@ -34,20 +35,9 @@ class Programmer(object):
 		self.programmers = []
 		self.defaults = []
 		conf = ConfigParser.RawConfigParser()
-		try:
-			path = os.path.join(os.getcwd(), "PROGRAMMERS")
-			if os.path.exists(path):
-				conf.read(path)
-			else: raise
-		except:
-			try:
-				path = os.path.join(sys.prefix, "share", "gnoduino", "PROGRAMMERS")
-				if os.path.exists(path):
-					conf.read(path)
-				else: raise
-			except Exception,e:
-				print e
-				raise SystemExit(_("Cannot load PROGRAMMERS file. Exiting."))
+		path = misc.getArduinoFile("PROGRAMMERS")
+		if path is None: raise SystemExit(_("Cannot find PROGRAMMERS"))
+		conf.read(path)
 		c = 1
 		for i in conf.sections():
 			v = mydict(conf.items(i))

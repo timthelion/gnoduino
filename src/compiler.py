@@ -247,6 +247,15 @@ def compile(tw, id, output, notify):
 		print "Error compiling. Op aborted!"
 	return tempobj
 
+def getLibraries():
+	paths = ["", misc.getArduinoPath()]
+	dirs = ["", "utility"]
+	for d in dirs:
+		for q in paths:
+			print q
+	#		fl = os.path.join(q, library, d)
+	#		if os.path.exists(fl):
+
 """checks whether library exists (it has been compiled and tries to compile it otherwise"""
 """@returns a list of compiled objects"""
 def validateLib(library, tempobj, output, notify):

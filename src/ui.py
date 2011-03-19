@@ -220,6 +220,9 @@ def find(widget, data=None):
 		srcview.findText(find_text, -1, [gui.get_object(i) for i in cbs])
 	find.hide()
 
+def libImport(widget, data=None):
+	compiler.getLibraries()
+
 def compile(widget, data=file):
 	cserial(None, 0, sctw)
 	page = getCurrentPage()
@@ -266,7 +269,6 @@ def preferences(widget, data=None):
 	r = pref.run()
 	if r == 1:
 		config.cur_editor_font = fe.get_font_name()
-		print fe.get_font_name()
 		p.setValue("editor.font", config.cur_editor_font.replace(" ", ","))
 		config.cur_console_font = fc.get_font_name()
 		p.setValue("console.font", config.cur_console_font.replace(" ", ","))
@@ -346,6 +348,7 @@ menus = [
 		("menu-undo", undo, (ord('z'), gtk.gdk.CONTROL_MASK)),
 		("menu-redo", redo, (ord('z'), gtk.gdk.CONTROL_MASK|gtk.gdk.SHIFT_MASK)),
 		("menu-compile", compile, (ord('r'), gtk.gdk.CONTROL_MASK)),
+		("menu-import", libImport, (ord('i'), gtk.gdk.CONTROL_MASK)),
 		("menu-reset-board", menuResetBoard, (ord('m'), gtk.gdk.CONTROL_MASK)),
 		("menu-preferences", preferences, (None, None)),
 		("menu-upload", menuUpload, (ord('u'), gtk.gdk.CONTROL_MASK)),
@@ -494,12 +497,17 @@ def run():
 			else: raise
 		except:
 			try:
-				path = os.path.join(sys.prefix, "share", "gnoduino", "ui", "main.ui")
+				path = os.path.join(sys.prefix, "local", "share", "gnoduino", "ui", "main.ui")
 				if os.path.exists(path):
 					gui.add_from_file(path)
-			except Exception,e:
-				print(e)
-				raise SystemExit(_("Cannot load ui file"))
+			except:
+				try:
+					path = os.path.join(sys.prefix, "share", "gnoduino", "ui", "main.ui")
+					if os.path.exists(path):
+						gui.add_from_file(path)
+				except Exception,e:
+					print(e)
+					raise SystemExit(_("Cannot load ui file"))
 		mainwin = gui.get_object("top_win")
 		mainwin.set_default_size(client.get_int(MW), client.get_int(MH))
 		mainwin.connect("configure-event", cb_configure_event)

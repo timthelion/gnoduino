@@ -21,27 +21,19 @@ import sys
 
 import gettext
 _ = gettext.gettext
+
+import misc
+
+defaultFile = "preferences.txt"
 defaultPath = os.path.expanduser('~/.arduino/preferences.txt')
 
 class preferences(object):
 
 	def __init__(self):
 		self.defaults = []
-		try:
-			if os.path.exists(defaultPath):
-				f = open(defaultPath)
-			else: raise
-		except:
-			try:
-				self.path = os.path.join(sys.prefix, "share", "gnoduino", "preferences.txt")
-				if os.path.exists(self.path):
-					f = open(self.path)
-				else: raise
-			except Exception,e:
-				print e
-				raise SystemExit(_("Cannot load defaults file. Installation problem."))
-
-		for i in f:
+		path = misc.getArduinoFile(defaultFile)
+		if path is None: raise SystemExit(_("Cannot find %s") % defaultFile)
+		for i in open(path):
 			self.defaults.append(i.rstrip("\n").split("="))
 
 	def getValue(self, value):

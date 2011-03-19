@@ -44,6 +44,7 @@ font = "Monospace 10"
 
 MW = "/apps/gnoduino/width"
 MH = "/apps/gnoduino/height"
+CPOS = "/apps/gnoduino/conspos"
 user_library_key = "/apps/gnoduino/user_library"
 serial_port_key = "/apps/gnoduino/serial_port"
 serial_baud_rate_key = "/apps/gnoduino/serial_baud_rate"
@@ -368,7 +369,6 @@ def createCon():
 	sw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
 	sw.set_shadow_type(gtk.SHADOW_IN)
 	tmp = gtk.TextView()
-	tmp.set_size_request(-1, 150)
 	tmp.set_editable(False)
 	twbuf = gtk.TextBuffer()
 	tmp.set_buffer(twbuf)
@@ -385,7 +385,6 @@ def createScon():
 	sw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
 	sw.set_shadow_type(gtk.SHADOW_IN)
 	tmp = gtk.TextView()
-	tmp.set_size_request(-1, 150)
 	tmp.set_editable(False)
 	twbuf = gtk.TextBuffer()
 	tmp.set_buffer(twbuf)
@@ -465,6 +464,10 @@ def getGui():
 def cb_configure_event(widget, event):
 	client.set_int(MW, event.width)
 	client.set_int(MH, event.height)
+
+def vbox_move_handle(widget, scrolltype):
+	client.set_int(CPOS, widget.get_position())
+	return True
 
 def run():
 	try:
@@ -577,6 +580,12 @@ def run():
 		(con, tw) = createCon()
 		(scon,sctw) = createScon()
 		vbox.add(con)
+		vbox.connect("notify::position", vbox_move_handle)
+		cpos = client.get_int(CPOS)
+		if cpos is not None:
+			vbox.set_position(cpos)
+		else:
+			vbox.set_position(-1)
 
 		mainwin.set_focus(sv)
 		mainwin.show_all()

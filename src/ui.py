@@ -67,13 +67,17 @@ def destroyPage(w, b):
 	f = b.get_data("file")
 	buf = b.get_data("buffer")
 	if misc.bufferModified(buf, f) is True:
-		save = misc.createPopup("Save document", mainwin, \
-			_("Save changes to document\n%s\n before closing?" % f))
+		if f is None: f= "Untitled"
+		save = misc.createPopup(_("Save document"), mainwin, \
+			_("Save changes to document \"%s\" before closing?" % f))
 		if save == gtk.RESPONSE_YES:
 			csave(None, False)
+		if save == gtk.RESPONSE_CANCEL or save == gtk.RESPONSE_DELETE_EVENT:
+			return False
 	nb.remove_page(nb.page_num(b))
 	if nb.get_n_pages() < 1:
 		createPage(nb)
+	return True
 
 def updatePageTitle(w, status):
 	page = getCurrentPage()
@@ -206,6 +210,9 @@ def csave(w, data=None):
 	updatePageTitle(b, sb2)
 
 def quit(widget, data=None):
+	for i in range(nb.get_n_pages()):
+		if (destroyPage(None, nb.get_nth_page(0)) is False):
+			return
 	shutil.rmtree(id, True)
 	gtk.main_quit()
 

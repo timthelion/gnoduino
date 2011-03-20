@@ -235,8 +235,12 @@ def createPopup(title, parent, msg):
 	dialog = gtk.MessageDialog(parent,
 			gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
 			gtk.MESSAGE_WARNING,
-			gtk.BUTTONS_YES_NO,
+			gtk.BUTTONS_NONE,
 			msg)
+	dialog.add_buttons(_("Close without Saving"), 1, gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+			gtk.STOCK_SAVE_AS, gtk.RESPONSE_YES)
+	dialog.format_secondary_text(_("If you don't save, changes will be permanently lost."))
+	dialog.set_default_response(gtk.RESPONSE_CANCEL)
 	response = dialog.run()
 	dialog.destroy()
 	return response

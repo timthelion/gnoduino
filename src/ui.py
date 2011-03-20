@@ -519,7 +519,10 @@ def run():
 					print(e)
 					raise SystemExit(_("Cannot load ui file"))
 		mainwin = gui.get_object("top_win")
-		mainwin.set_default_size(client.get_int(MW), client.get_int(MH))
+		mw = client.get_int(MW)
+		mh = client.get_int(MH)
+		if (mw and mh):
+			mainwin.set_default_size(mw, mh)
 		mainwin.connect("configure-event", cb_configure_event)
 		vbox = gui.get_object("vpan")
 		sb = gui.get_object("statusbar1")

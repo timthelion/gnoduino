@@ -128,6 +128,9 @@ def runProg(cmdline):
 				gtk.main_iteration()
 			sout += o
 		if p.poll()==1: raise
+	except OSError as e:
+		err = "ERROR: Error running %s: %s" % (cmdline[0], e.strerror)
+		return (False, err)
 	except:
 		logging.debug("ERR:%s", sout)
 		return (False, sout)

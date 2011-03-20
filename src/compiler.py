@@ -148,7 +148,7 @@ def compile(tw, id, output, notify):
 			misc.printLogMessageLn(sout)
 			if run == False:
 				misc.printError(notify, output, stripOut(sout, pre_file))
-				raise
+				raise NameError("compile error")
 		"""compile C++ targets"""
 		misc.printLogMessageLn('processing C++ targets')
 		for i in cppobj:
@@ -163,7 +163,7 @@ def compile(tw, id, output, notify):
 			misc.printLogMessageLn(sout)
 			if run == False:
 				misc.printError(notify, output, sout)
-				raise
+				raise NameError("compile error")
 		"""generate archive objects"""
 		misc.printLogMessageLn('generating ar objects')
 		for i in cobj+cppobj:
@@ -175,7 +175,7 @@ def compile(tw, id, output, notify):
 			misc.printLogMessageLn(sout)
 			if run == False:
 				misc.printError(notify, output, stripOut(sout, pre_file))
-				raise
+				raise NameError("compile error")
 		"""precompile pde"""
 		misc.printLogMessageLn('pde compile')
 		misc.printLogMessageLn('-----------')

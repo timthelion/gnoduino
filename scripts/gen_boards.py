@@ -21,15 +21,19 @@ import ConfigParser
 
 conf = ConfigParser.RawConfigParser()
 f = 'hardware/arduino/boards.txt'
-w = file('BOARDS', "w+")
 res = []
 tmp = []
-for i in file(f):
-	if i != "\n" and i != "#":
-		for j in i.splitlines():
-			if j[0] != "#":
-				tmp.append(j)
-				res.append(j.split('.', 1)[0])
+try:
+	for i in file(f):
+		if i != "\n" and i != "#":
+			for j in i.splitlines():
+				if j[0] != "#":
+					tmp.append(j)
+					res.append(j.split('.', 1)[0])
+except:
+	raise SystemExit("Cannot find %s. Forgot to update hardware module ? Exiting" % f)
+
+w = file('BOARDS', "w+")
 cnt = []
 for z in tmp:
 	cnt = z.split('.', 1)[1]

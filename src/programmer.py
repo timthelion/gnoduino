@@ -38,6 +38,8 @@ class Programmer(object):
 		path = misc.getArduinoFile("PROGRAMMERS")
 		if path is None: raise SystemExit(_("Cannot find PROGRAMMERS"))
 		conf.read(path)
+		if not len(conf.sections()):
+			raise SystemExit(_("Error reading %s file. File is corrupt. Installation problem.") % path)
 		c = 1
 		for i in conf.sections():
 			v = mydict(conf.items(i))

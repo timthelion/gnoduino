@@ -42,6 +42,8 @@ class Board(object):
 		path = misc.getArduinoFile("BOARDS")
 		if path is None: raise SystemExit(_("Cannot load BOARDS file. Exiting."))
 		conf.read(path)
+		if not len(conf.sections()):
+			raise SystemExit(_("Error reading %s file. File is corrupt. Installation problem.\n") % path)
 		c = 1
 		for i in conf.sections():
 			v = dict(conf.items(i))

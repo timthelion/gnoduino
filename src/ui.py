@@ -544,14 +544,20 @@ def run():
 			sub.append(menuItem)
 		gui.get_object("board").set_submenu(sub)
 
+		"""setup default serial port"""
 		sub = gtk.Menu()
 		maingroup = gtk.RadioMenuItem(None, None)
 		config.serial_port = client.get_string(serial_port_key)
+		validport = False
+		if config.serial_port: defport = config.serial_port
+		else: defport = p.getValue("serial.port")
+		for i in ser.scan():
+			if i == defport:
+				validport = True
+
 		for i in ser.scan():
 			menuItem = gtk.RadioMenuItem(maingroup, i)
-			if config.serial_port: defport = config.serial_port
-			else: defport = p.getValue("serial.port")
-			if defport:
+			if defport and validport:
 				if i == defport:
 					menuItem.set_active(True)
 					if config.cur_serial_port == -1:

@@ -154,7 +154,7 @@ def runProgOutput(console, cmdline):
 			if o == '' and p.poll() != None: break
 			printMessageLn(console, o)
 			pr = prefs.preferences()
-			if pr.getValue("build.verbose"): sys.stderr.write(o)
+			if pr.getBoolValue("build.verbose"): sys.stderr.write(o)
 			sout += o
 		if p.poll()==1: raise
 	except:
@@ -207,7 +207,7 @@ def printMessageLn(console, message):
 	console.scroll_mark_onscreen(mark)
 
 def printLogMessageLn(message):
-	if config.build_verbose: sys.stderr.write(message+"\n")
+	if config.build_verbose == 'true': sys.stderr.write(message+"\n")
 
 def statusMessage(w, text):
 	w.push(1, text)

@@ -266,10 +266,14 @@ def preferences(widget, data=None):
 	p = prefs.preferences()
 	fe.set_font_name(misc.merge_font_name(fe, config.cur_editor_font))
 	fc.set_font_name(misc.merge_font_name(fc, config.cur_console_font))
+	val = 0
 	if config.build_verbose != -1:
-		bv.set_active(bool(config.build_verbose))
+		if config.build_verbose == 'true':
+			val = 1
 	else:
-		bv.set_active(bool(p.getSafeValue("build.verbose", False)))
+		if p.getSafeValue("build.verbose", "false") == 'true':
+			val = 1
+	bv.set_active(val)
 	if (config.user_library != None and config.user_library != -1):
 		ul.set_text(str(config.user_library))
 	else:
@@ -282,7 +286,11 @@ def preferences(widget, data=None):
 		p.setValue("console.font", config.cur_console_font.replace(" ", ","))
 		config.user_library = ul.get_text()
 		p.setValue("gnoduino.user_library", config.user_library)
-		config.build_verbose = bv.get_active()
+		val = bv.get_active()
+		if val == 1:
+			config.build_verbose = 'true'
+		else:
+			config.build_verbose = 'false'
 		p.setValue("build.verbose", config.build_verbose)
 		p.saveValues()
 		misc.set_widget_font(tw, config.cur_console_font)
@@ -529,7 +537,7 @@ def run():
 		sb2 = gui.get_object("statusbar2")
 		config.cur_editor_font = p.getSafeValue("editor.font", "Monospace,12").replace(",", " ")
 		config.cur_console_font = p.getSafeValue("console.font", "Sans,12").replace(",", " ")
-		config.build_verbose = p.getSafeValue("build.verbose", False)
+		config.build_verbose = p.getSafeValue("build.verbose", "False")
 		config.user_library = client.get_string(user_library_key)
 		menu(gui)
 		"""build menus"""

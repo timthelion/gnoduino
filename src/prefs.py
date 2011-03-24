@@ -34,12 +34,21 @@ class preferences(object):
 		path = misc.getArduinoFile(defaultFile)
 		if path is None: raise SystemExit(_("Cannot find %s") % defaultFile)
 		for i in open(path):
-			self.defaults.append(i.rstrip("\n").split("="))
+			self.defaults.append(i.replace(" ", "").rstrip("\n").split("="))
 
 	def getValue(self, value):
 		for i in self.defaults:
 			if i[0] == value:
 				return i[1]
+		return None
+
+	def getBoolValue(self, value):
+		for i in self.defaults:
+			if i[0] == value:
+				if i[1] == 'true':
+					return True
+				if i[1] == 'false':
+					return False
 		return None
 
 	def getSafeValue(self, value, fail):
@@ -61,5 +70,8 @@ class preferences(object):
 		#fixme add backup copy in case things go wrong
 		w = open(defaultPath, "w")
 		for i in self.defaults:
-			w.write(i[0]+"="+i[1]+"\n")
+			if len(i)>1:
+				w.write(i[0]+" = "+i[1]+"\n")
+			else:
+				w.write(i[0]+"\n")
 		w.close()

@@ -63,7 +63,8 @@ def destroyPage(w, b):
 		save = misc.createPopup(_("Save document"), mainwin, \
 			_("Save changes to document \"%s\" before closing?" % f))
 		if save == gtk.RESPONSE_YES:
-			csave(None, False)
+			if csave(None, False) is False:
+				return False
 		if save == gtk.RESPONSE_CANCEL or save == gtk.RESPONSE_DELETE_EVENT:
 			return False
 	nb.remove_page(nb.page_num(b))
@@ -187,7 +188,7 @@ def csave(w, data=None):
 	f = page.get_data("file")
 	if f == None or data == True:
 		f = saveAs()
-		if f == None: return
+		if f == None: return False
 		else:
 			if os.path.exists(f):
 				p = misc.MessageBox()
@@ -200,6 +201,7 @@ def csave(w, data=None):
 	F.write(b.get_text(b.get_start_iter(), b.get_end_iter()))
 	F.close()
 	updatePageTitle(b, sb2)
+	return True
 
 def quit(widget, data=None):
 	for i in range(nb.get_n_pages()):

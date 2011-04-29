@@ -17,7 +17,6 @@
 
 import os
 import sys
-import gconf
 import glib
 import gobject
 import gtk
@@ -41,13 +40,6 @@ import gnoduino
 
 import gtksourceview2
 font = "Monospace 10"
-
-MW = "/apps/gnoduino/width"
-MH = "/apps/gnoduino/height"
-CPOS = "/apps/gnoduino/conspos"
-user_library_key = "/apps/gnoduino/user_library"
-serial_port_key = "/apps/gnoduino/serial_port"
-serial_baud_rate_key = "/apps/gnoduino/serial_baud_rate"
 
 def setupPage(w, page, p):
 	misc.set_widget_font(getCurrentView(), config.cur_editor_font)
@@ -257,7 +249,6 @@ def menuResetBoard(widget, data=None):
 	ser.resetBoard()
 
 def preferences(widget, data=None):
-	global client
 	pref = gui.get_object("preferences")
 	fe = gui.get_object("fontbutton1")
 	fc = gui.get_object("fontbutton2")
@@ -277,7 +268,7 @@ def preferences(widget, data=None):
 	if (config.user_library != None and config.user_library != -1):
 		ul.set_text(str(config.user_library))
 	else:
-		ul.set_text(str(client.get_string(user_library_key)) if client.get_string(user_library_key) != None else "")
+		ul.set_text(str(p.getSafeValue("user.library", "")))
 	r = pref.run()
 	if r == 1:
 		config.cur_editor_font = fe.get_font_name()
@@ -292,11 +283,11 @@ def preferences(widget, data=None):
 		else:
 			config.build_verbose = 'false'
 		p.setValue("build.verbose", config.build_verbose)
+		p.setValue("user.library", config.user_library)
 		p.saveValues()
 		misc.set_widget_font(tw, config.cur_console_font)
 		misc.set_widget_font(sctw, config.cur_console_font)
 		misc.set_widget_font(getCurrentView(), config.cur_editor_font)
-		client.set_string(user_library_key, config.user_library)
 	pref.hide()
 
 def stop(widget, data=None):
@@ -328,17 +319,18 @@ def burnBootloader(w, id):
 	uploader.burnBootloader(ser, tw, sb, id)
 
 def setBaud(w, data=None):
-	ser.resetBoard()
-	ser.serial.close()
+	if ser.serial.isOpen():
+		ser.resetBoard()
+		ser.serial.close()
 	if config.serial_baud_rate == -1:
-		config.serial_baud_rate = client.get_string(serial_baud_rate_key)
-		if config.serial_baud_rate: defbaud = config.serial_baud_rate
-		else: defbaud = p.getValue("serial.debug_rate")
+		config.serial_baud_rate = p.getSafeValue("serial.debug_rate", "9600")
+		defbaud = config.serial_baud_rate
 	else:
 		if w: defbaud = ser.getBaudrates()[w.get_active()]
 	ser.serial.baudrate = [i for i in ser.getBaudrates() if i == defbaud][0]
 	ser.serial.open()
-	client.set_string(serial_baud_rate_key, defbaud)
+	p.setValue("serial.debug_rate", defbaud)
+	p.saveValues()
 
 def serSendText(w, data=None):
 	ser.serial.write(w.get_text())
@@ -458,12 +450,17 @@ def setSerial(w, id):
 	createBaudCombo(w, id)
 	try:
 		config.cur_serial_port = id
-		ser.resetBoard()
-		ser.serial.close()
+		if ser.serial.isOpen():
+			ser.resetBoard()
+			ser.serial.close()
 		ser.serial.port = id
 		ser.serial.open()
-		client.set_string(serial_port_key, id)
-	except: None
+		p.setValue("serial.port", id)
+		p.saveValues()
+	except Exception,e:
+		misc.clearConsole(tw)
+		misc.printMessage(tw, str(e))
+		print(e)
 
 def getCurrentPage():
 	return nb.get_nth_page(nb.get_current_page())
@@ -477,11 +474,13 @@ def getGui():
 	return gui
 
 def cb_configure_event(widget, event):
-	client.set_int(MW, event.width)
-	client.set_int(MH, event.height)
+	p.setValue("default.window.width", event.width)
+	p.setValue("default.window.height", event.height)
+	p.saveValues()
 
 def vbox_move_handle(widget, scrolltype):
-	client.set_int(CPOS, widget.get_position())
+	p.setValue("console.height", widget.get_position())
+	p.saveValues()
 	return True
 
 def run():
@@ -501,8 +500,6 @@ def run():
 		global scon
 		global p
 		global b
-		global client
-		client = gconf.client_get_default()
 		id = misc.makeWorkdir()
 		ser = serialio.sconsole()
 		p = prefs.preferences()
@@ -527,8 +524,8 @@ def run():
 					print(e)
 					raise SystemExit(_("Cannot load ui file"))
 		mainwin = gui.get_object("top_win")
-		mw = client.get_int(MW)
-		mh = client.get_int(MH)
+		mw = int(p.getSafeValue("default.window.width", 0))
+		mh = int(p.getSafeValue("default.window.height", 0))
 		if (mw and mh):
 			mainwin.set_default_size(mw, mh)
 		mainwin.connect("configure-event", cb_configure_event)
@@ -538,7 +535,7 @@ def run():
 		config.cur_editor_font = p.getSafeValue("editor.font", "Monospace,12").replace(",", " ")
 		config.cur_console_font = p.getSafeValue("console.font", "Sans,12").replace(",", " ")
 		config.build_verbose = p.getSafeValue("build.verbose", "False")
-		config.user_library = client.get_string(user_library_key)
+		config.user_library = p.getValue("user.library")
 		menu(gui)
 		"""build menus"""
 		sub = gtk.Menu()
@@ -555,10 +552,8 @@ def run():
 		"""setup default serial port"""
 		sub = gtk.Menu()
 		maingroup = gtk.RadioMenuItem(None, None)
-		config.serial_port = client.get_string(serial_port_key)
+		defport = p.getValue("serial.port")
 		validport = False
-		if config.serial_port: defport = config.serial_port
-		else: defport = p.getValue("serial.port")
 		for i in ser.scan():
 			if i == defport:
 				validport = True
@@ -581,10 +576,7 @@ def run():
 			sub.append(menuItem)
 
 		if config.serial_baud_rate == -1:
-			config.serial_baud_rate = client.get_string(serial_baud_rate_key)
-			if config.serial_baud_rate: defbaud = config.serial_baud_rate
-			else: defbaud = p.getValue("serial.debug_rate")
-			config.serial_baud_rate = defbaud
+			config.serial_baud_rate = p.getSafeValue("serial.debug_rate", "9600")
 
 		gui.get_object("serial_port").set_submenu(sub)
 
@@ -605,12 +597,8 @@ def run():
 		(scon,sctw) = createScon()
 		vbox.add(con)
 		vbox.connect("notify::position", vbox_move_handle)
-		cpos = client.get_int(CPOS)
-		if cpos is not None:
-			vbox.set_position(cpos)
-		else:
-			vbox.set_position(-1)
-
+		cpos = int(p.getSafeValue("console.height", -1))
+		vbox.set_position(cpos)
 		mainwin.set_focus(sv)
 		mainwin.show_all()
 		mainwin.set_title("Arduino")

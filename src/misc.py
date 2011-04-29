@@ -46,22 +46,22 @@ def getArduinoFile(filename):
 		path = os.path.join(os.getcwd(), defaultPath, filename)
 		if os.path.exists(path):
 			return path
-		else: raise
+		else: raise Exception
 	except:
 		try:
 			path = os.path.join(sys.prefix, "local", "share", "gnoduino", filename)
 			if os.path.exists(path):
 				return path
-			else: raise
+			else: raise Exception
 		except:
 			try:
 				path = os.path.join(sys.prefix, "share", "gnoduino", filename)
 				if os.path.exists(path):
 					return path
-				else: raise
+				else: raise Exception
 			except Exception,e:
 				print(e)
-				return path
+				return None
 
 def getArduinoPath():
 	try:

@@ -16,7 +16,6 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
 
-import gconf
 import os
 import sys
 import ConfigParser
@@ -27,8 +26,6 @@ import misc
 import gettext
 _ = gettext.gettext
 
-BD_KEY = "/apps/gnoduino/board"
-
 class Board(object):
 	def __init__(self):
 		global client
@@ -37,8 +34,6 @@ class Board(object):
 		self.programmers = []
 		self.defaults = []
 		conf = ConfigParser.RawConfigParser()
-		client = gconf.client_get_default()
-		if client.get_int(BD_KEY): config.cur_board = client.get_int(BD_KEY)
 		path = misc.getArduinoFile("BOARDS")
 		if path is None: raise SystemExit(_("Cannot load BOARDS file. Exiting."))
 		conf.read(path)
@@ -51,10 +46,9 @@ class Board(object):
 			v['desc'] = i
 			self.boards.append(v)
 			c = c + 1
-		p = prefs.preferences()
+		self.p = prefs.preferences()
 		if config.cur_board == -1:
-			config.cur_board = self.getBoardIdByName(p.getValue("board")) - 1
-			client.set_int(BD_KEY, config.cur_board)
+			config.cur_board = self.getBoardIdByName(self.p.getSafeValue("board", "atmega168")) - 1
 
 	def getBoards(self):
 		return self.boards
@@ -99,9 +93,9 @@ class Board(object):
 		return self.boards[id]['file']
 
 	def setBoard(self, id):
-		print "set board %d" % (id -1)
 		config.cur_board = (id - 1)
-		client.set_int(BD_KEY, config.cur_board)
+		self.p.setValue("board", self.boards[config.cur_board]['name'])
+		self.p.saveValues()
 
 	def getBoardIdByName(self, name):
 		if name == None: return 1

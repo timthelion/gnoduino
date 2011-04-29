@@ -18,6 +18,7 @@
 
 import os
 import sys
+import gconf
 
 import gettext
 _ = gettext.gettext
@@ -27,14 +28,53 @@ import misc
 defaultFile = "preferences.txt"
 defaultPath = os.path.expanduser('~/.arduino/preferences.txt')
 
+"""gconf/preferences.txt keys"""
+config_keys = [
+[ "default.window.width",  "/apps/gnoduino/width", "int", 800],
+[ "default.window.height", "/apps/gnoduino/height", "int", 600], #mh
+[ "console.height", "/apps/gnoduino/conspos", "int", 100], #CPOS
+[ "user.library", "/apps/gnoduino/user_library", "string", "" ], #user_library_key
+[ "serial.port", "/apps/gnoduino/serial_port", "string", "/dev/ttyS0" ], #serial_port_key
+[ "serial.debug_rate", "/apps/gnoduino/serial_baud_rate", "string", "9600" ], #serial_baud_rate_key
+[ "board", "/apps/gnoduino/board", "string", "atmega168" ], #board
+[ "build.verbose", "/apps/gnoduino/build_verbose", "int", 0 ]] #board
+
 class preferences(object):
 
 	def __init__(self):
+		"""default backend is preferences.txt"""
+		self.backend = 0
 		self.defaults = []
-		path = misc.getArduinoFile(defaultFile)
-		if path is None: raise SystemExit(_("Cannot find %s") % defaultFile)
-		for i in open(path):
-			self.defaults.append(i.replace(" ", "").rstrip("\n").split("="))
+		self.mapping = []
+		if os.path.exists(defaultPath):
+			"""raise SystemExit(_("Cannot find %s") % defaultFile)"""
+			for i in open(defaultPath):
+				self.defaults.append(i.replace(" ", "").rstrip("\n").split("="))
+			return None
+		else:
+			"""use gconf as backend"""
+			self.backend = 1
+			client = gconf.client_get_default()
+			for i in config_keys:
+				self.mapping.append([i[0], i[1]])
+				if i[2] is 'int':
+					val = client.get_int(i[1])
+				if i[2] is 'string':
+					val = client.get_string(i[1])
+				if val is not None and val is not 0:
+					self.defaults.append([i[0], val])
+
+	def getType(self, key):
+		for i in config_keys:
+			if i[0] == key:
+				return i[2]
+		return 'string'
+
+	def getMap(self, key):
+		for i in config_keys:
+			if i[0] == key:
+				return i[1]
+		return None
 
 	def getValue(self, value):
 		for i in self.defaults:
@@ -67,11 +107,20 @@ class preferences(object):
 		self.defaults.append([key, str(value)]) if update is not True else ""
 
 	def saveValues(self):
-		#fixme add backup copy in case things go wrong
-		w = open(defaultPath, "w")
-		for i in self.defaults:
-			if len(i)>1:
-				w.write(i[0]+" = "+i[1]+"\n")
-			else:
-				w.write(i[0]+"\n")
-		w.close()
+		if self.backend is 0:
+			#fixme add backup copy in case things go wrong
+			w = open(defaultPath, "w")
+			for i in self.defaults:
+				if len(i)>1:
+					w.write(i[0]+" = "+i[1]+"\n")
+				else:
+					w.write(i[0]+"\n")
+			w.close()
+		else:
+			client = gconf.client_get_default()
+			for i in self.defaults:
+				if len(i)>1:
+					if self.getType(i[0]) == 'string':
+						client.set_string(self.getMap(i[0]), i[1])
+					if self.getType(i[0]) == 'int':
+						client.set_int(self.getMap(i[0]), int(i[1]))

@@ -348,6 +348,27 @@ def redo(w, data=None):
 	b = page.get_data("buffer")
 	if b.can_redo(): b.redo()
 
+def cut(w, data=None):
+	page = getCurrentPage()
+	b = page.get_data("buffer")
+	display = gtk.gdk.display_manager_get().get_default_display()
+	clipboard = gtk.Clipboard(display, "PRIMARY")
+	b.cut_clipboard(clipboard, True)
+
+def copy(w, data=None):
+	page = getCurrentPage()
+	b = page.get_data("buffer")
+	display = gtk.gdk.display_manager_get().get_default_display()
+	clipboard = gtk.Clipboard(display, "PRIMARY")
+	b.copy_clipboard(clipboard)
+
+def paste(w, data=None):
+	page = getCurrentPage()
+	b = page.get_data("buffer")
+	display = gtk.gdk.display_manager_get().get_default_display()
+	clipboard = gtk.Clipboard(display, "PRIMARY")
+	b.paste_clipboard(clipboard, None, True)
+
 menus = [
 		("menu-new", cnew, (ord('n'), gtk.gdk.CONTROL_MASK)),
 		("menu-open", copen, (ord('o'), gtk.gdk.CONTROL_MASK)),
@@ -357,6 +378,9 @@ menus = [
 		("menu-find", find, (ord('f'), gtk.gdk.CONTROL_MASK)),
 		("menu-undo", undo, (ord('z'), gtk.gdk.CONTROL_MASK)),
 		("menu-redo", redo, (ord('z'), gtk.gdk.CONTROL_MASK|gtk.gdk.SHIFT_MASK)),
+		("menu-cut", cut, (ord('x'), gtk.gdk.CONTROL_MASK)),
+		("menu-copy", copy, (ord('c'), gtk.gdk.CONTROL_MASK)),
+		("menu-paste", paste, (ord('v'), gtk.gdk.CONTROL_MASK)),
 		("menu-compile", compile, (ord('r'), gtk.gdk.CONTROL_MASK)),
 		("menu-import", libImport, (ord('i'), gtk.gdk.CONTROL_MASK)),
 		("menu-reset-board", menuResetBoard, (ord('m'), gtk.gdk.CONTROL_MASK)),

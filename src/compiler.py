@@ -122,7 +122,7 @@ def compile(tw, id, output, notify):
 	if cont is "": return -1
 	context = notify.get_context_id("main")
 	notify.pop(context)
-	notify.push(context, _("Compilling..."))
+	notify.push(context, _("Compiling..."))
 	misc.printLogMessageLn('Compile start')
 	misc.clearConsole(output)
 	tmpdir = id

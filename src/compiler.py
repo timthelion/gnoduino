@@ -243,8 +243,9 @@ def compile(tw, id, output, notify):
 			_("Binary sketch size: %s bytes (of a %s bytes maximum)") % (size, b.getBoardMemory(b.getBoard())))
 	except StandardError as e:
 		print "Error: %s" % e
-	except:
+	except Exception as e:
 		print "Error compiling. Op aborted!"
+		print "Error: %s" % e
 	return tempobj
 
 def getLibraries():

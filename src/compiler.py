@@ -262,7 +262,7 @@ def getLibraries():
 def validateLib(library, tempobj, output, notify):
 	"""compile library also try to compile every cpp under libdir"""
 	"""also try to compile utility dir if present"""
-	paths = ["", misc.getArduinoPath()]
+	paths = ["", misc.getArduinoPath(), misc.getArduinoLibsPath()]
 	if config.user_library != None and config.user_library != -1:
 		paths.extend(i.strip() for i in config.user_library.split(';'))
 	dirs = ["", "utility"]

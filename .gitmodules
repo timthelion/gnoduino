@@ -1,3 +1,6 @@
 [submodule "hardware"]
 	path = hardware
 	url = git://gnome.eu.org/hardware
+[submodule "libraries"]
+	path = libraries
+	url = git://gnome.eu.org/libraries

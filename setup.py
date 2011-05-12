@@ -63,10 +63,14 @@ data_files = [('share/gnoduino/ui', ['ui/main.ui']),
 		('share/gnoduino/pixmaps', glob.glob('pixmaps/*.png')),
 		('share/gnoduino/scripts', ['scripts/gen_boards.py', 'scripts/gen_programmers.py']),
 ]
+"""we ship hardware module"""
 for r,d,f in os.walk("hardware"):
 	if ".git" not in r and f:
 		data_files.append([os.path.join("share", "gnoduino", r), [os.path.join(r,i) for i in f]])
-print data_files
+"""we ship libraries module"""
+for r,d,f in os.walk("libraries"):
+	if ".git" not in r and f:
+		data_files.append([os.path.join("share", "gnoduino", r), [os.path.join(r,i) for i in f]])
 
 setup(name='gnoduino',
 	version=get_gnoduino_version(),

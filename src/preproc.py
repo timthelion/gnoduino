@@ -50,14 +50,26 @@ def findIncludes(instr, local=False):
 	l = [z.split()[1].strip('<>"') for z in m]
 	my = []
 	for z in l:
-		if os.path.exists(os.path.join(misc.getArduinoLibsPath(), z.strip(".h"))):
+		path = os.path.join(misc.getArduinoLibsPath(), z.strip(".h"))
+		if os.path.exists(path) or os.path.exists(path.lower()) or \
+				os.path.exists(path.upper()):
 			my.append(os.path.join(misc.getArduinoLibsPath(), z.strip(".h")))
 		if config.user_library:
 			for q in config.user_library.split(';'):
-				if os.path.exists(os.path.join(q.strip(), z.strip(".h"))):
-					my.append(os.path.join(q.strip(), z.strip(".h")))
-		if local and os.path.exists(os.path.join(z.strip(".h"))):
+				fl = os.path.join(q.strip(), z.strip(".h"))
+				if os.path.exists(fl) or os.path.exists(fl.lower()) or \
+					os.path.exists(fl.upper()):
+						my.append(os.path.join(q.strip(), z.strip(".h")))
+		if local and (os.path.exists(z.strip(".h")) or \
+				os.path.exists(z.strip(".h").lower()) or \
+				os.path.exists(z.strip(".h").upper())):
 			my.append(z.strip(".h"))
+	for z in l:
+		for r, d, f in os.walk(misc.getArduinoLibsPath()):
+			if len(f)>0:
+				for file in f:
+					if file.strip(".h")+".cpp" == z.strip(".h")+".cpp":
+						my.append(r)
 	if len(my) == 0:
 		for z in l:
 			for r, d, f in os.walk(misc.getArduinoLibsPath()):
@@ -90,10 +102,21 @@ def addHeaders(path, b):
 def generateCFlags(path, b):
 	#cont = b.get_text(b.get_start_iter(), b.get_end_iter())
 	cont = b
+	test = []
 	result = []
-	result.extend(["-I"+os.path.join(misc.getArduinoLibsPath(), i) for i in findIncludes(cont)])
-	result.extend(["-I"+os.path.join(config.user_library, i) for i in findIncludes(cont)])
-	result.extend(["-I"+i for i in findIncludes(cont, True)])
+	for i in findIncludes(cont):
+		flag = os.path.join(misc.getArduinoLibsPath(), i)
+		if flag not in set(test):
+			test.append(flag)
+			result.append("-I"+flag)
+		lib = os.path.join(config.user_library, i)
+		if lib not in set(test):
+			test.append(lib)
+			result.append("-I"+lib)
+	for i in findIncludes(cont, True):
+		if i not in set(test):
+			test.append(i)
+			result.append("-I"+i)
 	return result
 
 def generateLibs(path, b):

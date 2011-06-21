@@ -541,11 +541,13 @@ def run():
 				path = os.path.join(sys.prefix, "local", "share", "gnoduino", "ui", "main.ui")
 				if os.path.exists(path):
 					gui.add_from_file(path)
+				else: raise
 			except:
 				try:
 					path = os.path.join(sys.prefix, "share", "gnoduino", "ui", "main.ui")
 					if os.path.exists(path):
 						gui.add_from_file(path)
+					else: raise
 				except Exception,e:
 					print(e)
 					raise SystemExit(_("Cannot load ui file"))

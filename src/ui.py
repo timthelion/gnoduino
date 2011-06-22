@@ -576,6 +576,7 @@ def run():
 			menuItem.connect('toggled', selectBoard, i['id'])
 			sub.append(menuItem)
 		gui.get_object("board").set_submenu(sub)
+		(con, tw) = createCon()
 
 		"""setup default serial port"""
 		sub = gtk.Menu()
@@ -621,7 +622,6 @@ def run():
 		sv = createPage(nb)
 		vbox.add(nb)
 
-		(con, tw) = createCon()
 		(scon,sctw) = createScon()
 		vbox.add(con)
 		vbox.connect("notify::position", vbox_move_handle)

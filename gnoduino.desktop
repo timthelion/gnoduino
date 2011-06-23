@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Name=gnoduino
+GenericName=Gnoduino
+Comment=Gnome Arduino IDE implementation
+Exec=gnoduino %F
+Icon=gnoduino
+Terminal=false
+Type=Application
+MimeType=application/x-csrc;
+Categories=Engineering;Electronics;

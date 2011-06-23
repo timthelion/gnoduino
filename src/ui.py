@@ -238,6 +238,13 @@ def upload(widget, serial, data=file):
 		gtk.main_iteration()
 	uploader.upload(obj, serial, tw, sb)
 
+def butSave(widget, data=None):
+	b = getCurrentPage()
+	f = b.get_data("file")
+	buf = b.get_data("buffer")
+	if misc.bufferModified(buf, f) is True:
+		csave(widget, False)
+
 def menuUpload(widget, data=None):
 	upload(widget, ser, data)
 
@@ -451,7 +458,7 @@ buttons = [
 		("open", "open.png", copen),
 		("new", "new.png", cnew),
 
-		("save", "save.png", None),
+		("save", "save.png", butSave),
 		("upload", "upload.png", None),
 		("serial", "serial.png", None)
 	]

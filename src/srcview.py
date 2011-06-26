@@ -182,7 +182,9 @@ def createsrcview(status, f=None):
 	manager = gtksourceview2.StyleSchemeManager()
 #	for i in gtksourceview2.StyleSchemeManager.get_scheme_ids(manager):
 #		print i
-	scheme =  manager.get_scheme("tango")
+	manager.append_search_path(misc.getArduinoUiPath())
+	manager.force_rescan()
+	scheme =  manager.get_scheme("arduino")
 	sbuffer.set_style_scheme(scheme);
 	sv.set_size_request(500, 450)
 	sv.set_editable(True)

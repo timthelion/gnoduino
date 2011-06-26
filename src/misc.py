@@ -104,6 +104,20 @@ def getArduinoLibsPath():
 		except: path = ""
 	finally: return path
 
+def getArduinoUiPath():
+	try:
+		path = os.path.join(os.getcwd(), "ui")
+		if os.path.exists(path) is False: raise
+	except:
+		try:
+			path = os.path.join(sys.prefix, "local", "share", "gnoduino", "ui")
+			if os.path.exists(path) is False: raise
+		except:
+			try:
+				path = os.path.join(sys.prefix, "share", "gnoduino", "ui")
+				if os.path.exists(path) is False: raise
+			except: path = ""
+	finally: return path
 
 def makeWorkdir():
 	return tempfile.mkdtemp("", os.path.join(tempfile.gettempdir(), "build"+str(time.time())))

@@ -23,6 +23,7 @@ import gtk
 import subprocess
 import select
 import shutil
+import signal
 
 import gettext
 _ = gettext.gettext
@@ -206,7 +207,7 @@ def csave(w, data=None):
 def quit(widget, data=None):
 	for i in range(nb.get_n_pages()):
 		if (destroyPage(None, nb.get_nth_page(0)) is False):
-			return
+			return True
 	shutil.rmtree(id, True)
 	gtk.main_quit()
 
@@ -537,6 +538,8 @@ def run():
 		global scon
 		global p
 		global b
+		#perform cleanup prior to this
+		signal.signal(signal.SIGINT, signal.SIG_DFL)
 		id = misc.makeWorkdir()
 		ser = serialio.sconsole()
 		p = prefs.preferences()
@@ -648,7 +651,7 @@ def run():
 		mainwin.set_focus(sv)
 		mainwin.show_all()
 		mainwin.set_title("Arduino")
-		mainwin.connect("destroy", quit)
+		mainwin.connect("delete-event", quit)
 		gui.get_object("ser_monitor").connect("activate", cserial, sertime, sctw)
 		gui.get_object("serial").connect("clicked", cserial, sertime, sctw)
 		gui.get_object("upload").connect("clicked", upload, ser)

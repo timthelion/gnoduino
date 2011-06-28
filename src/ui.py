@@ -313,6 +313,9 @@ def cserial(w, st, data=None):
 			vbox.add(con)
 		return
 	if (sertime == None):
+		if not ser.serial.isOpen():
+			ser.getConfigSerialPort(sb, tw)
+			return
 		sertime = glib.timeout_add(1000,
 			ser.updateConsole,
 			data)
@@ -331,6 +334,7 @@ def setBaud(w, data=None):
 	if ser.serial.isOpen():
 		ser.resetBoard()
 		ser.serial.close()
+	else: return
 	if config.serial_baud_rate == -1:
 		config.serial_baud_rate = p.getSafeValue("serial.debug_rate", "9600")
 		defbaud = config.serial_baud_rate
@@ -590,6 +594,8 @@ def run():
 		maingroup = gtk.RadioMenuItem(None, None)
 		defport = p.getValue("serial.port")
 		validport = False
+		activePort = False
+		"""validate serial ports - this should really be moved to serialio"""
 		for i in ser.scan():
 			if i == defport:
 				validport = True
@@ -603,18 +609,23 @@ def run():
 						config.cur_serial_port = i
 					setSerial(None, i)
 			else:
-				if i == "/dev/ttyS0":
-					if config.cur_serial_port == -1:
-						config.cur_serial_port = i
-					menuItem.set_active(True)
-					setSerial(None, i)
+				if config.cur_serial_port == -1:
+					config.cur_serial_port = i
+				try:
+					s = ser.tryPort(i)
+					s.close()
+				except: continue
+				menuItem.set_active(True)
+				setSerial(None, i)
 			menuItem.connect('activate', setSerial, i)
 			sub.append(menuItem)
+			activePort = True
 
 		if config.serial_baud_rate == -1:
 			config.serial_baud_rate = p.getSafeValue("serial.debug_rate", "9600")
 
 		gui.get_object("serial_port").set_submenu(sub)
+		gui.get_object("serial_port").set_sensitive(activePort)
 
 		sub = gtk.Menu()
 		pgm = programmer.Programmer()

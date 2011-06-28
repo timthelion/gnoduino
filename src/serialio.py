@@ -15,30 +15,44 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-
+import config
 import glob
+import misc
 import time
 import serial
+
+import gettext
+_ = gettext.gettext
 
 class sconsole:
 	def __init__(self):
 		"""9600 8N1"""
 		self.serial = serial.Serial(
-			port='/dev/ttyS0',
+			port=None,
 			baudrate=9600,
 			parity=serial.PARITY_NONE,
 			stopbits=serial.STOPBITS_ONE,
 			bytesize=serial.EIGHTBITS
 		)
-		self.serial.open()
-		self.serial.isOpen()
 
 	def __del__(self):
 		self.serial.close()
 
+	def tryPort(self, port):
+		return serial.Serial(port)
+
 	def scan(self):
 		"""scan for available ports. return a list of device names."""
-		return glob.glob('/dev/ttyS*') + glob.glob('/dev/ttyUSB*') + glob.glob('/dev/ttyACM*')
+		ports = []
+		tryports = glob.glob('/dev/ttyS*') + glob.glob('/dev/ttyUSB*') + glob.glob('/dev/ttyACM*')
+		for i in tryports:
+			try:
+				s = serial.Serial(i)
+				ports.append(s.portstr)
+				s.close()
+			except serial.SerialException:
+				pass
+		return ports
 
 	def read(self):
 		while self.serial.inWaiting() > 0:
@@ -72,4 +86,11 @@ class sconsole:
 
 	def getBaudrates(self):
 		return [i[0] for i in self.serial.getSupportedBaudrates() if i[1] >= 300 and i[1] <= 1150000]
+	def getConfigSerialPort(self, notify, output):
+		if config.cur_serial_port == -1:
+			misc.printError(notify, output, \
+				_("Serial port not configured!\nUse Tools->Serial Port to configure port."))
+			return -1
+		else:
+			return config.cur_serial_port
 

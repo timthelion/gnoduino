@@ -336,7 +336,7 @@ def setBaud(w, data=None):
 		ser.serial.close()
 	else: return
 	if config.serial_baud_rate == -1:
-		config.serial_baud_rate = p.getSafeValue("serial.debug_rate", p.getDefaultValue("serial.debug_rate")))
+		config.serial_baud_rate = p.getSafeValue("serial.debug_rate", p.getDefaultValue("serial.debug_rate"))
 		defbaud = config.serial_baud_rate
 	else:
 		if w: defbaud = ser.getBaudrates()[w.get_active()]

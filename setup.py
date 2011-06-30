@@ -23,6 +23,10 @@ import re
 import logging
 import subprocess
 from distutils.core import setup
+from distutils import cmd
+import distutils.command
+from distutils.command.install import install as _install
+import sys
 
 def runProg(cmdline):
 	sout = ""
@@ -36,11 +40,7 @@ def runProg(cmdline):
 			close_fds = True)
 		poll = select.poll()
 		poll.register(p.stdout, select.POLLIN)
-		while gtk.events_pending():
-			gtk.main_iteration()
 		(sout,serr) = p.communicate()
-		while gtk.events_pending():
-			gtk.main_iteration()
 		if p.poll()==1: raise
 	except:
 		logging.debug("ERR:%s", sout)
@@ -52,17 +52,48 @@ def get_gnoduino_version():
 	text = open(os.path.join("src", "__init__.py"), "r").read()
 	return re.search(r"__version__ *= *['\"](.*?)['\"]", text).group(1)
 
+class Pixmaps(cmd.Command):
+	"""Command to build pixmaps from svg sources."""
+	description = "build png files from svg sources"
+	user_options = []
+
+	def initialize_options(self):
+		"""Initialize default values for options."""
+		pass
+
+	def finalize_options(self):
+		"""Ensure that options have valid values."""
+		pass
+
+	def run(self):
+		"""Build pixmap from svg sources."""
+		if not self.dry_run:
+			subprocess.call("scripts/gen-pixmaps.sh")
+
 compline = "scripts/gen_boards.py"
 (run, sout) = runProg(compline)
 compline = "scripts/gen_programmers.py"
 (run, sout) = runProg(compline)
 compline = "scripts/gitlog.sh"
 (run, sout) = runProg(compline)
+
+
 data_files = [('share/gnoduino/ui', ['ui/main.ui', 'ui/arduino.xml']),
 		('share/gnoduino/', ['BOARDS', 'ChangeLog', 'NEWS', 'PROGRAMMERS', 'preferences.txt']),
 		('share/gnoduino/pixmaps', glob.glob('pixmaps/*.png')),
 		('share/gnoduino/scripts', ['scripts/gen_boards.py', 'scripts/gen_programmers.py']),
 ]
+
+class install(_install):
+	def run(self):
+		if len(glob.glob('pixmaps/*.png')) == 0:
+			print "Couldn't find pixmaps files."
+			print "Please run 'python setup.py pixmaps' to build pixmap files."
+			print "(Requires inkscape)"
+			sys.exit(1)
+		# Run all sub-commands (at least those that need to be run)
+		_install.run(self)
+
 """we ship hardware module"""
 for r,d,f in os.walk("hardware"):
 	if ".git" not in r and f:
@@ -84,6 +115,10 @@ setup(name='gnoduino',
 	url='http://gnome.eu.org/evo/index.php/Gnoduino',
 	license='GPL',
 	platforms='linux',
-	data_files = data_files
+	data_files = data_files,
+	cmdclass={
+		"pixmaps": Pixmaps,
+		"install": install
+	}
 )
 

@@ -286,7 +286,6 @@ def preferences(widget, data=None):
 		config.cur_console_font = fc.get_font_name()
 		p.setValue("console.font", config.cur_console_font.replace(" ", ","))
 		config.user_library = ul.get_text()
-		p.setValue("gnoduino.user_library", config.user_library)
 		val = bv.get_active()
 		if val == 1:
 			config.build_verbose = 'true'

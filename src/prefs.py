@@ -37,7 +37,9 @@ config_keys = [
 [ "serial.port", "/apps/gnoduino/serial_port", "string", "/dev/ttyS0" ], #serial_port_key
 [ "serial.debug_rate", "/apps/gnoduino/serial_baud_rate", "string", "9600" ], #serial_baud_rate_key
 [ "board", "/apps/gnoduino/board", "string", "atmega168" ], #board
-[ "build.verbose", "/apps/gnoduino/build_verbose", "int", 0 ]] #board
+[ "editor.font", "/apps/gnoduino/editor_font", "string", "Monospace,10" ],
+[ "console.font", "/apps/gnoduino/console_font", "string", "Sans,12" ],
+[ "build.verbose", "/apps/gnoduino/build_verbose", "string", "false" ]]
 
 class preferences(object):
 

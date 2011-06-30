@@ -336,7 +336,7 @@ def setBaud(w, data=None):
 		ser.serial.close()
 	else: return
 	if config.serial_baud_rate == -1:
-		config.serial_baud_rate = p.getSafeValue("serial.debug_rate", "9600")
+		config.serial_baud_rate = p.getSafeValue("serial.debug_rate", p.getDefaultValue("serial.debug_rate")))
 		defbaud = config.serial_baud_rate
 	else:
 		if w: defbaud = ser.getBaudrates()[w.get_active()]
@@ -573,9 +573,9 @@ def run():
 		vbox = gui.get_object("vpan")
 		sb = gui.get_object("statusbar1")
 		sb2 = gui.get_object("statusbar2")
-		config.cur_editor_font = p.getSafeValue("editor.font", "Monospace,12").replace(",", " ")
-		config.cur_console_font = p.getSafeValue("console.font", "Sans,12").replace(",", " ")
-		config.build_verbose = p.getSafeValue("build.verbose", "False")
+		config.cur_editor_font = p.getSafeValue("editor.font", p.getDefaultValue("editor.font")).replace(",", " ")
+		config.cur_console_font = p.getSafeValue("console.font", p.getDefaultValue("console.font")).replace(",", " ")
+		config.build_verbose = p.getSafeValue("build.verbose", p.getDefaultValue("build.verbose"))
 		config.user_library = p.getValue("user.library")
 		menu(gui)
 		"""build menus"""
@@ -624,7 +624,7 @@ def run():
 			activePort = True
 
 		if config.serial_baud_rate == -1:
-			config.serial_baud_rate = p.getSafeValue("serial.debug_rate", "9600")
+			config.serial_baud_rate = p.getSafeValue("serial.debug_rate", p.getDefaultValue("serial.debug_rate"))
 
 		gui.get_object("serial_port").set_submenu(sub)
 		gui.get_object("serial_port").set_sensitive(activePort)

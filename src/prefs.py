@@ -93,6 +93,12 @@ class preferences(object):
 					return False
 		return None
 
+	def getDefaultValue(self, value):
+		for i in config_keys:
+			if i[0] == value:
+				return i[3]
+		return fail
+
 	def getSafeValue(self, value, fail):
 		for i in self.defaults:
 			if i[0] == value:

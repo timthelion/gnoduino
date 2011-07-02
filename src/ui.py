@@ -155,6 +155,8 @@ def openFile(w):
 	processFile(f)
 
 def processFile(f):
+	if not os.path.exists(f):
+		return
 	page = getCurrentPage()
 	createPage(nb, f)
 	if page.get_data("label").get_text() == "Untitled":
@@ -679,14 +681,15 @@ def run():
 			o.show_all()
 			if i[2] != None:
 				o.connect("clicked", i[2])
-		if sys.argv[1:][0] == "--help" or sys.argv[1:][0] == "-h":
-			print """--help Prints the command line options.\n--version Output version information and exit"""
-			sys.exit(0)
-		if sys.argv[1:][0] == "--version" or sys.argv[1:][0] == "-v":
-			print "gnoduino %s" % gnoduino.__version__
-			sys.exit(0)
-		for f in sys.argv[1:]:
-			processFile(f)
+		if (sys.argv[1:]):
+			if sys.argv[1:][0] == "--help" or sys.argv[1:][0] == "-h":
+				print """--help Prints the command line options.\n--version Output version information and exit"""
+				sys.exit(0)
+			if sys.argv[1:][0] == "--version" or sys.argv[1:][0] == "-v":
+				print "gnoduino %s" % gnoduino.__version__
+				sys.exit(0)
+			for f in sys.argv[1:]:
+				processFile(f)
 		gtk.main()
 	except KeyboardInterrupt:
 		print "\nExit on user cancel."

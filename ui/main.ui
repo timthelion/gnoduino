@@ -10,7 +10,7 @@
     <property name="copyright" translatable="yes">Lucian Langa &lt;cooly@gnome.eu.org&gt;</property>
     <property name="comments" translatable="yes">GNOME Arduino IDE</property>
     <property name="website">http://gnome.eu.org/evo/index.php/Gnoduino</property>
-    <property name="website_label" translatable="yes">GNODUINO</property>
+    <property name="website_label" translatable="yes">gnoduino</property>
     <property name="license" translatable="yes"># gnoduino - Python Arduino IDE implementation
 # Copyright (C) 2010  Lucian Langa
 #

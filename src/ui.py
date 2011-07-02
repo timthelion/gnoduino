@@ -147,12 +147,16 @@ def searchFile(nb, f):
 			return True
 	return False
 
-def processFile(w):
-	if searchFile(nb, w.get_filename()) == True:
+def openFile(w):
+	f = w.get_filename()
+	if searchFile(nb, f) == True:
 		w.destroy()
 		return
+	processFile(f)
+
+def processFile(f):
 	page = getCurrentPage()
-	createPage(nb, w.get_filename())
+	createPage(nb, f)
 	if page.get_data("label").get_text() == "Untitled":
 		replacePage(page)
 
@@ -176,7 +180,7 @@ def copen(widget, data=None):
 	p.set_size_request(650, 500)
 	p.show_all()
 	if p.run() == gtk.RESPONSE_ACCEPT:
-		processFile(p)
+		openFile(p)
 	p.destroy()
 
 def csave_as(w, data=None):
@@ -675,6 +679,14 @@ def run():
 			o.show_all()
 			if i[2] != None:
 				o.connect("clicked", i[2])
+		if sys.argv[1:][0] == "--help" or sys.argv[1:][0] == "-h":
+			print """--help Prints the command line options.\n--version Output version information and exit"""
+			sys.exit(0)
+		if sys.argv[1:][0] == "--version" or sys.argv[1:][0] == "-v":
+			print "gnoduino %s" % gnoduino.__version__
+			sys.exit(0)
+		for f in sys.argv[1:]:
+			processFile(f)
 		gtk.main()
 	except KeyboardInterrupt:
 		print "\nExit on user cancel."

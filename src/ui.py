@@ -269,6 +269,7 @@ def preferences(widget, data=None):
 	fe = gui.get_object("fontbutton1")
 	fc = gui.get_object("fontbutton2")
 	bv = gui.get_object("build.verbose")
+	sn = gui.get_object("show.numbers")
 	ul = gui.get_object("user.library")
 	p = prefs.preferences()
 	fe.set_font_name(misc.merge_font_name(fe, config.cur_editor_font))
@@ -281,6 +282,14 @@ def preferences(widget, data=None):
 		if p.getSafeValue("build.verbose", "false") == 'true':
 			val = 1
 	bv.set_active(val)
+	val = 0
+	if config.show_numbers != -1:
+		if config.show_numbers == 'true':
+			val = 1
+	else:
+		if p.getSafeValue("show.numbers", "false") == 'true':
+			val = 1
+	sn.set_active(val)
 	if (config.user_library != None and config.user_library != -1):
 		ul.set_text(str(config.user_library))
 	else:
@@ -292,12 +301,22 @@ def preferences(widget, data=None):
 		config.cur_console_font = fc.get_font_name()
 		p.setValue("console.font", config.cur_console_font.replace(" ", ","))
 		config.user_library = ul.get_text()
-		val = bv.get_active()
-		if val == 1:
+		if bv.get_active() == 1:
 			config.build_verbose = 'true'
 		else:
 			config.build_verbose = 'false'
 		p.setValue("build.verbose", config.build_verbose)
+		if sn.get_active() == 1:
+			config.show_numbers = 'true'
+		else:
+			config.show_numbers = 'false'
+		p.setValue("show.numbers", config.show_numbers)
+		for i in range(nb.get_n_pages()):
+			sv = nb.get_nth_page(i).get_data("view")
+			if (config.show_numbers == 'true'):
+				sv.set_show_line_numbers(True)
+			else:
+				sv.set_show_line_numbers(False)
 		p.setValue("user.library", config.user_library)
 		p.saveValues()
 		misc.set_widget_font(tw, config.cur_console_font)
@@ -582,6 +601,7 @@ def run():
 		config.cur_editor_font = p.getSafeValue("editor.font", p.getDefaultValue("editor.font")).replace(",", " ")
 		config.cur_console_font = p.getSafeValue("console.font", p.getDefaultValue("console.font")).replace(",", " ")
 		config.build_verbose = p.getSafeValue("build.verbose", p.getDefaultValue("build.verbose"))
+		config.show_numbers = p.getSafeValue("show.numbers", p.getDefaultValue("show.numbers"))
 		config.user_library = p.getValue("user.library")
 		menu(gui)
 		"""build menus"""

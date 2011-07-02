@@ -188,6 +188,8 @@ def createsrcview(status, f=None):
 	sbuffer.set_style_scheme(scheme);
 	sv.set_size_request(500, 450)
 	sv.set_editable(True)
+	if config.show_numbers == 'true':
+		sv.set_show_line_numbers(True)
 	sv.set_cursor_visible(True)
 #	sv.set_show_line_numbers(True)
 	sv.set_wrap_mode(gtk.WRAP_CHAR)

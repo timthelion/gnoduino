@@ -8,3 +8,4 @@ cur_console_font = -1
 build_verbose = -1
 user_library = -1
 serial_baud_rate = -1
+show_numbers = -1

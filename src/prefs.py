@@ -39,7 +39,8 @@ config_keys = [
 [ "board", "/apps/gnoduino/board", "string", "atmega168" ], #board
 [ "editor.font", "/apps/gnoduino/editor_font", "string", "Monospace,10" ],
 [ "console.font", "/apps/gnoduino/console_font", "string", "Sans,10" ],
-[ "build.verbose", "/apps/gnoduino/build_verbose", "string", "false" ]]
+[ "build.verbose", "/apps/gnoduino/build_verbose", "string", "false" ],
+[ "show.numbers", "/apps/gnoduino/show_numbers", "string", "false" ]]
 
 class preferences(object):
 

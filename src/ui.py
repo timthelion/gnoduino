@@ -163,7 +163,7 @@ def processFile(f):
 		replacePage(page)
 
 def saveAs():
-	p = gtk.FileChooserDialog("Save file", None, gtk.FILE_CHOOSER_ACTION_OPEN,
+	p = gtk.FileChooserDialog("Save file", None, gtk.FILE_CHOOSER_ACTION_SAVE,
 		(gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT,
 		gtk.STOCK_OK, gtk.RESPONSE_ACCEPT))
 	p.set_size_request(650, 500)

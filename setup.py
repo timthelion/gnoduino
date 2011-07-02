@@ -52,6 +52,15 @@ def get_gnoduino_version():
 	text = open(os.path.join("src", "__init__.py"), "r").read()
 	return re.search(r"__version__ *= *['\"](.*?)['\"]", text).group(1)
 
+class installSchema(_install):
+	def run(self):
+		try:
+			os.system('GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source` gconftool-2 --makefile-install-rule data/gnoduino.schemas')
+		except Exception, e:
+			print "Installing schema has failed."
+			print "%s: %s" % (type(e), e)
+			sys.exit(1)
+
 class Pixmaps(cmd.Command):
 	"""Command to build pixmaps from svg sources."""
 	description = "build png files from svg sources"
@@ -82,6 +91,10 @@ data_files = [('share/gnoduino/ui', ['ui/main.ui', 'ui/arduino.xml']),
 		('share/gnoduino/', ['BOARDS', 'ChangeLog', 'NEWS', 'PROGRAMMERS', 'preferences.txt']),
 		('share/gnoduino/pixmaps', glob.glob('pixmaps/*.png')),
 		('share/gnoduino/scripts', ['scripts/gen_boards.py', 'scripts/gen_programmers.py']),
+		('share/man/man1', ['data/gnoduino.1']),
+		('share/applications', ['data/gnoduino.desktop']),
+		('share/pixmaps', ['pixmaps/gnoduino.png']),
+
 ]
 
 class install(_install):
@@ -118,7 +131,8 @@ setup(name='gnoduino',
 	data_files = data_files,
 	cmdclass={
 		"pixmaps": Pixmaps,
-		"install": install
+		"install": install,
+		"install": installSchema
 	}
 )
 

@@ -60,6 +60,7 @@ class installSchema(_install):
 			print "Installing schema has failed."
 			print "%s: %s" % (type(e), e)
 			sys.exit(1)
+		_install.run(self)
 
 class Pixmaps(cmd.Command):
 	"""Command to build pixmaps from svg sources."""

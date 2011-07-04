@@ -38,7 +38,7 @@ config_keys = [
 [ "serial.debug_rate", "/apps/gnoduino/serial_baud_rate", "string", "9600" ], #serial_baud_rate_key
 [ "board", "/apps/gnoduino/board", "string", "atmega168" ], #board
 [ "editor.font", "/apps/gnoduino/editor_font", "string", "Monospace,10" ],
-[ "console.font", "/apps/gnoduino/console_font", "string", "Sans,10" ],
+[ "console.font", "/apps/gnoduino/console_font", "string", "Monospace,10" ],
 [ "build.verbose", "/apps/gnoduino/build_verbose", "string", "false" ],
 [ "show.numbers", "/apps/gnoduino/show_numbers", "string", "false" ]]
 

@@ -28,7 +28,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 </property>
-    <property name="authors">Lucian Langa &lt;lucilanga@gnome.eu.org&gt;</property>
+    <property name="authors">Lucian Langa &lt;lucilanga@gnome.org&gt;</property>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox1">
         <property name="visible">True</property>

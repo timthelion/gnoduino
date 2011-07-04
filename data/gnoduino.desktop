@@ -1,8 +1,8 @@
 [Desktop Entry]
 Version=1.0
-Name=gnoduino
-GenericName=Gnoduino
-Comment=Gnome Arduino IDE implementation
+Name=Gnoduino
+GenericName=Electronics Prototyping Environment
+Comment=Prototype electronics using an AVR microcontroller
 Exec=gnoduino %F
 Icon=gnoduino
 Terminal=false

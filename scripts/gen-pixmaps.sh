@@ -1,14 +1,12 @@
 #!/bin/sh
 
-for F in pixmaps/*.svg
+for F in `ls pixmaps/*.svg | grep -v gnoduino`
 do
-	for S in "22" "24" "32" "48"
-	do
-		SIZE="$S"x"$S"
-		D=$(echo $F | sed -e "s/scalable/$SIZE/g" | sed -e "s/.svg/.png/")
-		if [ ! -e $D ]
-		then
-			inkscape --export-png=$D -w $S -h $S $F
-		fi
-	done
+        rsvg --format=png --width=25 --height=25 ${F} `echo ${F} | sed -e 's#.svg#.png#'`
 done
+
+for F in `ls pixmaps/*.svg | grep gnoduino`
+do
+	rsvg --format=png --width=48 --height=48 ${F} `echo ${F} | sed -e 's#.svg#.png#'`
+done
+

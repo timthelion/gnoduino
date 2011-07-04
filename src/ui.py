@@ -675,7 +675,7 @@ def run():
 		vbox.set_position(cpos)
 		mainwin.set_focus(sv)
 		mainwin.show_all()
-		mainwin.set_title("Arduino")
+		mainwin.set_title("Gnoduino")
 		mainwin.connect("delete-event", quit)
 		gui.get_object("ser_monitor").connect("activate", cserial, sertime, sctw)
 		gui.get_object("serial").connect("clicked", cserial, sertime, sctw)

@@ -62,7 +62,7 @@ def destroyPage(w, b):
 	if misc.bufferModified(buf, f) is True:
 		if f is None: f= "Untitled"
 		save = misc.createPopup(_("Save document"), mainwin, \
-			_("Save changes to document \"%s\"\n before closing?" % f))
+			_("Save changes to document \"%s\"\n before closing?" % os.path.basename(f)))
 		if save == gtk.RESPONSE_YES:
 			if csave(None, False) is False:
 				return False
@@ -163,9 +163,20 @@ def processFile(f):
 		replacePage(page)
 
 def saveAs():
+	page = getCurrentPage()
+	buf = page.get_data("buffer")
+	f = page.get_data("file")
+	if misc.bufferModified(buf, f) is False:
+		return
 	p = gtk.FileChooserDialog("Save file", None, gtk.FILE_CHOOSER_ACTION_SAVE,
 		(gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT,
 		gtk.STOCK_OK, gtk.RESPONSE_ACCEPT))
+	if page.get_data("file") is not None:
+		name =  os.path.basename(page.get_data("file"))
+		p.set_filename(name)
+	else:
+		name = "Untitled"
+		p.set_current_name(name)
 	p.set_size_request(650, 500)
 	p.show_all()
 	if p.run() == gtk.RESPONSE_ACCEPT:

@@ -2,6 +2,7 @@
 Version=1.0
 Name=Gnoduino
 GenericName=Electronics Prototyping Environment
+X-GNOME-FullName=Gnoduino Electronics Prototyping Environment
 Comment=Prototype electronics using an AVR microcontroller
 Exec=gnoduino %F
 Icon=gnoduino

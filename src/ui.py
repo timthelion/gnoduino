@@ -62,7 +62,7 @@ def destroyPage(w, b):
 	if misc.bufferModified(buf, f) is True:
 		if f is None: f= "Untitled"
 		save = misc.createPopup(_("Save document"), mainwin, \
-			_("Save changes to document \"%s\" before closing?" % f))
+			_("Save changes to document \"%s\"\n before closing?" % f))
 		if save == gtk.RESPONSE_YES:
 			if csave(None, False) is False:
 				return False

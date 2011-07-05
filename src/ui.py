@@ -84,7 +84,7 @@ def updatePageTitle(w, status):
 		name = "Untitled"
 
 	if (misc.bufferModified(w, f)):
-		l.set_text(name+"*")
+		l.set_text("*"+name)
 	else:
 		l.set_text(name)
 	srcview.updatePos(w, status)

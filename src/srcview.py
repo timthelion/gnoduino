@@ -186,7 +186,7 @@ def createsrcview(status, f=None):
 	manager.force_rescan()
 	scheme =  manager.get_scheme("arduino")
 	sbuffer.set_style_scheme(scheme);
-	sv.set_size_request(500, 450)
+	sv.set_size_request(300, 100)
 	sv.set_editable(True)
 	if config.show_numbers == 'true':
 		sv.set_show_line_numbers(True)

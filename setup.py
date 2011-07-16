@@ -103,7 +103,6 @@ class install(_install):
 		if len(glob.glob('pixmaps/*.png')) == 0:
 			print "Couldn't find pixmaps files."
 			print "Please run 'python setup.py pixmaps' to build pixmap files."
-			print "(Requires inkscape)"
 			sys.exit(1)
 		# Run all sub-commands (at least those that need to be run)
 		_install.run(self)

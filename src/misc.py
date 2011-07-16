@@ -33,7 +33,7 @@ import config
 import prefs
 
 LOG_FILENAME = 'arduino.out'
-logging.basicConfig(filename=LOG_FILENAME,level=logging.DEBUG)
+#logging.basicConfig(filename=LOG_FILENAME,level=logging.DEBUG)
 
 defaultPath = os.path.expanduser('~/.arduino')
 arduino_path = "hardware/arduino/cores/arduino"

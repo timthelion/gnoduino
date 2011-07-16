@@ -32,7 +32,7 @@ import hashlib
 _ = gettext.gettext
 
 LOG_FILENAME = 'arduino.out'
-logging.basicConfig(filename=LOG_FILENAME,level=logging.DEBUG)
+#logging.basicConfig(filename=LOG_FILENAME,level=logging.DEBUG)
 _debug = 1
 
 import board

@@ -177,7 +177,7 @@ def saveAs():
 	else:
 		name = "Untitled"
 		p.set_current_name(name)
-	p.set_size_request(650, 500)
+	p.set_default_size(450, 400)
 	p.show_all()
 	if p.run() == gtk.RESPONSE_ACCEPT:
 		f = p.get_filename()
@@ -190,7 +190,7 @@ def copen(widget, data=None):
 	p = gtk.FileChooserDialog("Open file", None, gtk.FILE_CHOOSER_ACTION_OPEN,
 		(gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT,
 		gtk.STOCK_OK, gtk.RESPONSE_ACCEPT))
-	p.set_size_request(650, 500)
+	p.set_size_request(450, 400)
 	p.show_all()
 	if p.run() == gtk.RESPONSE_ACCEPT:
 		openFile(p)

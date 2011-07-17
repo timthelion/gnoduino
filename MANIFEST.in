@@ -6,3 +6,4 @@ include preferences.txt
 include ChangeLog
 include NEWS
 recursive-include hardware/arduino/ *
+recursive-include libraries/ *

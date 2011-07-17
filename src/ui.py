@@ -584,19 +584,19 @@ def run():
 			path = os.path.join(os.getcwd(), "ui", "main.ui")
 			if os.path.exists(path):
 				gui.add_from_file(path)
-			else: raise
+			else: raise NameError("System error")
 		except:
 			try:
 				path = os.path.join(sys.prefix, "local", "share", "gnoduino", "ui", "main.ui")
 				if os.path.exists(path):
 					gui.add_from_file(path)
-				else: raise
+				else: raise NameError("System error")
 			except:
 				try:
 					path = os.path.join(sys.prefix, "share", "gnoduino", "ui", "main.ui")
 					if os.path.exists(path):
 						gui.add_from_file(path)
-					else: raise
+					else: raise NameError("System error")
 				except Exception,e:
 					print(e)
 					raise SystemExit(_("Cannot load ui file"))
@@ -697,13 +697,13 @@ def run():
 				path = os.path.join(os.getcwd(), "pixmaps", i[1])
 				if os.path.exists(path):
 					w.set_from_file(path)
-				else: raise
+				else: raise NameError("System error")
 			except:
 				try:
 					path = os.path.join(sys.prefix, 'share', 'gnoduino', "pixmaps", i[1])
 					if os.path.exists(path):
 						w.set_from_file(path)
-					else: raise
+					else: raise NameError("System error")
 				except Exception,e:
 					print(e)
 					raise SystemExit(_("Cannot load pixmap files"))

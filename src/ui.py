@@ -231,7 +231,7 @@ def quit(widget, data=None):
 def find(widget, data=None):
 	find = gui.get_object("find")
 	find_text = gui.get_object("find-text")
-	find_text.child.select_region(0, -1)
+	find_text.select_region(0, -1)
 	cbs = ["checkbutton1", "checkbutton2","checkbutton3", "checkbutton4"]
 	find_text.connect("key-release-event", srcview.findText, [gui.get_object(i) for i in cbs])
 	find.set_default_response(gtk.RESPONSE_OK)
@@ -601,6 +601,7 @@ def run():
 					print(e)
 					raise SystemExit(_("Cannot load ui file"))
 		mainwin = gui.get_object("top_win")
+		mainwin.set_icon_from_file(misc.getPixmapPath("gnoduino.png"))
 		mw = int(p.getSafeValue("default.window.width", 0))
 		mh = int(p.getSafeValue("default.window.height", 0))
 		if (mw and mh):
@@ -693,20 +694,7 @@ def run():
 		gui.get_object("upload").connect("clicked", upload, ser)
 		for i in buttons:
 			w = gtk.Image()
-			try:
-				path = os.path.join(os.getcwd(), "pixmaps", i[1])
-				if os.path.exists(path):
-					w.set_from_file(path)
-				else: raise NameError("System error")
-			except:
-				try:
-					path = os.path.join(sys.prefix, 'share', 'gnoduino', "pixmaps", i[1])
-					if os.path.exists(path):
-						w.set_from_file(path)
-					else: raise NameError("System error")
-				except Exception,e:
-					print(e)
-					raise SystemExit(_("Cannot load pixmap files"))
+			w.set_from_file(misc.getPixmapPath(i[1]))
 			o = gui.get_object(i[0])
 			o.set_icon_widget(w)
 			o.show_all()

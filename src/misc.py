@@ -119,6 +119,22 @@ def getArduinoUiPath():
 			except: path = ""
 	finally: return path
 
+def getPixmapPath(pixmap):
+	try:
+		path = os.path.join(os.getcwd(), "pixmaps", pixmap)
+		if os.path.exists(path):
+			return path
+		else: raise NameError("System error")
+	except:
+		try:
+			path = os.path.join(sys.prefix, 'share', 'gnoduino', "pixmaps", pixmap)
+			if os.path.exists(path):
+				return path
+			else: raise NameError("System error")
+		except Exception,e:
+			print(e)
+			raise SystemExit(_("Cannot load pixmap files"))
+
 def makeWorkdir():
 	return tempfile.mkdtemp("", os.path.join(tempfile.gettempdir(), "build"+str(time.time())))
 

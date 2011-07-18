@@ -101,9 +101,9 @@ def findText(widget, event, data=None):
 		b = view.get_buffer()
 		mark = b.get_insert()
 		iter = b.get_iter_at_mark(mark)
-		search = widget.get_active_text()
+		search = widget.get_text()
 		flags = 0
-		if data[0].get_active() == True:
+		if data[0].get_active() == False:
 			flags = gtksourceview2.SEARCH_CASE_INSENSITIVE
 		backwards = False
 		if data[2].get_active() == True:

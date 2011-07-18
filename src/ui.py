@@ -443,6 +443,8 @@ def menu(gui):
 	[gui.get_object(i[0]).add_accelerator("activate", \
 		accel, i[2][0], i[2][1], 0) for i in menus if i[2][0] != None]
 	mainwin.add_accel_group(accel)
+	gui.get_object("menu-find-next").set_sensitive(False)
+	gui.get_object("menu-replace").set_sensitive(False)
 
 def createCon():
 	sw = gtk.ScrolledWindow()

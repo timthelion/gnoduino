@@ -162,11 +162,11 @@ def processFile(f):
 	if page.get_data("label").get_text() == "Untitled":
 		replacePage(page)
 
-def saveAs():
+def saveAs(js=False):
 	page = getCurrentPage()
 	buf = page.get_data("buffer")
 	f = page.get_data("file")
-	if misc.bufferModified(buf, f) is False:
+	if misc.bufferModified(buf, f) is False and js is False:
 		return
 	p = gtk.FileChooserDialog("Save file", None, gtk.FILE_CHOOSER_ACTION_SAVE,
 		(gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT,
@@ -205,7 +205,7 @@ def csave(w, data=None):
 	b = page.get_data("buffer")
 	f = page.get_data("file")
 	if f == None or data == True:
-		f = saveAs()
+		f = saveAs(data)
 		if f == None: return False
 		else:
 			if os.path.exists(f):

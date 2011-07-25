@@ -680,13 +680,13 @@ def run():
 		nb = gtk.Notebook()
 		nb.connect("switch-page", setupPage)
 		sv = createPage(nb)
-		vbox.add(nb)
-
+		vbox.pack1(nb, shrink=True, resize=True)
 		(scon,sctw) = createScon()
-		vbox.add(con)
+		vbox.pack2(con, shrink=False, resize= False)
 		vbox.connect("notify::position", vbox_move_handle)
 		cpos = int(p.getSafeValue("console.height", -1))
 		vbox.set_position(cpos)
+
 		mainwin.set_focus(sv)
 		mainwin.show_all()
 		mainwin.set_title("Gnoduino")

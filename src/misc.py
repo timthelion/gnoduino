@@ -17,6 +17,7 @@
 
 import os
 import glib
+import gnomevfs
 import gtk
 import hashlib
 import logging
@@ -191,6 +192,16 @@ def runProgOutput(console, cmdline):
 		logging.debug("ERR:%s", sout)
 		return False
 	return True
+
+def get_mime_type(content):
+	mime = gnomevfs.get_mime_type_for_data(content)
+	"""try harder to guess mime type"""
+	"""sometimes helps to trim leading newlines"""
+	"""FIXME: try with smaller chunk of content"""
+	if mime == "text/plain":
+		tmpmime = gnomevfs.get_mime_type_for_data(content.strip("\n"))
+		if mime is not None: mime = tmpmime
+	return mime
 
 def merge_font_name(widget, font):
 	if widget == None: return

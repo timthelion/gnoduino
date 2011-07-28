@@ -19,11 +19,13 @@ import os
 import sys
 import glib
 import gobject
+import gnomevfs
 import gtk
 import subprocess
 import select
 import shutil
 import signal
+import urlparse
 
 import gettext
 _ = gettext.gettext
@@ -152,10 +154,13 @@ def openFile(w):
 	if searchFile(nb, f) == True:
 		w.destroy()
 		return
+	addRecentItem(recentmanager, f)
 	processFile(f)
 
 def processFile(f):
 	if not os.path.exists(f):
+		return
+	if searchFile(nb, f) == True:
 		return
 	page = getCurrentPage()
 	createPage(nb, f)
@@ -218,6 +223,7 @@ def csave(w, data=None):
 	F = open(f, "w")
 	F.write(b.get_text(b.get_start_iter(), b.get_end_iter()))
 	F.close()
+	addRecentItem(recentmanager, f)
 	updatePageTitle(b, sb2)
 	return True
 
@@ -446,6 +452,31 @@ def menu(gui):
 	gui.get_object("menu-find-next").set_sensitive(False)
 	gui.get_object("menu-replace").set_sensitive(False)
 
+def addRecentItem(manager, f):
+	uri = gnomevfs.get_uri_from_local_path(f)
+	mime = misc.get_mime_type(file(f).read())
+	if mime:
+		data = { 'mime_type': mime, 'app_name' : "gnoduino", 'app_exec' : "gnoduino" }
+		manager.add_full(uri, data)
+	else:
+		manager.add_item(uri)
+
+
+def recentMenuActivated(widget):
+	processFile(urlparse.urlparse(widget.get_current_uri()).path)
+
+def createRecentMenu():
+	menuRecent = gtk.RecentChooserMenu(recentmanager)
+	menuRecent.set_limit(10)
+	menuRecent.set_sort_type(gtk.RECENT_SORT_MRU)
+	filter = gtk.RecentFilter()
+	filter.add_application ("gnoduino");
+	menuRecent.set_filter(filter)
+	mi = gtk.MenuItem("Open Recent", use_underline=True)
+	mi.set_submenu(menuRecent)
+	gui.get_object("filemenu").insert(mi, 2)
+	menuRecent.connect ("item_activated", recentMenuActivated);
+
 def createCon():
 	sw = gtk.ScrolledWindow()
 	sw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
@@ -575,11 +606,13 @@ def run():
 		global scon
 		global p
 		global b
+		global recentmanager
 		#perform cleanup prior to this
 		signal.signal(signal.SIGINT, signal.SIG_DFL)
 		id = misc.makeWorkdir()
 		ser = serialio.sconsole()
 		p = prefs.preferences()
+		recentmanager = gtk.recent_manager_get_default()
 		sertime = None
 		gui = gtk.Builder()
 		try:
@@ -668,6 +701,7 @@ def run():
 
 		gui.get_object("serial_port").set_submenu(sub)
 		gui.get_object("serial_port").set_sensitive(activePort)
+		createRecentMenu()
 
 		sub = gtk.Menu()
 		pgm = programmer.Programmer()

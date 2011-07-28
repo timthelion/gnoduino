@@ -252,7 +252,11 @@ def libImport(widget, data=None):
 def compile(widget, data=file):
 	cserial(None, 0, sctw)
 	page = getCurrentPage()
+	spinner.show()
+	spinner.start()
 	obj = compiler.compile(page.get_data("view"), id, tw, sb) #page.get_data("buffer")
+	spinner.stop()
+	spinner.hide()
 	return obj
 
 def upload(widget, serial, data=file):
@@ -260,7 +264,11 @@ def upload(widget, serial, data=file):
 	if obj == -1: return
 	while (gtk.events_pending()):
 		gtk.main_iteration()
+	spinner.show()
+	spinner.start()
 	uploader.upload(obj, serial, tw, sb)
+	spinner.stop()
+	spinner.hide()
 
 def butSave(widget, data=None):
 	b = getCurrentPage()
@@ -452,6 +460,7 @@ def menu(gui):
 	gui.get_object("menu-find-next").set_sensitive(False)
 	gui.get_object("menu-replace").set_sensitive(False)
 
+
 def addRecentItem(manager, f):
 	uri = gnomevfs.get_uri_from_local_path(f)
 	mime = misc.get_mime_type(file(f).read())
@@ -607,6 +616,7 @@ def run():
 		global p
 		global b
 		global recentmanager
+		global spinner
 		#perform cleanup prior to this
 		signal.signal(signal.SIGINT, signal.SIG_DFL)
 		id = misc.makeWorkdir()
@@ -645,6 +655,12 @@ def run():
 		vbox = gui.get_object("vpan")
 		sb = gui.get_object("statusbar1")
 		sb2 = gui.get_object("statusbar2")
+		stbox = gui.get_object("statusbox")
+		spinner = gtk.Spinner()
+		stbox.pack_start(spinner, False, True)
+		stbox.reorder_child(spinner, 0)
+		context = sb.get_context_id("main")
+		spinner.set_no_show_all(True)
 		config.cur_editor_font = p.getSafeValue("editor.font", p.getDefaultValue("editor.font")).replace(",", " ")
 		config.cur_console_font = p.getSafeValue("console.font", p.getDefaultValue("console.font")).replace(",", " ")
 		config.build_verbose = p.getSafeValue("build.verbose", p.getDefaultValue("build.verbose"))

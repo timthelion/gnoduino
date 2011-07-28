@@ -585,7 +585,7 @@ def cb_configure_event(widget, event):
 	p.saveValues()
 
 def vbox_move_handle(widget, scrolltype):
-	p.setValue("console.height", widget.get_position())
+	p.setValue("console.height", widget.get_position()+8)
 	p.saveValues()
 	return True
 

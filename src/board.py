@@ -84,7 +84,9 @@ class Board(object):
 		return self.boards[id]['low_fuses']
 
 	def getFuseExtended(self, id):
-		return self.boards[id]['extended_fuses']
+		try:
+			return self.boards[id]['extended_fuses']
+		except KeyError: return ""
 
 	def getPath(self, id):
 		return self.boards[id]['path']

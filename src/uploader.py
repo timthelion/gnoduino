@@ -62,7 +62,8 @@ def burnBootloader(serial, output, notify, id):
 	if pgm.getForce(id) == 'true':
 		compline.append("-F")
 	compline.append("-Ulock:w:" + b.getFuseUnlock(b.getBoard()) + ":m")
-	compline.append("-Uefuse:w:" + b.getFuseExtended(b.getBoard()) + ":m")
+	if b.getBoardMCU(b.getBoard()) != 'atmega8':
+		compline.append("-Uefuse:w:" + b.getFuseExtended(b.getBoard()) + ":m")
 	compline.append("-Uhfuse:w:" + b.getFuseHigh(b.getBoard()) + ":m")
 	compline.append("-Ulfuse:w:" + b.getFuseLow(b.getBoard()) + ":m")
 	print compline
@@ -85,9 +86,11 @@ def burnBootloader(serial, output, notify, id):
 		compline.append("-F")
 	compline.append("-Uflash:w:" + findBootLoader() + ":i")
 	compline.append("-Ulock:w:" + b.getFuseLock(b.getBoard()) + ":m")
+	print "compline"
 	print compline
 	try:
 		(run, sout) = misc.runProgOutput(output, compline)
+		print "out"
 		print sout
 		if run == False:
 			misc.printError(notify, output, sout)

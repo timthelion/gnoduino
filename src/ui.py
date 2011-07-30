@@ -374,7 +374,9 @@ def cserial(w, st, data=None):
 		vbox.add(con)
 
 def burnBootloader(w, id):
+	startSpinner()
 	uploader.burnBootloader(ser, tw, sb, id)
+	stopSpinner()
 
 def setBaud(w, data=None):
 	if ser.serial.isOpen():

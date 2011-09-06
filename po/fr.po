@@ -1,0 +1,341 @@
+# gnoduino French translation.
+# Copyright (C) 2011 Listed translators
+# This file is distributed under the same license as the gnoduino package.
+# Claude Paroz <claude@2xlibre.net>, 2011
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gnoduino master fr\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-09-06 08:58+0200\n"
+"PO-Revision-Date: 2011-09-06 17:57+0200\n"
+"Last-Translator: Claude Paroz <claude@2xlibre.net>\n"
+"Language-Team: GNOME French team <gnomefr@traduc.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/board.py:38
+msgid "Cannot load BOARDS file. Exiting."
+msgstr "Impossible de charger le fichier BOARDS. Le programme doit quitter."
+
+#: ../src/board.py:41
+#, python-format
+msgid "Error reading %s file. File is corrupt. Installation problem.\n"
+msgstr "Erreur de lecture du fichier %s. Le fichier est corrompu. Problème d'installation.\n"
+
+#: ../src/compiler.py:125
+msgid "Compiling..."
+msgstr "Compilation..."
+
+#: ../src/compiler.py:152 ../src/compiler.py:170 ../src/compiler.py:185
+#: ../src/compiler.py:207
+msgid "Compile Error"
+msgstr "Erreur de compilation"
+
+#: ../src/compiler.py:233
+msgid "Linking error"
+msgstr "Erreur de liaison"
+
+#: ../src/compiler.py:245 ../src/compiler.py:258
+msgid "Object error"
+msgstr "Erreur d'object"
+
+#: ../src/compiler.py:264
+msgid "Done compilling."
+msgstr "Compilation terminée."
+
+#: ../src/compiler.py:268
+#, python-format
+msgid "Binary sketch size: %s bytes (of a %s bytes maximum)\n"
+msgstr "Taille du programme binaire : %s octets (sur %s octets maximum)\n"
+
+#: ../src/compiler.py:322 ../src/compiler.py:345
+msgid "Library Error"
+msgstr "Erreur de bibliothèque"
+
+#: ../src/misc.py:80 ../src/misc.py:95
+msgid "Cannot find path"
+msgstr "Impossible de trouver le chemin"
+
+#: ../src/misc.py:137
+msgid "Cannot load pixmap files"
+msgstr "Impossible de charger les fichiers pixmap"
+
+#: ../src/misc.py:251
+msgid "Error compilling."
+msgstr "Erreur de compilation."
+
+#: ../src/misc.py:321
+msgid "Close without Saving"
+msgstr "Fermer sans enregistrer"
+
+#: ../src/misc.py:323
+msgid "If you don't save, changes will be permanently lost."
+msgstr "Si vous n'enregistrez pas, les modifications seront définitivement perdues."
+
+#: ../src/programmer.py:39
+msgid "Cannot find PROGRAMMERS"
+msgstr "Impossible de truover le fichier PROGRAMMERS"
+
+#: ../src/programmer.py:42
+#, python-format
+msgid "Error reading %s file. File is corrupt. Installation problem."
+msgstr "Erreur de lecture du fichier %s. Le fichier est corrompu. Problème d'installation."
+
+#: ../src/serialio.py:92
+msgid ""
+"Serial port not configured!\n"
+"Use Tools->Serial Port to configure port."
+msgstr ""
+"Le port série n'est pas configuré.\n"
+"Utilisez Outils->Port série pour configurer le port."
+
+#: ../src/srcview.py:147 ../src/srcview.py:157
+#, python-format
+msgid "'%s' not found."
+msgstr "« %s » introuvable."
+
+#: ../src/ui.py:67
+msgid "Save document"
+msgstr "Enregistrer le document"
+
+#: ../src/ui.py:68
+#, python-format
+msgid ""
+"Save changes to document \"%s\"\n"
+" before closing?"
+msgstr ""
+"Enregistrer les modifications du document « %s »\n"
+" avant de fermer ?"
+
+#: ../src/ui.py:671
+msgid "Cannot load ui file"
+msgstr "Impossible de charger le fichier d'interface"
+
+#: ../src/uploader.py:54
+msgid "Burning bootloader..."
+msgstr "Écriture du chargeur d'amorçage"
+
+#: ../src/uploader.py:77 ../src/uploader.py:80 ../src/uploader.py:96
+#: ../src/uploader.py:99
+msgid "Burn Error"
+msgstr "Erreur d'écriture"
+
+#: ../src/uploader.py:80 ../src/uploader.py:99
+msgid "Burn ERROR."
+msgstr "Erreur d'écriture"
+
+#: ../src/uploader.py:102
+msgid "Burn complete."
+msgstr "Écriture terminée."
+
+#: ../src/uploader.py:110
+msgid "Flashing..."
+msgstr "Flash en cours..."
+
+#: ../src/uploader.py:115
+msgid "Flashing error."
+msgstr "Erreur de flash."
+
+#: ../src/uploader.py:135
+msgid "Flashing Error"
+msgstr "Erreur de flash"
+
+#: ../src/uploader.py:135
+msgid "Flash ERROR.\n"
+msgstr "Erreur de flash.\n"
+
+#: ../src/uploader.py:138
+msgid "Flashing complete."
+msgstr "Flash terminé."
+
+#: ../ui/arduino.xml.h:1
+msgid "Arduino"
+msgstr "Arduino"
+
+#: ../ui/arduino.xml.h:2
+msgid "Arduino color scheme"
+msgstr "Jeu de couleurs Arduino"
+
+#: ../ui/main.ui.h:1
+msgid ""
+"# gnoduino - Python Arduino IDE implementation\n"
+"# Copyright (C) 2010  Lucian Langa\n"
+"#\n"
+"# This program is free software; you can redistribute it and/or\n"
+"# modify it under the terms of the GNU General Public License\n"
+"# as published by the Free Software Foundation; either version 2\n"
+"# of the License, or (at your option) any later version.\n"
+"#\n"
+"# This program is distributed in the hope that it will be useful,\n"
+"# but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"# GNU General Public License for more details.\n"
+"#\n"
+"# You should have received a copy of the GNU General Public License\n"
+"# along with this program; if not, write to the Free Software\n"
+"# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, "
+"USA.\n"
+msgstr ""
+
+#: ../ui/main.ui.h:18
+msgid "Add File..."
+msgstr "Ajouter un fichier..."
+
+#: ../ui/main.ui.h:19
+msgid "Additional libray paths:"
+msgstr "Chemins de bibliothèques supplémentaires :"
+
+#: ../ui/main.ui.h:20
+msgid "Auto Format"
+msgstr "Format automatique"
+
+#: ../ui/main.ui.h:21
+msgid "Board"
+msgstr "Carte"
+
+#: ../ui/main.ui.h:22
+msgid "Burn Bootloader"
+msgstr "Graver le chargeur d'amorçage"
+
+#: ../ui/main.ui.h:23
+msgid "Compile"
+msgstr "Compiler"
+
+#: ../ui/main.ui.h:24
+msgid "Console font size"
+msgstr "Taille de police de la console"
+
+#: ../ui/main.ui.h:25
+msgid "Editor font size"
+msgstr "Taille de police de l'éditeur"
+
+#: ../ui/main.ui.h:26
+msgid ""
+"Enter any suplementary path that compiler will check for, separate them by "
+"commas. eg /usr/share/gnoduino;/usr/local/share/gnoduino)"
+msgstr ""
+"Saisissez tout chemin supplémentaire que le compilateur devra utiliser, séparés "
+"par des points-virgules. Par ex : /usr/share/gnoduino;/usr/local/share/gnoduino"
+
+#: ../ui/main.ui.h:27
+msgid "Find Next"
+msgstr "Chercher le suivant"
+
+#: ../ui/main.ui.h:28
+msgid "GNOME Arduino IDE"
+msgstr "EDI Arduino GNOME"
+
+#: ../ui/main.ui.h:29
+msgid "Import Library"
+msgstr "Importer la bibliothèque"
+
+#: ../ui/main.ui.h:30
+msgid "Lucian Langa <lucilanga@gnome.org>"
+msgstr "Lucian Langa <lucilanga@gnome.org>"
+
+#: ../ui/main.ui.h:31
+msgid "Match case"
+msgstr "Respecter la casse"
+
+#: ../ui/main.ui.h:32
+msgid "Match entire word only"
+msgstr "Mots entiers"
+
+#: ../ui/main.ui.h:33
+msgid "New"
+msgstr "Nouveau"
+
+#: ../ui/main.ui.h:34
+msgid "Open"
+msgstr "Ouvrir"
+
+#: ../ui/main.ui.h:35
+msgid "Preferences"
+msgstr "Préférences"
+
+#: ../ui/main.ui.h:36
+msgid "Reference"
+msgstr "Référence"
+
+#: ../ui/main.ui.h:37
+msgid "Reset Board"
+msgstr "Réinitialiser la carte"
+
+#: ../ui/main.ui.h:38
+msgid "Save"
+msgstr "Enregistrer"
+
+#: ../ui/main.ui.h:39
+msgid "Search backwards"
+msgstr "Rechercher en arrière"
+
+#: ../ui/main.ui.h:40
+msgid "Search for:"
+msgstr "Rechercher :"
+
+#: ../ui/main.ui.h:41
+msgid "Send"
+msgstr "Envoyer"
+
+#: ../ui/main.ui.h:42
+msgid "Serial Monitor"
+msgstr "Moniteur série"
+
+#: ../ui/main.ui.h:43
+msgid "Serial Port"
+msgstr "Port série"
+
+#: ../ui/main.ui.h:44
+msgid "Show line numbers"
+msgstr "Afficher les numéros de lignes"
+
+#: ../ui/main.ui.h:45
+msgid "Sketch"
+msgstr "Programme"
+
+#: ../ui/main.ui.h:46
+msgid "Stop"
+msgstr "Arrêter"
+
+#: ../ui/main.ui.h:47
+msgid "Tools"
+msgstr "Outils"
+
+#: ../ui/main.ui.h:48
+msgid "Upload"
+msgstr "Transférer"
+
+#: ../ui/main.ui.h:49
+msgid "Upload to I/O Board"
+msgstr "Transférer vers les E/S de la carte"
+
+#: ../ui/main.ui.h:50
+msgid "Verbose build"
+msgstr "Construction loquace"
+
+#: ../ui/main.ui.h:51
+msgid "Verify/Compile"
+msgstr "Vérifier/compiler"
+
+#: ../ui/main.ui.h:52
+msgid "Wrap around"
+msgstr "Recherche circulaire"
+
+#: ../ui/main.ui.h:53
+msgid "_Edit"
+msgstr "É_dition"
+
+#: ../ui/main.ui.h:54
+msgid "_File"
+msgstr "_Fichier"
+
+#: ../ui/main.ui.h:55
+msgid "_Help"
+msgstr "Aid_e"
+
+#: ../ui/main.ui.h:56
+msgid "gnoduino"
+msgstr "gnoduino"

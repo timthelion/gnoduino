@@ -1,0 +1,21 @@
+<Project xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns:gnome="http://api.gnome.org/doap-extensions#"
+         xmlns="http://usefulinc.com/ns/doap#">
+
+  <name xml:lang="en">gnoduino</name>
+  <shortdesc xml:lang="en">Gnome Arduino IDE implementation</shortdesc>
+
+  <homepage rdf:resource="http://gnome.eu.org/evo/index.php/Gnoduino" />
+  <download-page rdf:resource="http://gnome.eu.org/evo/index.php/Gnoduino#Source_Code" />
+  <bug-database rdf:resource="http://bugzilla.gnome.eu.org/browse.cgi?product=gnoduino" />
+
+  <maintainer>
+    <foaf:Person>
+      <foaf:name>Lucian Langa</foaf:name>
+      <gnome:userid>lucilanga</gnome:userid>
+      <foaf:mbox rdf:resource="mailto:lucilanga@gnome.org" />
+    </foaf:Person>
+  </maintainer>
+</Project>

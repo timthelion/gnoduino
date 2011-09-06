@@ -97,16 +97,6 @@ compline = "scripts/gitlog.sh"
 (run, sout) = runProg(compline)
 
 
-data_files = [('share/gnoduino/ui', ['ui/main.ui', 'ui/arduino.xml']),
-		('share/gnoduino/', ['BOARDS', 'ChangeLog', 'NEWS', 'PROGRAMMERS', 'preferences.txt']),
-		('share/gnoduino/pixmaps', glob.glob('pixmaps/*.png')),
-		('share/gnoduino/scripts', ['scripts/gen_boards.py', 'scripts/gen_programmers.py']),
-		('share/man/man1', ['data/gnoduino.1']),
-		('share/applications', ['data/gnoduino.desktop']),
-		('share/pixmaps', ['pixmaps/gnoduino.png']),
-
-]
-
 class install(_install):
 	def run(self):
 		if len(glob.glob('pixmaps/*.png')) == 0:
@@ -115,18 +105,24 @@ class install(_install):
 		_install.run(self)
 		installSchema(self.distribution).run()
 
-"""we ship hardware module"""
-for r,d,f in os.walk("hardware"):
-	if ".git" not in r and f:
-		data_files.append([os.path.join("share", "gnoduino", r), [os.path.join(r,i) for i in f]])
-"""we ship libraries module"""
-for r,d,f in os.walk("libraries"):
-	if ".git" not in r and f:
-		data_files.append([os.path.join("share", "gnoduino", r), [os.path.join(r,i) for i in f]])
-"""we ship reference module"""
-for r,d,f in os.walk("reference"):
-	if ".git" not in r and f:
-		data_files.append([os.path.join("share", "gnoduino", r), [os.path.join(r,i) for i in f]])
+def get_data_files():
+    data_files = [
+        ('share/gnoduino/ui', ['ui/main.ui', 'ui/arduino.xml']),
+        ('share/gnoduino/', ['BOARDS', 'ChangeLog', 'NEWS', 'PROGRAMMERS', 'preferences.txt']),
+        ('share/gnoduino/pixmaps', glob.glob('pixmaps/*.png')),
+        ('share/gnoduino/scripts', ['scripts/gen_boards.py', 'scripts/gen_programmers.py']),
+        ('share/man/man1', ['data/gnoduino.1']),
+        ('share/applications', ['data/gnoduino.desktop']),
+        ('share/pixmaps', ['pixmaps/gnoduino.png']),
+    ]
+    for subdir in ("hardware", "libraries", "reference"):
+        # We ship hardware/libraries/reference modules if not already installed
+        if not os.path.exists(os.path.join(sys.prefix, "share", "arduino", subdir)):
+            for dirpath, dirnames, filenames in os.walk(subdir):
+                if ".git" not in dirpath and filenames:
+                    data_files.append([os.path.join("share", "gnoduino", dirpath),
+                                       [os.path.join(dirpath,i) for i in filenames]])
+    return data_files
 
 cmd_classes = {
 	"pixmaps": Pixmaps,
@@ -150,7 +146,7 @@ setup(name='gnoduino',
 	url='http://gnome.eu.org/evo/index.php/Gnoduino',
 	license='GPL',
 	platforms='linux',
-	data_files = data_files,
+	data_files = get_data_files(),
 	cmdclass=cmd_classes,
 )
 

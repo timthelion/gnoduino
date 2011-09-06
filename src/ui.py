@@ -28,6 +28,7 @@ import signal
 import urlparse
 import time
 
+import locale
 import gettext
 _ = gettext.gettext
 
@@ -44,6 +45,7 @@ import gnoduino
 
 import gtksourceview2
 font = "Monospace 10"
+APP_NAME = "gnoduino"
 
 def setupPage(w, page, p):
 	misc.set_widget_font(getCurrentView(), config.cur_editor_font)
@@ -622,6 +624,15 @@ def vbox_move_handle(widget, scrolltype):
 	p.saveValues()
 	return True
 
+def _search_locales():
+	localedirs = ("/usr/share/locale",
+					"/usr/local/share/locale")
+	for dir in localedirs:
+		if os.path.exists(os.path.join(dir, 'fr', 'LC_MESSAGES', 'gnoduino.mo')):
+			return dir
+    # fall back to the current directory
+	return "locale/"
+
 def run():
 	try:
 		global gui
@@ -640,6 +651,10 @@ def run():
 		global p
 		global b
 		global recentmanager
+		locale_path = _search_locales()
+		gettext.bindtextdomain(APP_NAME, locale_path)
+		gettext.textdomain(APP_NAME)
+		locale.bindtextdomain(APP_NAME, locale_path)
 		#global spinner
 		#perform cleanup prior to this
 		signal.signal(signal.SIGINT, signal.SIG_DFL)
@@ -649,6 +664,7 @@ def run():
 		recentmanager = gtk.recent_manager_get_default()
 		sertime = None
 		gui = gtk.Builder()
+		gui.set_translation_domain(APP_NAME)
 		try:
 			path = os.path.join(os.getcwd(), "ui", "main.ui")
 			if os.path.exists(path):

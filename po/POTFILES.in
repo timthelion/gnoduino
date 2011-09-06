@@ -1,0 +1,10 @@
+src/board.py
+src/compiler.py
+src/misc.py
+src/programmer.py
+src/serialio.py
+src/srcview.py
+src/ui.py
+src/uploader.py
+ui/arduino.xml
+[type: gettext/glade]ui/main.ui

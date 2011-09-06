@@ -22,11 +22,18 @@ import os
 import re
 import logging
 import subprocess
+import sys
 from distutils.core import setup
 from distutils import cmd
 import distutils.command
 from distutils.command.install import install as _install
-import sys
+
+try:
+    from DistUtilsExtra.command import *
+    has_extras = True
+except ImportError:
+    logging.warn("To be able to install translations, you must install python-distutils-extra.")
+    has_extras = False
 
 def runProg(cmdline):
 	sout = ""
@@ -121,6 +128,16 @@ for r,d,f in os.walk("reference"):
 	if ".git" not in r and f:
 		data_files.append([os.path.join("share", "gnoduino", r), [os.path.join(r,i) for i in f]])
 
+cmd_classes = {
+	"pixmaps": Pixmaps,
+	"install": install,
+}
+if has_extras:
+	cmd_classes.update({
+		"build" : build_extra.build_extra,
+		"build_i18n" :  build_i18n.build_i18n,
+	})
+
 setup(name='gnoduino',
 	version=get_gnoduino_version(),
 	description='Gnome Arduino IDE implementation',
@@ -134,9 +151,6 @@ setup(name='gnoduino',
 	license='GPL',
 	platforms='linux',
 	data_files = data_files,
-	cmdclass={
-		"pixmaps": Pixmaps,
-		"install": install,
-	}
+	cmdclass=cmd_classes,
 )
 

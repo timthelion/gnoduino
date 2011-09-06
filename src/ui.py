@@ -65,7 +65,7 @@ def destroyPage(w, b):
 	if misc.bufferModified(buf, f) is True:
 		if f is None: f= "Untitled"
 		save = misc.createPopup(_("Save document"), mainwin, \
-			_("Save changes to document \"%s\"\n before closing?" % os.path.basename(f)))
+			_("Save changes to document \"%s\"\n before closing?") % os.path.basename(f))
 		if save == gtk.RESPONSE_YES:
 			if csave(None, False) is False:
 				return False
@@ -174,7 +174,7 @@ def saveAs(js=False):
 	f = page.get_data("file")
 	if misc.bufferModified(buf, f) is False and js is False:
 		return
-	p = gtk.FileChooserDialog("Save file", None, gtk.FILE_CHOOSER_ACTION_SAVE,
+	p = gtk.FileChooserDialog(_("Save file"), None, gtk.FILE_CHOOSER_ACTION_SAVE,
 		(gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT,
 		gtk.STOCK_OK, gtk.RESPONSE_ACCEPT))
 	if page.get_data("file") is not None:
@@ -193,7 +193,7 @@ def saveAs(js=False):
 	return None
 
 def copen(widget, data=None):
-	p = gtk.FileChooserDialog("Open file", None, gtk.FILE_CHOOSER_ACTION_OPEN,
+	p = gtk.FileChooserDialog(_("Open file"), None, gtk.FILE_CHOOSER_ACTION_OPEN,
 		(gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT,
 		gtk.STOCK_OK, gtk.RESPONSE_ACCEPT))
 	p.set_size_request(450, 400)
@@ -216,8 +216,8 @@ def csave(w, data=None):
 		else:
 			if os.path.exists(f):
 				p = misc.MessageBox()
-				res = p.show("""<b>A file named %s already exists. Do you want to replace it?</b>""" % f,
-				"The file already exists in \"%s\". Replacing it will overwrite its contents." % os.path.dirname(f))
+				res = p.show(_("""<b>A file named %s already exists. Do you want to replace it?</b>""") % f,
+				_("The file already exists in \"%s\". Replacing it will overwrite its contents.") % os.path.dirname(f))
 				if not res: return
 			l.set_text(os.path.basename(f))
 			page.set_data("file", f)
@@ -504,7 +504,7 @@ def createRecentMenu():
 	filter = gtk.RecentFilter()
 	filter.add_application ("gnoduino");
 	menuRecent.set_filter(filter)
-	mi = gtk.MenuItem("Open Recent", use_underline=True)
+	mi = gtk.MenuItem(_("Open Recent"), use_underline=True)
 	mi.set_submenu(menuRecent)
 	gui.get_object("filemenu").insert(mi, 2)
 	menuRecent.connect ("item_activated", recentMenuActivated);
@@ -539,8 +539,8 @@ def createScon():
 	misc.set_widget_font(tmp, config.cur_console_font)
 	sw.add(tmp)
 	hbox = gtk.HBox(False, 0)
-	s = gtk.Button("Send")
-	c = gtk.Button("Clear")
+	s = gtk.Button(_("Send"))
+	c = gtk.Button(_("Clear"))
 	c.connect("clicked", ser.clearConsole, tmp)
 	bb = gtk.HBox(False, 0)
 	gui.set_data("baudHBox", bb)
@@ -575,7 +575,7 @@ def createBaudCombo(w, port):
 		bw = gui.get_data("baudWidget")
 		if bw: bw.destroy()
 		b = gtk.combo_box_new_text()
-		[b.append_text(i+" baud") for i in ser.getBaudrates()]
+		[b.append_text(_("%s baud") % str(i)) for i in ser.getBaudrates()]
 		b.connect("changed", setBaud)
 		b.set_active(ser.getBaudrates().index(config.serial_baud_rate))
 		hb.pack_start(b, False, False, 3)
@@ -653,19 +653,19 @@ def run():
 			path = os.path.join(os.getcwd(), "ui", "main.ui")
 			if os.path.exists(path):
 				gui.add_from_file(path)
-			else: raise NameError("System error")
+			else: raise NameError(_("System error"))
 		except:
 			try:
 				path = os.path.join(sys.prefix, "local", "share", "gnoduino", "ui", "main.ui")
 				if os.path.exists(path):
 					gui.add_from_file(path)
-				else: raise NameError("System error")
+				else: raise NameError(_("System error"))
 			except:
 				try:
 					path = os.path.join(sys.prefix, "share", "gnoduino", "ui", "main.ui")
 					if os.path.exists(path):
 						gui.add_from_file(path)
-					else: raise NameError("System error")
+					else: raise NameError(_("System error"))
 				except Exception,e:
 					print(e)
 					raise SystemExit(_("Cannot load ui file"))
@@ -774,7 +774,8 @@ def run():
 				o.connect("clicked", i[2])
 		if (sys.argv[1:]):
 			if sys.argv[1:][0] == "--help" or sys.argv[1:][0] == "-h":
-				print """--help Prints the command line options.\n--version Output version information and exit"""
+				print _("--help    Print the command line options")
+				print _("--version Output version information and exit")
 				sys.exit(0)
 			if sys.argv[1:][0] == "--version" or sys.argv[1:][0] == "-v":
 				print "gnoduino %s" % gnoduino.__version__

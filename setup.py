@@ -60,7 +60,6 @@ class installSchema(_install):
 			print "Installing schema has failed."
 			print "%s: %s" % (type(e), e)
 			sys.exit(1)
-		_install.run(self)
 
 class Pixmaps(cmd.Command):
 	"""Command to build pixmaps from svg sources."""
@@ -78,7 +77,10 @@ class Pixmaps(cmd.Command):
 	def run(self):
 		"""Build pixmap from svg sources."""
 		if not self.dry_run:
-			subprocess.call("scripts/gen-pixmaps.sh")
+			retcode = subprocess.call("scripts/gen-pixmaps.sh")
+			if retcode != 0:
+				print "Error: Unable to convert images to PNG"
+				sys.exit(1)
 
 compline = "scripts/gen_boards.py"
 (run, sout) = runProg(compline)
@@ -101,11 +103,10 @@ data_files = [('share/gnoduino/ui', ['ui/main.ui', 'ui/arduino.xml']),
 class install(_install):
 	def run(self):
 		if len(glob.glob('pixmaps/*.png')) == 0:
-			print "Couldn't find pixmaps files."
-			print "Please run 'python setup.py pixmaps' to build pixmap files."
-			sys.exit(1)
+			Pixmaps(self.distribution).run()
 		# Run all sub-commands (at least those that need to be run)
 		_install.run(self)
+		installSchema(self.distribution).run()
 
 """we ship hardware module"""
 for r,d,f in os.walk("hardware"):
@@ -136,7 +137,6 @@ setup(name='gnoduino',
 	cmdclass={
 		"pixmaps": Pixmaps,
 		"install": install,
-		"install": installSchema
 	}
 )
 

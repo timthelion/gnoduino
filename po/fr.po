@@ -6,15 +6,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnoduino master fr\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-06 08:58+0200\n"
-"PO-Revision-Date: 2011-09-06 17:57+0200\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gnoduino&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-09-10 09:54+0000\n"
+"PO-Revision-Date: 2011-09-10 12:23+0200\n"
 "Last-Translator: Claude Paroz <claude@2xlibre.net>\n"
 "Language-Team: GNOME French team <gnomefr@traduc.org>\n"
-"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
 
 #: ../src/board.py:38
 msgid "Cannot load BOARDS file. Exiting."
@@ -23,7 +24,9 @@ msgstr "Impossible de charger le fichier BOARDS. Le programme doit quitter."
 #: ../src/board.py:41
 #, python-format
 msgid "Error reading %s file. File is corrupt. Installation problem.\n"
-msgstr "Erreur de lecture du fichier %s. Le fichier est corrompu. Problème d'installation.\n"
+msgstr ""
+"Erreur de lecture du fichier %s. Le fichier est corrompu. Problème "
+"d'installation.\n"
 
 #: ../src/compiler.py:125
 msgid "Compiling..."
@@ -55,25 +58,23 @@ msgstr "Taille du programme binaire : %s octets (sur %s octets maximum)\n"
 msgid "Library Error"
 msgstr "Erreur de bibliothèque"
 
-#: ../src/misc.py:80 ../src/misc.py:95
-msgid "Cannot find path"
-msgstr "Impossible de trouver le chemin"
+#: ../src/misc.py:51
+#, python-format
+msgid "Cannot find %s"
+msgstr "Impossible de trouver %s"
 
-#: ../src/misc.py:137
-msgid "Cannot load pixmap files"
-msgstr "Impossible de charger les fichiers pixmap"
-
-#: ../src/misc.py:251
+#: ../src/misc.py:183
 msgid "Error compilling."
 msgstr "Erreur de compilation."
 
-#: ../src/misc.py:321
+#: ../src/misc.py:253
 msgid "Close without Saving"
 msgstr "Fermer sans enregistrer"
 
-#: ../src/misc.py:323
+#: ../src/misc.py:255
 msgid "If you don't save, changes will be permanently lost."
-msgstr "Si vous n'enregistrez pas, les modifications seront définitivement perdues."
+msgstr ""
+"Si vous n'enregistrez pas, les modifications seront définitivement perdues."
 
 #: ../src/programmer.py:39
 msgid "Cannot find PROGRAMMERS"
@@ -82,7 +83,9 @@ msgstr "Impossible de truover le fichier PROGRAMMERS"
 #: ../src/programmer.py:42
 #, python-format
 msgid "Error reading %s file. File is corrupt. Installation problem."
-msgstr "Erreur de lecture du fichier %s. Le fichier est corrompu. Problème d'installation."
+msgstr ""
+"Erreur de lecture du fichier %s. Le fichier est corrompu. Problème "
+"d'installation."
 
 #: ../src/serialio.py:92
 msgid ""
@@ -97,11 +100,11 @@ msgstr ""
 msgid "'%s' not found."
 msgstr "« %s » introuvable."
 
-#: ../src/ui.py:67
+#: ../src/ui.py:69
 msgid "Save document"
 msgstr "Enregistrer le document"
 
-#: ../src/ui.py:68
+#: ../src/ui.py:70
 #, python-format
 msgid ""
 "Save changes to document \"%s\"\n"
@@ -110,9 +113,58 @@ msgstr ""
 "Enregistrer les modifications du document « %s »\n"
 " avant de fermer ?"
 
-#: ../src/ui.py:671
+#: ../src/ui.py:179
+msgid "Save file"
+msgstr "Enregistrer le fichier"
+
+#: ../src/ui.py:198
+msgid "Open file"
+msgstr "Ouvrir un fichier"
+
+#: ../src/ui.py:221
+#, python-format
+msgid "<b>A file named %s already exists. Do you want to replace it?</b>"
+msgstr "<b>Il existe déjà un fichier nommé %s. Voulez-vous le remplacer ?</b>"
+
+#: ../src/ui.py:222
+#, python-format
+msgid ""
+"The file already exists in \"%s\". Replacing it will overwrite its contents."
+msgstr ""
+"Ce fichier existe déjà dans « %s ». Si vous le remplacez, son contenu sera écrasé."
+
+#: ../src/ui.py:509
+msgid "Open Recent"
+msgstr "Récemment ouverts"
+
+#: ../src/ui.py:544 ../ui/main.ui.h:41
+msgid "Send"
+msgstr "Envoyer"
+
+#: ../src/ui.py:545
+msgid "Clear"
+msgstr "Effacer"
+
+#: ../src/ui.py:580
+#, python-format
+msgid "%s baud"
+msgstr "%s baud"
+
+#: ../src/ui.py:672 ../src/ui.py:678 ../src/ui.py:684
+msgid "System error"
+msgstr "Erreur système"
+
+#  ../src/ui.py:687
 msgid "Cannot load ui file"
 msgstr "Impossible de charger le fichier d'interface"
+
+#: ../src/ui.py:793
+msgid "--help    Print the command line options"
+msgstr "--help    Affiche les options de la ligne de commande"
+
+#: ../src/ui.py:794
+msgid "--version Output version information and exit"
+msgstr "--version Affiche les informations de version et quitte"
 
 #: ../src/uploader.py:54
 msgid "Burning bootloader..."
@@ -179,6 +231,24 @@ msgid ""
 "# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, "
 "USA.\n"
 msgstr ""
+"# gnoduino - implémentation Python de l'EDI Arduino\n"
+"# Copyright (C) 2010  Lucian Langa\n"
+"#\n"
+"# Ce programme est un logiciel libre ; vous pouvez le redistribuer\n"
+"# et/ou le modifier au titre des clauses de la Licence Publique\n"
+"# Générale GNU, telle que publiée par la Free Software Foundation ;\n"
+"# soit la version 2 de la Licence, ou (à votre discrétion) une version\n"
+"# ultérieure quelconque.\n"
+"#\n"
+"# Ce programme est distribué dans l'espoir qu'il sera utile, mais SANS\n"
+"# AUCUNE GARANTIE ; sans même une garantie implicite de COMMERCIABILITÉ\n"
+"# ou DE CONFORMITÉ À UNE UTILISATION PARTICULIÈRE. Voir la Licence\n"
+"# Publique Générale GNU pour plus de détails."
+"#\n"
+"# Vous devriez avoir reçu un exemplaire de la Licence Publique Générale\n"
+"# GNU avec ce programme ; si ce n'est pas le cas, écrivez à la Free\n"
+"# Software Foundation Inc., 51 Franklin Street, Fifth Floor, Boston,\n"
+"# MA 02110-1301, USA.\n"
 
 #: ../ui/main.ui.h:18
 msgid "Add File..."
@@ -217,8 +287,9 @@ msgid ""
 "Enter any suplementary path that compiler will check for, separate them by "
 "commas. eg /usr/share/gnoduino;/usr/local/share/gnoduino)"
 msgstr ""
-"Saisissez tout chemin supplémentaire que le compilateur devra utiliser, séparés "
-"par des points-virgules. Par ex : /usr/share/gnoduino;/usr/local/share/gnoduino"
+"Saisissez tout chemin supplémentaire que le compilateur devra utiliser, "
+"séparés par des points-virgules. Par ex : /usr/share/gnoduino;/usr/local/"
+"share/gnoduino"
 
 #: ../ui/main.ui.h:27
 msgid "Find Next"
@@ -275,10 +346,6 @@ msgstr "Rechercher en arrière"
 #: ../ui/main.ui.h:40
 msgid "Search for:"
 msgstr "Rechercher :"
-
-#: ../ui/main.ui.h:41
-msgid "Send"
-msgstr "Envoyer"
 
 #: ../ui/main.ui.h:42
 msgid "Serial Monitor"
@@ -339,3 +406,6 @@ msgstr "Aid_e"
 #: ../ui/main.ui.h:56
 msgid "gnoduino"
 msgstr "gnoduino"
+
+#~ msgid "Cannot load pixmap files"
+#~ msgstr "Impossible de charger les fichiers pixmap"

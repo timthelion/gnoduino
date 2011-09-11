@@ -133,7 +133,8 @@ def get_mime_type(content):
 	"""FIXME: try with smaller chunk of content"""
 	if mime == "text/plain":
 		tmpmime = gnomevfs.get_mime_type_for_data(content.strip("\n"))
-		if mime is not None: mime = tmpmime
+		if tmpmime != "text/plain": mime = tmpmime
+		else: mime = "text/x-csrc"
 	return mime
 
 def merge_font_name(widget, font):

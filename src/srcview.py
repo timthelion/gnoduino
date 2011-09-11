@@ -56,7 +56,8 @@ def get_lang_for_content(content):
 				return lang
 
 def instext(b, iter, text, len) :
-	lang = get_lang_for_content(text)
+	cont = b.get_text(b.get_start_iter(), b.get_end_iter())
+	lang = get_lang_for_content(cont)
 	if lang != None:
 		b.set_language(lang)
 

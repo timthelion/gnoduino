@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnoduino master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnoduino&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-09-14 13:40+0000\n"
-"PO-Revision-Date: 2011-09-17 12:08+0100\n"
+"POT-Creation-Date: 2011-09-17 11:42+0000\n"
+"PO-Revision-Date: 2011-09-17 17:19+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenščina <gnome-si@googlegroups.com>\n"
 "Language: \n"
@@ -248,12 +248,13 @@ msgid "Additional libray paths:"
 msgstr "Dodatne poti knjižnic:"
 
 #: ../ui/main.ui.h:20
+#, fuzzy
 msgid "Auto Format"
-msgstr ""
+msgstr "_Oblika = Povezana"
 
 #: ../ui/main.ui.h:21
 msgid "Board"
-msgstr ""
+msgstr "Tabla"
 
 #: ../ui/main.ui.h:22
 msgid "Burn Bootloader"
@@ -317,7 +318,7 @@ msgstr "Sklic"
 
 #: ../ui/main.ui.h:37
 msgid "Reset Board"
-msgstr ""
+msgstr "Počisti tablo"
 
 #: ../ui/main.ui.h:38
 msgid "Save"
@@ -332,8 +333,9 @@ msgid "Search for:"
 msgstr "Poišči:"
 
 #: ../ui/main.ui.h:42
+#, fuzzy
 msgid "Serial Monitor"
-msgstr ""
+msgstr "<b>Nadzornik dogajanja</b>"
 
 #: ../ui/main.ui.h:43
 msgid "Serial Port"
@@ -344,8 +346,9 @@ msgid "Show line numbers"
 msgstr "Pokaži številke vrstic"
 
 #: ../ui/main.ui.h:45
+#, fuzzy
 msgid "Sketch"
-msgstr ""
+msgstr "Dodajanje shem"
 
 #: ../ui/main.ui.h:46
 msgid "Stop"
@@ -357,15 +360,15 @@ msgstr "Orodja"
 
 #: ../ui/main.ui.h:48
 msgid "Upload"
-msgstr ""
+msgstr "Pošlji"
 
 #: ../ui/main.ui.h:49
 msgid "Upload to I/O Board"
-msgstr ""
+msgstr "Pošlji na V/I tablo"
 
 #: ../ui/main.ui.h:50
 msgid "Verbose build"
-msgstr ""
+msgstr "Podrobni izpis izgradnje"
 
 #: ../ui/main.ui.h:51
 msgid "Verify/Compile"

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnoduino master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnoduino&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-09-12 19:56+0000\n"
-"PO-Revision-Date: 2011-09-14 15:39+0100\n"
+"POT-Creation-Date: 2011-09-14 13:40+0000\n"
+"PO-Revision-Date: 2011-09-17 12:08+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenščina <gnome-si@googlegroups.com>\n"
 "Language: \n"
@@ -31,33 +31,28 @@ msgid "Error reading %s file. File is corrupt. Installation problem.\n"
 msgstr "Napaka branja datoteke %s. Datoteka je pokvarjena in predstavlja napako namestitve.\n"
 
 #: ../src/compiler.py:125
-#, fuzzy
 msgid "Compiling..."
-msgstr "Napaka med prevajanjem logičnega izraza: %s\n"
+msgstr "Poteka kodno prevajanje ..."
 
 #: ../src/compiler.py:152
 #: ../src/compiler.py:170
 #: ../src/compiler.py:185
 #: ../src/compiler.py:207
-#, fuzzy
 msgid "Compile Error"
-msgstr "Napaka vsebuje"
+msgstr "Napaka kodnega prevajanja"
 
 #: ../src/compiler.py:233
-#, fuzzy
 msgid "Linking error"
-msgstr "Napaka vsebuje"
+msgstr "Napaka povezovanja"
 
 #: ../src/compiler.py:245
 #: ../src/compiler.py:258
-#, fuzzy
 msgid "Object error"
-msgstr "Napaka okolja za zagon predmetov (OAF)"
+msgstr "Napaka predmeta"
 
 #: ../src/compiler.py:264
-#, fuzzy
 msgid "Done compilling."
-msgstr "Vse je opravljeno!"
+msgstr "Kodno prevajanje je končano."
 
 #: ../src/compiler.py:268
 #, python-format
@@ -75,52 +70,52 @@ msgid "Cannot find %s"
 msgstr "Ni mogoče najti %s"
 
 #: ../src/misc.py:184
-#, fuzzy
 msgid "Error compilling."
-msgstr "Napaka vsebuje"
+msgstr "Med kodnim prevajanjem je prišlo do napake."
 
 #: ../src/misc.py:254
-#, fuzzy
 msgid "Close without Saving"
 msgstr "Zapri brez shranjevanja"
 
 #: ../src/misc.py:256
-#, fuzzy
 msgid "If you don't save, changes will be permanently lost."
 msgstr "V primeru, da sprememb ne shranite, bodo te trajno izgubljene."
 
 #: ../src/programmer.py:39
-#, fuzzy
 msgid "Cannot find PROGRAMMERS"
-msgstr "Ni mogoče najti imenika %s\n"
+msgstr "Ni mogoče najti datoteke PROGRAMMERS"
 
 #: ../src/programmer.py:42
 #, python-format
 msgid "Error reading %s file. File is corrupt. Installation problem."
-msgstr ""
+msgstr "Napaka branja datoteke %s. Datoteka je pokvarjena in predstavlja napako namestitve."
 
 #: ../src/serialio.py:92
 msgid ""
 "Serial port not configured!\n"
 "Use Tools->Serial Port to configure port."
 msgstr ""
+"Zaporedna vrata niso nastavljena!\n"
+"Uporabite Orodja->Zaporedna vrata na nastavljanje."
 
 #: ../src/srcview.py:148
 #: ../src/srcview.py:158
-#, fuzzy, python-format
+#, python-format
 msgid "'%s' not found."
-msgstr "Ni zadetkov"
+msgstr "'%s' ni mogoče najti."
 
 #: ../src/ui.py:69
 msgid "Save document"
 msgstr "Shrani dokument"
 
 #: ../src/ui.py:70
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Save changes to document \"%s\"\n"
 " before closing?"
-msgstr "Ali želite shraniti spremembe v dokumentu \"%s\" preden se zapre?"
+msgstr ""
+"Ali želite shraniti spremembe v dokumentu\n"
+"\"%s\" preden se zapre?"
 
 #: ../src/ui.py:179
 msgid "Save file"
@@ -131,12 +126,12 @@ msgid "Open file"
 msgstr "Odpri datoteko"
 
 #: ../src/ui.py:221
-#, fuzzy, python-format
+#, python-format
 msgid "<b>A file named %s already exists. Do you want to replace it?</b>"
-msgstr "Datoteka z imenom \"%s\" že obstaja. Ali jo želite zamenjati?"
+msgstr "<b>Datoteka z imenom %s že obstaja. Ali jo želite zamenjati?</b>"
 
 #: ../src/ui.py:222
-#, fuzzy, python-format
+#, python-format
 msgid "The file already exists in \"%s\". Replacing it will overwrite its contents."
 msgstr "Datoteka že obstaja v mapi \"%s\". S prepisom bo izgubljena njena vsebina."
 
@@ -154,9 +149,9 @@ msgid "Clear"
 msgstr "Počisti"
 
 #: ../src/ui.py:580
-#, fuzzy, python-format
+#, python-format
 msgid "%s baud"
-msgstr "Baudna hitrost"
+msgstr "%s baud"
 
 #: ../src/ui.py:672
 #: ../src/ui.py:678
@@ -165,77 +160,64 @@ msgid "System error"
 msgstr "Sistemska napaka"
 
 #: ../src/ui.py:687
-#, fuzzy
 msgid "Cannot load ui file"
-msgstr "Napaka med nalaganjem datoteke uporabniškega vmesnika"
+msgstr "Ni mogoče naložiti datoteke uporabniškega vmesnika."
 
 #: ../src/ui.py:793
-#, fuzzy
 msgid "--help    Print the command line options"
-msgstr "V ukazni vrstici so bile uporabljene nezdružljive možnosti."
+msgstr "--help    Izpiši možnosti ukazne vrstice"
 
 #: ../src/ui.py:794
-#, fuzzy
 msgid "--version Output version information and exit"
-msgstr "Izpiši podrobnosti različice in končaj"
+msgstr "--version Izpiši podrobnosti različice in končaj"
 
 #: ../src/uploader.py:54
-#, fuzzy
 msgid "Burning bootloader..."
-msgstr "Zapisovanje DVD nosilca"
+msgstr "Zapisovanje zagonskega nalagalnika ..."
 
 #: ../src/uploader.py:77
 #: ../src/uploader.py:80
 #: ../src/uploader.py:96
 #: ../src/uploader.py:99
-#, fuzzy
 msgid "Burn Error"
-msgstr "Napaka vsebuje"
+msgstr "Napaka zapisovanja"
 
 #: ../src/uploader.py:80
 #: ../src/uploader.py:99
-#, fuzzy
 msgid "Burn ERROR."
-msgstr "Napaka vsebuje"
+msgstr "Napaka zapisovanja."
 
 #: ../src/uploader.py:102
-#, fuzzy
 msgid "Burn complete."
-msgstr "_Samodejno izpolnjevanje"
+msgstr "Zapisovanje je končano."
 
 #: ../src/uploader.py:110
-#, fuzzy
 msgid "Flashing..."
-msgstr "Bliskanje tipk"
+msgstr "Zaključevanje ..."
 
 #: ../src/uploader.py:115
-#, fuzzy
 msgid "Flashing error."
-msgstr "Napaka vsebuje"
+msgstr "Napaka zaključevanja."
 
 #: ../src/uploader.py:135
-#, fuzzy
 msgid "Flashing Error"
-msgstr "Napaka vsebuje"
+msgstr "Napaka zaključevanja."
 
 #: ../src/uploader.py:135
-#, fuzzy
 msgid "Flash ERROR.\n"
-msgstr "Napaka vsebuje"
+msgstr "Napaka Zaključevanja.\n"
 
 #: ../src/uploader.py:138
-#, fuzzy
 msgid "Flashing complete."
-msgstr "_Samodejno izpolnjevanje"
+msgstr "Zaključevanje je končano."
 
 #: ../ui/arduino.xml.h:1
 msgid "Arduino"
 msgstr "Arduino"
 
 #: ../ui/arduino.xml.h:2
-#, fuzzy
 msgid "Arduino color scheme"
-msgstr "Datoteke barvnih shem"
+msgstr "Barvna shema Arduino"
 
 #: ../ui/main.ui.h:1
 msgid ""
@@ -262,29 +244,24 @@ msgid "Add File..."
 msgstr "Dodaj datoteko ..."
 
 #: ../ui/main.ui.h:19
-#, fuzzy
 msgid "Additional libray paths:"
-msgstr "Dodaj dodatne poti vira"
+msgstr "Dodatne poti knjižnic:"
 
 #: ../ui/main.ui.h:20
-#, fuzzy
 msgid "Auto Format"
-msgstr "_Oblika = Povezana"
+msgstr ""
 
 #: ../ui/main.ui.h:21
-#, fuzzy
 msgid "Board"
-msgstr "Tabla"
+msgstr ""
 
 #: ../ui/main.ui.h:22
-#, fuzzy
 msgid "Burn Bootloader"
-msgstr "_Zapiši"
+msgstr "Zapiši zagonski nalagalnik"
 
 #: ../ui/main.ui.h:23
-#, fuzzy
 msgid "Compile"
-msgstr "_Kodno prevajanje"
+msgstr "Kodno prevajanje"
 
 #: ../ui/main.ui.h:24
 msgid "Console font size"
@@ -296,7 +273,7 @@ msgstr "Velikost pisave urejevalnika"
 
 #: ../ui/main.ui.h:26
 msgid "Enter any suplementary path that compiler will check for, separate them by commas. eg /usr/share/gnoduino;/usr/local/share/gnoduino)"
-msgstr ""
+msgstr "Vnesite dodatne poti, ki jih bo kodni prevajalnik preiskal, ločene s podpičji (na primer: usr/share/gnoduino;/usr/local/share/gnoduino)."
 
 #: ../ui/main.ui.h:27
 msgid "Find Next"
@@ -339,9 +316,8 @@ msgid "Reference"
 msgstr "Sklic"
 
 #: ../ui/main.ui.h:37
-#, fuzzy
 msgid "Reset Board"
-msgstr "Naslov table"
+msgstr ""
 
 #: ../ui/main.ui.h:38
 msgid "Save"
@@ -356,23 +332,20 @@ msgid "Search for:"
 msgstr "Poišči:"
 
 #: ../ui/main.ui.h:42
-#, fuzzy
 msgid "Serial Monitor"
-msgstr "<b>Nadzornik dogajanja</b>"
+msgstr ""
 
 #: ../ui/main.ui.h:43
 msgid "Serial Port"
 msgstr "Zaporedna vrata"
 
 #: ../ui/main.ui.h:44
-#, fuzzy
 msgid "Show line numbers"
 msgstr "Pokaži številke vrstic"
 
 #: ../ui/main.ui.h:45
-#, fuzzy
 msgid "Sketch"
-msgstr "Dodajanje shem"
+msgstr ""
 
 #: ../ui/main.ui.h:46
 msgid "Stop"
@@ -383,24 +356,20 @@ msgid "Tools"
 msgstr "Orodja"
 
 #: ../ui/main.ui.h:48
-#, fuzzy
 msgid "Upload"
-msgstr "Pošlji"
+msgstr ""
 
 #: ../ui/main.ui.h:49
-#, fuzzy
 msgid "Upload to I/O Board"
-msgstr "Dodano na pano"
+msgstr ""
 
 #: ../ui/main.ui.h:50
-#, fuzzy
 msgid "Verbose build"
-msgstr "Mapa za izgradnjo:"
+msgstr ""
 
 #: ../ui/main.ui.h:51
-#, fuzzy
 msgid "Verify/Compile"
-msgstr "Kodno prevedi datoteko"
+msgstr "Overi/Kodno prevedi"
 
 #: ../ui/main.ui.h:52
 msgid "Wrap around"

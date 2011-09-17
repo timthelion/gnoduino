@@ -173,15 +173,14 @@ def processFile(f):
 def saveAs(js=False):
 	page = getCurrentPage()
 	buf = page.get_data("buffer")
-	f = page.get_data("file")
-	if misc.bufferModified(buf, f) is False and js is False:
+	cur_file = page.get_data("file")
+	if misc.bufferModified(buf, cur_file) is False and js is False:
 		return
 	p = gtk.FileChooserDialog(_("Save file"), None, gtk.FILE_CHOOSER_ACTION_SAVE,
 		(gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT,
 		gtk.STOCK_OK, gtk.RESPONSE_ACCEPT))
-	if page.get_data("file") is not None:
-		name =  os.path.basename(page.get_data("file"))
-		p.set_filename(name)
+	if cur_file is not None:
+		p.set_filename(cur_file)
 	else:
 		name = "Untitled"
 		p.set_current_name(name)
@@ -198,6 +197,9 @@ def copen(widget, data=None):
 	p = gtk.FileChooserDialog(_("Open file"), None, gtk.FILE_CHOOSER_ACTION_OPEN,
 		(gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT,
 		gtk.STOCK_OK, gtk.RESPONSE_ACCEPT))
+	cur_file = getCurrentPage().get_data("file")
+	if cur_file is not None:
+		p.set_current_folder(os.path.dirname(cur_file))
 	p.set_size_request(450, 400)
 	p.show_all()
 	if p.run() == gtk.RESPONSE_ACCEPT:

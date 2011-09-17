@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnoduino master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnoduino&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-09-17 11:42+0000\n"
-"PO-Revision-Date: 2011-09-17 17:19+0100\n"
-"Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
+"POT-Creation-Date: 2011-09-17 15:20+0000\n"
+"PO-Revision-Date: 2011-09-17 17:49+0100\n"
+"Last-Translator: Martin Srebotnjak  <miles@filmsi.net>\n"
 "Language-Team: Slovenščina <gnome-si@googlegroups.com>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -55,9 +55,9 @@ msgid "Done compilling."
 msgstr "Kodno prevajanje je končano."
 
 #: ../src/compiler.py:268
-#, python-format
+#, fuzzy, python-format
 msgid "Binary sketch size: %s bytes (of a %s bytes maximum)\n"
-msgstr ""
+msgstr "Velikost dvojiške skice: %s bajtov (od največ %s bajtov)\n"
 
 #: ../src/compiler.py:322
 #: ../src/compiler.py:345
@@ -115,7 +115,7 @@ msgid ""
 " before closing?"
 msgstr ""
 "Ali želite shraniti spremembe v dokumentu\n"
-"\"%s\" preden se zapre?"
+"\"%s\", preden se zapre?"
 
 #: ../src/ui.py:179
 msgid "Save file"
@@ -133,7 +133,7 @@ msgstr "<b>Datoteka z imenom %s že obstaja. Ali jo želite zamenjati?</b>"
 #: ../src/ui.py:222
 #, python-format
 msgid "The file already exists in \"%s\". Replacing it will overwrite its contents."
-msgstr "Datoteka že obstaja v mapi \"%s\". S prepisom bo izgubljena njena vsebina."
+msgstr "Datoteka že obstaja v mapi \"%s\". S prepisom bo njena vsebina izgubljena."
 
 #: ../src/ui.py:509
 msgid "Open Recent"
@@ -161,7 +161,7 @@ msgstr "Sistemska napaka"
 
 #: ../src/ui.py:687
 msgid "Cannot load ui file"
-msgstr "Ni mogoče naložiti datoteke uporabniškega vmesnika."
+msgstr "Datoteke uporabniškega vmesnika ni mogoče naložiti."
 
 #: ../src/ui.py:793
 msgid "--help    Print the command line options"
@@ -238,6 +238,22 @@ msgid ""
 "# along with this program; if not, write to the Free Software\n"
 "# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.\n"
 msgstr ""
+"# gnoduino - Implementacija integriranega razvijalskega okolja Python Arduino\n"
+"# Copyright (C) 2010  Lucian Langa\n"
+"#\n"
+"# Ta program je prosto programje; lahko ga nadalje razširjate in/ali\n"
+"# spreminjate pod pogoji licence GNU GPL, kot jo je objavila\n"
+"# Free Software Foundation; pod 2. različico ali (če želite)\n"
+"# katerokoli kasnejšo različico.\n"
+"#\n"
+"# Ta program je distribuiran v upanju, da bo uporaben,\n"
+"\"# toda BREZ KAKRŠNIH KOLI ZAGOTOVIL; tudi brez impliciranih\n"
+"\"# zagotovila za PRODAJO ali PRIMERNOST ZA DOLOČEN NAMEN.\n"
+"# Oglejte si licenco GNU GPL za več podrobnosti.\n"
+"#\n"
+"# Kopijo licence GNU General Public License\n"
+"# bi morali prejeti s tem programom; če je niste, pišite na naslov Free Software\n"
+"# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.\n"
 
 #: ../ui/main.ui.h:18
 msgid "Add File..."
@@ -248,9 +264,8 @@ msgid "Additional libray paths:"
 msgstr "Dodatne poti knjižnic:"
 
 #: ../ui/main.ui.h:20
-#, fuzzy
 msgid "Auto Format"
-msgstr "_Oblika = Povezana"
+msgstr "Samooblikovanje"
 
 #: ../ui/main.ui.h:21
 msgid "Board"
@@ -333,9 +348,8 @@ msgid "Search for:"
 msgstr "Poišči:"
 
 #: ../ui/main.ui.h:42
-#, fuzzy
 msgid "Serial Monitor"
-msgstr "<b>Nadzornik dogajanja</b>"
+msgstr "Nadzornik zaporednih vrat"
 
 #: ../ui/main.ui.h:43
 msgid "Serial Port"
@@ -346,9 +360,8 @@ msgid "Show line numbers"
 msgstr "Pokaži številke vrstic"
 
 #: ../ui/main.ui.h:45
-#, fuzzy
 msgid "Sketch"
-msgstr "Dodajanje shem"
+msgstr "Skica"
 
 #: ../ui/main.ui.h:46
 msgid "Stop"

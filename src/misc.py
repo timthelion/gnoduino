@@ -260,6 +260,19 @@ def createPopup(title, parent, msg):
 	dialog.destroy()
 	return response
 
+
+def launch_in_browser(page):
+	# The difficulty here is that the default open method for local files may not be
+	# a browser (even with python webbrowser module). That's why we try first to read
+	# the gconf key
+	try:
+		import gconf
+		client = gconf.client_get_default()
+		prog = client.get_string("/desktop/gnome/url-handlers/http/command")
+		subprocess.call(prog % page, shell=True)
+	except:
+		gtk.show_uri(None, "file:///"+page, int(time.time()))
+
 #float = config.getfloat('Section1', 'float')
 #int = config.getint('Section1', 'int')
 #print float + int

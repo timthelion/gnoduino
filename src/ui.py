@@ -26,7 +26,6 @@ import select
 import shutil
 import signal
 import urlparse
-import time
 
 import locale
 import gettext
@@ -282,7 +281,7 @@ def menuUpload(widget, data=None):
 	upload(widget, ser, data)
 
 def menuReference(widget, data=None):
-	gtk.show_uri(None, "file:///"+os.path.join(misc.getArduinoFile("reference"), "index.html"), int(time.time()))
+	misc.launch_in_browser(os.path.join(misc.getArduinoFile("reference"), "index.html"))
 
 def about(widget, data=None):
 	about = gui.get_object("about")

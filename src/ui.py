@@ -418,21 +418,18 @@ def redo(w, data=None):
 def cut(w, data=None):
 	page = getCurrentPage()
 	b = page.get_data("buffer")
-	display = gtk.gdk.display_manager_get().get_default_display()
-	clipboard = gtk.Clipboard(display, "PRIMARY")
+	clipboard = gtk.clipboard_get(gtk.gdk.SELECTION_CLIPBOARD)
 	b.cut_clipboard(clipboard, True)
 
 def copy(w, data=None):
 	page = getCurrentPage()
 	b = page.get_data("buffer")
-	display = gtk.gdk.display_manager_get().get_default_display()
 	clipboard = gtk.clipboard_get(gtk.gdk.SELECTION_CLIPBOARD)
 	b.copy_clipboard(clipboard)
 
 def paste(w, data=None):
 	page = getCurrentPage()
 	b = page.get_data("buffer")
-	display = gtk.gdk.display_manager_get().get_default_display()
 	clipboard = gtk.clipboard_get(gtk.gdk.SELECTION_CLIPBOARD)
 	b.paste_clipboard(clipboard, None, True)
 

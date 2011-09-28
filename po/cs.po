@@ -1,0 +1,404 @@
+# Czech translation for gnoduino.
+# Copyright (C) 2011 gnoduino's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gnoduino package.
+#
+# Marek Černocký <marek@manet.cz>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gnoduino master\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gnoduino&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-09-19 19:51+0000\n"
+"PO-Revision-Date: 2011-09-28 11:09+0200\n"
+"Last-Translator: Marek Černocký <marek@manet.cz>\n"
+"Language-Team: Czech <gnome-cs-list@gnome.org>\n"
+"MIME-Version: 1.0\n"
+"Language: cs\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: ../src/board.py:38
+msgid "Cannot load BOARDS file. Exiting."
+msgstr "Nelze načíst soubor BOARDS. Ukončuje se."
+
+#: ../src/board.py:41
+#, python-format
+msgid "Error reading %s file. File is corrupt. Installation problem.\n"
+msgstr ""
+"Chyba při načítání souboru %s. Soubor je poškozen. Problém s instalací.\n"
+
+#: ../src/compiler.py:125
+msgid "Compiling..."
+msgstr "Překládá se…"
+
+#: ../src/compiler.py:152 ../src/compiler.py:170 ../src/compiler.py:185
+#: ../src/compiler.py:207
+msgid "Compile Error"
+msgstr "Chyba překladu"
+
+#: ../src/compiler.py:233
+msgid "Linking error"
+msgstr "Chyba sestavení"
+
+#: ../src/compiler.py:245 ../src/compiler.py:258
+msgid "Object error"
+msgstr "Chyba objektu"
+
+#: ../src/compiler.py:264
+msgid "Done compilling."
+msgstr "Překlad dokončen."
+
+#: ../src/compiler.py:268
+#, python-format
+msgid "Binary sketch size: %s bytes (of a %s bytes maximum)\n"
+msgstr "Velikost binárního programu: %s bajtů (z maximálně možných %s bajtů)\n"
+
+#: ../src/compiler.py:322 ../src/compiler.py:345
+msgid "Library Error"
+msgstr "Chyba knihovny"
+
+#: ../src/misc.py:52
+#, python-format
+msgid "Cannot find %s"
+msgstr "Nelze najít %s"
+
+#: ../src/misc.py:185
+msgid "Error compilling."
+msgstr "Chyba při překládání."
+
+#: ../src/misc.py:255
+msgid "Close without Saving"
+msgstr "Zavřít bez uložení"
+
+#: ../src/misc.py:257
+msgid "If you don't save, changes will be permanently lost."
+msgstr "Pokud změny neuložíte, budou trvale ztraceny."
+
+#: ../src/programmer.py:39
+msgid "Cannot find PROGRAMMERS"
+msgstr "Nelze najít soubor PROGRAMMERS"
+
+#: ../src/programmer.py:42
+#, python-format
+msgid "Error reading %s file. File is corrupt. Installation problem."
+msgstr ""
+"Chyba při načítání souboru %s. Soubor je poškozen. Problém s instalací."
+
+#: ../src/serialio.py:92
+msgid ""
+"Serial port not configured!\n"
+"Use Tools->Serial Port to configure port."
+msgstr ""
+"Sériový port není nastaven.\n"
+"K nastavení použijte Nástroje ▸ Sériový port."
+
+#: ../src/srcview.py:148 ../src/srcview.py:158
+#, python-format
+msgid "'%s' not found."
+msgstr "„%s“ nenalezeno."
+
+#: ../src/ui.py:68
+msgid "Save document"
+msgstr "Uložit dokument"
+
+#: ../src/ui.py:69
+#, python-format
+msgid ""
+"Save changes to document \"%s\"\n"
+" before closing?"
+msgstr ""
+"Uložit před zavření změny do\n"
+"dokumentu „%s“?"
+
+#: ../src/ui.py:178
+msgid "Save file"
+msgstr "Uložení souboru"
+
+#: ../src/ui.py:196
+msgid "Open file"
+msgstr "Otevření souboru"
+
+#: ../src/ui.py:222
+#, python-format
+msgid "<b>A file named %s already exists. Do you want to replace it?</b>"
+msgstr "<b>Soubor s názvem %s již existuje? Chcete jej nahradit?</b>"
+
+#: ../src/ui.py:223
+#, python-format
+msgid ""
+"The file already exists in \"%s\". Replacing it will overwrite its contents."
+msgstr "Soubor již existuje v „%s“. Při jeho nahrazení přepíšete jeho obsah."
+
+#: ../src/ui.py:507
+msgid "Open Recent"
+msgstr "Otevřít nedávné"
+
+#: ../src/ui.py:542 ../ui/main.ui.h:41
+msgid "Send"
+msgstr "Poslat"
+
+#: ../src/ui.py:543
+msgid "Clear"
+msgstr "Smazat"
+
+#: ../src/ui.py:578
+#, python-format
+msgid "%s baud"
+msgstr "%s b/s"
+
+#: ../src/ui.py:670 ../src/ui.py:676 ../src/ui.py:682
+msgid "System error"
+msgstr "Systémová chyba"
+
+#: ../src/ui.py:685
+msgid "Cannot load ui file"
+msgstr "Nelze načíst soubor s uživatelským rozhraním"
+
+#: ../src/ui.py:791
+msgid "--help    Print the command line options"
+msgstr "--help    Vypsat přepínače příkazového řádku"
+
+#: ../src/ui.py:792
+msgid "--version Output version information and exit"
+msgstr "--version Vypsat informace o verzi a skončit"
+
+#: ../src/uploader.py:54
+msgid "Burning bootloader..."
+msgstr "Vypaluje se zavaděč…"
+
+#: ../src/uploader.py:77 ../src/uploader.py:80 ../src/uploader.py:96
+#: ../src/uploader.py:99
+msgid "Burn Error"
+msgstr "Chyba vypalování"
+
+#: ../src/uploader.py:80 ../src/uploader.py:99
+msgid "Burn ERROR."
+msgstr "CHYBA vypalování."
+
+#: ../src/uploader.py:102
+msgid "Burn complete."
+msgstr "Vypalování dokončeno."
+
+#: ../src/uploader.py:110
+msgid "Flashing..."
+msgstr "Programuje se flash paměť…"
+
+#: ../src/uploader.py:115
+msgid "Flashing error."
+msgstr "Chyba programování flash paměti."
+
+#: ../src/uploader.py:135
+msgid "Flashing Error"
+msgstr "Chyba programování flash paměti"
+
+#: ../src/uploader.py:135
+msgid "Flash ERROR.\n"
+msgstr "CHYBA programování flash paměti.\n"
+
+#: ../src/uploader.py:138
+msgid "Flashing complete."
+msgstr "Programování flash paměti dokončeno."
+
+#: ../ui/arduino.xml.h:1
+msgid "Arduino"
+msgstr "Arduino"
+
+#: ../ui/arduino.xml.h:2
+msgid "Arduino color scheme"
+msgstr "Barevné schéma Arduino"
+
+#: ../ui/main.ui.h:1
+msgid ""
+"# gnoduino - Python Arduino IDE implementation\n"
+"# Copyright (C) 2010  Lucian Langa\n"
+"#\n"
+"# This program is free software; you can redistribute it and/or\n"
+"# modify it under the terms of the GNU General Public License\n"
+"# as published by the Free Software Foundation; either version 2\n"
+"# of the License, or (at your option) any later version.\n"
+"#\n"
+"# This program is distributed in the hope that it will be useful,\n"
+"# but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"# GNU General Public License for more details.\n"
+"#\n"
+"# You should have received a copy of the GNU General Public License\n"
+"# along with this program; if not, write to the Free Software\n"
+"# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, "
+"USA.\n"
+msgstr ""
+"# gnoduino – Implementace Arduino IDE v jazyce Python\n"
+"# Copyright © 2010 Lucian Langa\n"
+"#\n"
+"# Tento program je svobodný software. Můžete jej dále šířit\n"
+"# a/nebo upravovat za dodržení podmínek GNU General Public\n"
+"# License, tak jak ji vydala Free Software Foundation ve verzi 2\n"
+"# nebo (dle vaší volby) novější.\n"
+"#\n"
+"# Tento program je šířen s přesvědčením, že může být užitečný,\n"
+"# ale BEZ JAKÝCHKOLIV ZÁRUK, bez předpokládané záruky na\n"
+"# OBCHODOVATELNOST nebo VHODNOST PRO URČITÝ ÚČEL.\n"
+"# Více podrobností najdete ve znění GNU General Public License.\n"
+"#\n"
+"# Kopii GNU General Public License byste měli získat spolu s tímto\n"
+"# programem. Pokud se tak nestalo, můžete poslat žádost na Free\n"
+"# Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, \n"
+"# MA  02110-1301, USA.\n"
+
+#: ../ui/main.ui.h:18
+msgid "Add File..."
+msgstr "Přidat soubor…"
+
+#: ../ui/main.ui.h:19
+msgid "Additional libray paths:"
+msgstr "Cesty k dodatečným knihovnám:"
+
+#: ../ui/main.ui.h:20
+msgid "Auto Format"
+msgstr "Automaticky formátovat"
+
+#: ../ui/main.ui.h:21
+msgid "Board"
+msgstr "Deska"
+
+#: ../ui/main.ui.h:22
+msgid "Burn Bootloader"
+msgstr "Vypálit zavaděč"
+
+#: ../ui/main.ui.h:23
+msgid "Compile"
+msgstr "Přeložit"
+
+#: ../ui/main.ui.h:24
+msgid "Console font size"
+msgstr "Velikost písma konzoly"
+
+#: ../ui/main.ui.h:25
+msgid "Editor font size"
+msgstr "Velikost písma editoru"
+
+#: ../ui/main.ui.h:26
+msgid ""
+"Enter any suplementary path that compiler will check for, separate them by "
+"commas. eg /usr/share/gnoduino;/usr/local/share/gnoduino)"
+msgstr ""
+"Zadejte dodatečné cesty, které má překladač kontrolovat. K oddělení použijte "
+"čárky, např. /usr/share/gnoduino;/usr/local/share/gnoduino"
+
+#: ../ui/main.ui.h:27
+msgid "Find Next"
+msgstr "Hledat následující"
+
+#: ../ui/main.ui.h:28
+msgid "GNOME Arduino IDE"
+msgstr "Arduino IDE pro GNOME"
+
+#: ../ui/main.ui.h:29
+msgid "Import Library"
+msgstr "Importovat knihovnu"
+
+#: ../ui/main.ui.h:30
+msgid "Lucian Langa <lucilanga@gnome.org>"
+msgstr "Lucian Langa <lucilanga@gnome.org>"
+
+#: ../ui/main.ui.h:31
+msgid "Match case"
+msgstr "Shoda velikosti písmen"
+
+#: ../ui/main.ui.h:32
+msgid "Match entire word only"
+msgstr "Shoda pouze celých slov"
+
+#: ../ui/main.ui.h:33
+msgid "New"
+msgstr "Nový"
+
+#: ../ui/main.ui.h:34
+msgid "Open"
+msgstr "Otevřít"
+
+#: ../ui/main.ui.h:35
+msgid "Preferences"
+msgstr "Předvolby"
+
+#: ../ui/main.ui.h:36
+msgid "Reference"
+msgstr "Referenční příručka"
+
+#: ../ui/main.ui.h:37
+msgid "Reset Board"
+msgstr "Resetovat desku"
+
+#: ../ui/main.ui.h:38
+msgid "Save"
+msgstr "Uložit"
+
+#: ../ui/main.ui.h:39
+msgid "Search backwards"
+msgstr "Hledat od konce k začátku"
+
+#: ../ui/main.ui.h:40
+msgid "Search for:"
+msgstr "Hledat:"
+
+#: ../ui/main.ui.h:42
+msgid "Serial Monitor"
+msgstr "Sledování sériového portu"
+
+#: ../ui/main.ui.h:43
+msgid "Serial Port"
+msgstr "Sériový port"
+
+#: ../ui/main.ui.h:44
+msgid "Show line numbers"
+msgstr "Zobrazovat čísla řádků"
+
+#: ../ui/main.ui.h:45
+msgid "Sketch"
+msgstr "Program"
+
+#: ../ui/main.ui.h:46
+msgid "Stop"
+msgstr "Zastavit"
+
+#: ../ui/main.ui.h:47
+msgid "Tools"
+msgstr "Nástroje"
+
+#: ../ui/main.ui.h:48
+msgid "Upload"
+msgstr "Nahrát"
+
+#: ../ui/main.ui.h:49
+msgid "Upload to I/O Board"
+msgstr "Nahrát do V/V desky"
+
+#: ../ui/main.ui.h:50
+msgid "Verbose build"
+msgstr "Podrobné informace při sestavení"
+
+#: ../ui/main.ui.h:51
+msgid "Verify/Compile"
+msgstr "Ověřit/přeložit"
+
+#: ../ui/main.ui.h:52
+msgid "Wrap around"
+msgstr "Přecházet přes okraj"
+
+#: ../ui/main.ui.h:53
+msgid "_Edit"
+msgstr "_Upravit"
+
+#: ../ui/main.ui.h:54
+msgid "_File"
+msgstr "_Soubor"
+
+#: ../ui/main.ui.h:55
+msgid "_Help"
+msgstr "_Nápověda"
+
+#: ../ui/main.ui.h:56
+msgid "gnoduino"
+msgstr "gnoduino"

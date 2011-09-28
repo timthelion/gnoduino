@@ -64,7 +64,7 @@ def destroyPage(w, b):
 	f = b.get_data("file")
 	buf = b.get_data("buffer")
 	if misc.bufferModified(buf, f) is True:
-		if f is None: f= "Untitled"
+		if f is None: f = _("Untitled")
 		save = misc.createPopup(_("Save document"), mainwin, \
 			_("Save changes to document \"%s\"\n before closing?") % os.path.basename(f))
 		if save == gtk.RESPONSE_YES:
@@ -84,8 +84,7 @@ def updatePageTitle(w, status):
 	if f != None:
 		name = os.path.basename(f)
 	else:
-		fh = 0
-		name = "Untitled"
+		name = _("Untitled")
 
 	if (misc.bufferModified(w, f)):
 		l.set_text("*"+name)
@@ -98,7 +97,7 @@ def switchPage(page, a, b, c):
 
 def createPage(nb, f=None):
 	hbox = gtk.HBox(False, 0)
-	flabel = gtk.Label(os.path.basename(f) if f else "Untitled")
+	flabel = gtk.Label(os.path.basename(f) if f else _("Untitled"))
 	hbox.pack_start(flabel, True, False, 3)
 	b = gtk.Button()
 	img = gtk.Image()
@@ -166,7 +165,7 @@ def processFile(f):
 		return
 	page = getCurrentPage()
 	createPage(nb, f)
-	if page.get_data("label").get_text() == "Untitled":
+	if page.get_data("label").get_text() == _("Untitled"):
 		replacePage(page)
 
 def saveAs(js=False):
@@ -181,8 +180,7 @@ def saveAs(js=False):
 	if cur_file is not None:
 		p.set_filename(cur_file)
 	else:
-		name = "Untitled"
-		p.set_current_name(name)
+		p.set_current_name(_("Untitled"))
 	p.set_default_size(450, 400)
 	p.show_all()
 	if p.run() == gtk.RESPONSE_ACCEPT:

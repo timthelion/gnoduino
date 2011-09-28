@@ -1,7 +1,6 @@
 # Czech translation for gnoduino.
 # Copyright (C) 2011 gnoduino's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gnoduino package.
-#
 # Marek Černocký <marek@manet.cz>, 2011.
 #
 msgid ""
@@ -9,14 +8,14 @@ msgstr ""
 "Project-Id-Version: gnoduino master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gnoduino&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-09-19 19:51+0000\n"
-"PO-Revision-Date: 2011-09-28 11:09+0200\n"
+"POT-Creation-Date: 2011-09-28 18:28+0000\n"
+"PO-Revision-Date: 2011-09-28 21:15+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
-"Language: cs\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: ../src/board.py:38
@@ -99,6 +98,11 @@ msgstr ""
 msgid "'%s' not found."
 msgstr "„%s“ nenalezeno."
 
+#: ../src/ui.py:67 ../src/ui.py:87 ../src/ui.py:100 ../src/ui.py:168
+#: ../src/ui.py:183
+msgid "Untitled"
+msgstr "Nepojmenovaný"
+
 #: ../src/ui.py:68
 msgid "Save document"
 msgstr "Uložit dokument"
@@ -112,55 +116,55 @@ msgstr ""
 "Uložit před zavření změny do\n"
 "dokumentu „%s“?"
 
-#: ../src/ui.py:178
+#: ../src/ui.py:177
 msgid "Save file"
 msgstr "Uložení souboru"
 
-#: ../src/ui.py:196
+#: ../src/ui.py:194
 msgid "Open file"
 msgstr "Otevření souboru"
 
-#: ../src/ui.py:222
+#: ../src/ui.py:220
 #, python-format
 msgid "<b>A file named %s already exists. Do you want to replace it?</b>"
 msgstr "<b>Soubor s názvem %s již existuje? Chcete jej nahradit?</b>"
 
-#: ../src/ui.py:223
+#: ../src/ui.py:221
 #, python-format
 msgid ""
 "The file already exists in \"%s\". Replacing it will overwrite its contents."
 msgstr "Soubor již existuje v „%s“. Při jeho nahrazení přepíšete jeho obsah."
 
-#: ../src/ui.py:507
+#: ../src/ui.py:505
 msgid "Open Recent"
 msgstr "Otevřít nedávné"
 
-#: ../src/ui.py:542 ../ui/main.ui.h:41
+#: ../src/ui.py:540 ../ui/main.ui.h:41
 msgid "Send"
 msgstr "Poslat"
 
-#: ../src/ui.py:543
+#: ../src/ui.py:541
 msgid "Clear"
 msgstr "Smazat"
 
-#: ../src/ui.py:578
+#: ../src/ui.py:576
 #, python-format
 msgid "%s baud"
 msgstr "%s b/s"
 
-#: ../src/ui.py:670 ../src/ui.py:676 ../src/ui.py:682
+#: ../src/ui.py:668 ../src/ui.py:674 ../src/ui.py:680
 msgid "System error"
 msgstr "Systémová chyba"
 
-#: ../src/ui.py:685
+#: ../src/ui.py:683
 msgid "Cannot load ui file"
 msgstr "Nelze načíst soubor s uživatelským rozhraním"
 
-#: ../src/ui.py:791
+#: ../src/ui.py:789
 msgid "--help    Print the command line options"
 msgstr "--help    Vypsat přepínače příkazového řádku"
 
-#: ../src/ui.py:792
+#: ../src/ui.py:790
 msgid "--version Output version information and exit"
 msgstr "--version Vypsat informace o verzi a skončit"
 
@@ -252,7 +256,8 @@ msgid "Add File..."
 msgstr "Přidat soubor…"
 
 #: ../ui/main.ui.h:19
-msgid "Additional libray paths:"
+#| msgid "Additional libray paths:"
+msgid "Additional library paths:"
 msgstr "Cesty k dodatečným knihovnám:"
 
 #: ../ui/main.ui.h:20
@@ -280,12 +285,15 @@ msgid "Editor font size"
 msgstr "Velikost písma editoru"
 
 #: ../ui/main.ui.h:26
+#| msgid ""
+#| "Enter any suplementary path that compiler will check for, separate them "
+#| "by commas. eg /usr/share/gnoduino;/usr/local/share/gnoduino)"
 msgid ""
-"Enter any suplementary path that compiler will check for, separate them by "
-"commas. eg /usr/share/gnoduino;/usr/local/share/gnoduino)"
+"Enter any supplementary path that compiler will check for, separate them by "
+"semicolons. (eg /usr/share/gnoduino;/usr/local/share/gnoduino)"
 msgstr ""
 "Zadejte dodatečné cesty, které má překladač kontrolovat. K oddělení použijte "
-"čárky, např. /usr/share/gnoduino;/usr/local/share/gnoduino"
+"středníky (např. /usr/share/gnoduino;/usr/local/share/gnoduino)."
 
 #: ../ui/main.ui.h:27
 msgid "Find Next"

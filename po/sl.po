@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnoduino master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnoduino&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-09-17 16:14+0000\n"
-"PO-Revision-Date: 2011-09-17 18:16+0100\n"
-"Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
+"POT-Creation-Date: 2011-09-28 18:28+0000\n"
+"PO-Revision-Date: 2011-09-28 20:46+0100\n"
+"Last-Translator: Martin Srebotnjak  <miles@filmsi.net>\n"
 "Language-Team: Slovenščina <gnome-si@googlegroups.com>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n%100==4 ? 3 : 0)\n"
 "X-Poedit-Language: Slovenian\n"
 "X-Poedit-Country: Slovenia\n"
@@ -64,20 +64,20 @@ msgstr "Velikost dvojiške skice: %s bajtov (od največ %s bajtov)\n"
 msgid "Library Error"
 msgstr "Napaka knjižnice"
 
-#: ../src/misc.py:51
+#: ../src/misc.py:52
 #, python-format
 msgid "Cannot find %s"
 msgstr "Ni mogoče najti %s"
 
-#: ../src/misc.py:184
+#: ../src/misc.py:185
 msgid "Error compilling."
 msgstr "Med kodnim prevajanjem je prišlo do napake."
 
-#: ../src/misc.py:254
+#: ../src/misc.py:255
 msgid "Close without Saving"
 msgstr "Zapri brez shranjevanja"
 
-#: ../src/misc.py:256
+#: ../src/misc.py:257
 msgid "If you don't save, changes will be permanently lost."
 msgstr "V primeru, da sprememb ne shranite, bodo te trajno izgubljene."
 
@@ -104,11 +104,19 @@ msgstr ""
 msgid "'%s' not found."
 msgstr "'%s' ni mogoče najti."
 
-#: ../src/ui.py:69
+#: ../src/ui.py:67
+#: ../src/ui.py:87
+#: ../src/ui.py:100
+#: ../src/ui.py:168
+#: ../src/ui.py:183
+msgid "Untitled"
+msgstr "Neimenovano"
+
+#: ../src/ui.py:68
 msgid "Save document"
 msgstr "Shrani dokument"
 
-#: ../src/ui.py:70
+#: ../src/ui.py:69
 #, python-format
 msgid ""
 "Save changes to document \"%s\"\n"
@@ -117,57 +125,57 @@ msgstr ""
 "Ali želite shraniti spremembe v dokumentu\n"
 "\"%s\", preden se zapre?"
 
-#: ../src/ui.py:179
+#: ../src/ui.py:177
 msgid "Save file"
 msgstr "Shrani datoteko"
 
-#: ../src/ui.py:198
+#: ../src/ui.py:194
 msgid "Open file"
 msgstr "Odpri datoteko"
 
-#: ../src/ui.py:221
+#: ../src/ui.py:220
 #, python-format
 msgid "<b>A file named %s already exists. Do you want to replace it?</b>"
 msgstr "<b>Datoteka z imenom %s že obstaja. Ali jo želite zamenjati?</b>"
 
-#: ../src/ui.py:222
+#: ../src/ui.py:221
 #, python-format
 msgid "The file already exists in \"%s\". Replacing it will overwrite its contents."
 msgstr "Datoteka že obstaja v mapi \"%s\". S prepisom bo njena vsebina izgubljena."
 
-#: ../src/ui.py:509
+#: ../src/ui.py:505
 msgid "Open Recent"
 msgstr "Odpri nedavno"
 
-#: ../src/ui.py:544
+#: ../src/ui.py:540
 #: ../ui/main.ui.h:41
 msgid "Send"
 msgstr "Pošlji"
 
-#: ../src/ui.py:545
+#: ../src/ui.py:541
 msgid "Clear"
 msgstr "Počisti"
 
-#: ../src/ui.py:580
+#: ../src/ui.py:576
 #, python-format
 msgid "%s baud"
 msgstr "%s baud"
 
-#: ../src/ui.py:672
-#: ../src/ui.py:678
-#: ../src/ui.py:684
+#: ../src/ui.py:668
+#: ../src/ui.py:674
+#: ../src/ui.py:680
 msgid "System error"
 msgstr "Sistemska napaka"
 
-#: ../src/ui.py:687
+#: ../src/ui.py:683
 msgid "Cannot load ui file"
 msgstr "Datoteke uporabniškega vmesnika ni mogoče naložiti."
 
-#: ../src/ui.py:793
+#: ../src/ui.py:789
 msgid "--help    Print the command line options"
 msgstr "--help    Izpiši možnosti ukazne vrstice"
 
-#: ../src/ui.py:794
+#: ../src/ui.py:790
 msgid "--version Output version information and exit"
 msgstr "--version Izpiši podrobnosti različice in končaj"
 
@@ -260,7 +268,8 @@ msgid "Add File..."
 msgstr "Dodaj datoteko ..."
 
 #: ../ui/main.ui.h:19
-msgid "Additional libray paths:"
+#| msgid "Additional libray paths:"
+msgid "Additional library paths:"
 msgstr "Dodatne poti knjižnic:"
 
 #: ../ui/main.ui.h:20
@@ -288,8 +297,11 @@ msgid "Editor font size"
 msgstr "Velikost pisave urejevalnika"
 
 #: ../ui/main.ui.h:26
-msgid "Enter any suplementary path that compiler will check for, separate them by commas. eg /usr/share/gnoduino;/usr/local/share/gnoduino)"
-msgstr "Vnesite dodatne poti, ki jih bo kodni prevajalnik preiskal, ločene s podpičji (na primer: usr/share/gnoduino;/usr/local/share/gnoduino)."
+#| msgid ""
+#| "Enter any suplementary path that compiler will check for, separate them "
+#| "by commas. eg /usr/share/gnoduino;/usr/local/share/gnoduino)"
+msgid "Enter any supplementary path that compiler will check for, separate them by semicolons. (eg /usr/share/gnoduino;/usr/local/share/gnoduino)"
+msgstr "Vnesite dodatne poti, ki jih bo kodni prevajalnik preiskal, ločene s podpičji (npr. usr/share/gnoduino;/usr/local/share/gnoduino)."
 
 #: ../ui/main.ui.h:27
 msgid "Find Next"

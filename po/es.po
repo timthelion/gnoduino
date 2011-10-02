@@ -2,21 +2,21 @@
 # Copyright (C) 2011 gnoduino's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gnoduino package.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2011.
-# FULL NAME <EMAIL@ADDRESS>, 2011.
+# Jorge González <jorgegonz@svn.gnome.org>, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnoduino master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gnoduino&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-09-28 18:28+0000\n"
-"PO-Revision-Date: 2011-10-01 11:40+0200\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: Spanish <gnome-es-list@gnome.org>\n"
+"POT-Creation-Date: 2011-10-01 09:41+0000\n"
+"PO-Revision-Date: 2011-10-02 16:56+0200\n"
+"Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
+"Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 #: ../src/board.py:38
 msgid "Cannot load BOARDS file. Exiting."
@@ -53,7 +53,7 @@ msgstr "Compilación terminada."
 #: ../src/compiler.py:268
 #, python-format
 msgid "Binary sketch size: %s bytes (of a %s bytes maximum)\n"
-msgstr ""
+msgstr "Tamaño del esbozo del binario: %s bytes (de un máximo de %s)\n"
 
 #: ../src/compiler.py:322 ../src/compiler.py:345
 msgid "Library Error"
@@ -238,6 +238,26 @@ msgid ""
 "# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, "
 "USA.\n"
 msgstr ""
+"# gnoduino: implementación en Python del EID para Arduino\n"
+"# Copyright (C) 2010  Lucian Langa\n"
+"#\n"
+"# Este programa es software libre; puede redistribuirlo y/o modificarlo "
+"bajo\n"
+"# los términos de la <citetitle>Licencia Pública General GNU</citetitle> "
+"tal\n"
+"# como se publica por la Free Software Foundation; ya sea la versión 2 de "
+"la\n"
+"# Licencia, o (a su elección) cualquier versión posterior.\n"
+"#\n"
+"# Este programa se distribuye con la esperanza de que le sea útil, pero SIN\n"
+"# NINGUNA GARANTÍA; sin incluso la garantía implícita de MERCANTILIDAD o\n"
+"# IDONEIDAD PARA UN PROPÓSITO PARTICULAR. Consulte la <citetitle>Licencia \n"
+"# Pública General GNU</citetitle> para obtener más detalles.\n"
+"#\n"
+"# Debería haber recibido una copia de la Licencia Pública General GNU junto\n"
+"# con el programa. Si no la recibió escriba a la Free Software Foundation "
+"Inc.,\n"
+"# 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, EE. UU.\n"
 
 #: ../ui/main.ui.h:18
 msgid "Add File..."
@@ -350,7 +370,7 @@ msgstr "Mostrar números de línea"
 
 #: ../ui/main.ui.h:45
 msgid "Sketch"
-msgstr ""
+msgstr "Esbozo"
 
 #: ../ui/main.ui.h:46
 msgid "Stop"
@@ -366,11 +386,11 @@ msgstr "Subir"
 
 #: ../ui/main.ui.h:49
 msgid "Upload to I/O Board"
-msgstr ""
+msgstr "Subir al tablero de E/S"
 
 #: ../ui/main.ui.h:50
 msgid "Verbose build"
-msgstr ""
+msgstr "Construcción detallada"
 
 #: ../ui/main.ui.h:51
 msgid "Verify/Compile"

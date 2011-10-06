@@ -259,7 +259,7 @@ msgstr ""
 "License erhalten\n"
 "# haben. Wenn dem nicht so ist, so schreiben Sie bitte an die\n"
 "# Free Software Foundation, Inc.,\n"
-"# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. "
+"# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.\n"
 
 #: ../ui/main.ui.h:18
 msgid "Add File..."

@@ -8,9 +8,9 @@ msgstr ""
 "Project-Id-Version: gnoduino master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gnoduino&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-10-07 12:07+0000\n"
-"PO-Revision-Date: 2011-10-10 13:01+0100\n"
-"Last-Translator: Christian Kirbach <Christian.Kirbach@googlemail.com>\n"
+"POT-Creation-Date: 2011-10-12 20:00+0000\n"
+"PO-Revision-Date: 2011-10-18 20:47+0100\n"
+"Last-Translator: Mario Blättermann <mariobl@freenet.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -52,9 +52,9 @@ msgid "Done compilling."
 msgstr "Kompilierung abgeschlossen."
 
 #: ../src/compiler.py:268
-#, fuzzy, python-format
+#, python-format
 msgid "Binary sketch size: %s bytes (of a %s bytes maximum)\n"
-msgstr "Binäre Bildgröße %s Byte (von maximal %s Byte)\n"
+msgstr "Binäre Sketchgröße %s Byte (von maximal %s Byte)\n"
 
 #: ../src/compiler.py:322 ../src/compiler.py:345
 msgid "Library Error"
@@ -86,8 +86,7 @@ msgstr "PROGRAMMERS kann nicht gefunden werden"
 #, python-format
 msgid "Error reading %s file. File is corrupt. Installation problem."
 msgstr ""
-"Fehler beim Lesen der Datei %s. Die Datei ist beschädigt. "
-"Installationsfehler."
+"Fehler beim Lesen der Datei %s. Die Datei ist beschädigt. Installationsfehler."
 
 #: ../src/serialio.py:92
 msgid ""
@@ -299,8 +298,8 @@ msgid ""
 "Enter any supplementary path that compiler will check for, separate them by "
 "semicolons. (eg /usr/share/gnoduino;/usr/local/share/gnoduino)"
 msgstr ""
-"Geben Sie zusätzliche Pfade ein, die der Compiler berücksichtigen soll, "
-"durch Semikola getrennt. z.B. /usr/share/gnoduino;/usr/local/share/gnoduino)"
+"Geben Sie zusätzliche Pfade ein, die der Compiler berücksichtigen soll, durch "
+"Semikola getrennt. z.B. /usr/share/gnoduino;/usr/local/share/gnoduino)"
 
 #: ../ui/main.ui.h:27
 msgid "Find Next"
@@ -371,9 +370,8 @@ msgid "Show line numbers"
 msgstr "Zeilennummern anzeigen"
 
 #: ../ui/main.ui.h:45
-#, fuzzy
 msgid "Sketch"
-msgstr "Bild"
+msgstr "Sketch"
 
 #: ../ui/main.ui.h:46
 msgid "Stop"

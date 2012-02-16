@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: gnoduino master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gnoduino&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-12-09 13:02+0000\n"
-"PO-Revision-Date: 2012-02-20 15:21-0200\n"
+"POT-Creation-Date: 2012-02-22 17:17+0000\n"
+"PO-Revision-Date: 2012-02-23 09:41-0200\n"
 "Last-Translator: Gabriel Speckhahn <gabspeck@gmail.com>\n"
 "Language-Team: GNOME pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -67,7 +67,7 @@ msgstr "Não foi possível localizar %s"
 
 #: ../src/misc.py:185
 msgid "Error compilling."
-msgstr "Erro de compilação."
+msgstr "Erro ao compilar."
 
 #: ../src/misc.py:255
 msgid "Close without Saving"
@@ -79,7 +79,7 @@ msgstr "Se você não salvar, as alterações serão permanentemente perdidas."
 
 #: ../src/programmer.py:39
 msgid "Cannot find PROGRAMMERS"
-msgstr "Não foi possível localizer PROGRAMMERS"
+msgstr "Não foi possível localizar PROGRAMMERS"
 
 #: ../src/programmer.py:42
 #, python-format
@@ -129,7 +129,7 @@ msgstr "Abrir arquivo"
 #: ../src/ui.py:220
 #, python-format
 msgid "<b>A file named %s already exists. Do you want to replace it?</b>"
-msgstr "<b>Já existe um arquivo com o nome %s. Você deseja substitui-lo?</b>"
+msgstr "<b>Já existe um arquivo com o nome %s. Você deseja substituí-lo?</b>"
 
 #: ../src/ui.py:221
 #, python-format
@@ -142,7 +142,7 @@ msgstr ""
 msgid "Open Recent"
 msgstr "Abrir recente"
 
-#: ../src/ui.py:540 ../ui/main.ui.h:41
+#: ../src/ui.py:540 ../ui/main.ui.h:56
 msgid "Send"
 msgstr "Enviar"
 
@@ -217,6 +217,18 @@ msgid "Arduino color scheme"
 msgstr "Esquema de cores do Arduino"
 
 #: ../ui/main.ui.h:1
+msgid "Lucian Langa <lucilanga@gnome.org>"
+msgstr "Lucian Langa <lucilanga@gnome.org>"
+
+#: ../ui/main.ui.h:2
+msgid "GNOME Arduino IDE"
+msgstr "IDE Arduino do GNOME"
+
+#: ../ui/main.ui.h:3
+msgid "gnoduino"
+msgstr "gnoduino"
+
+#: ../ui/main.ui.h:4
 msgid ""
 "# gnoduino - Python Arduino IDE implementation\n"
 "# Copyright (C) 2010  Lucian Langa\n"
@@ -258,39 +270,43 @@ msgstr ""
 "# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,\n"
 "# USA.\n"
 
-#: ../ui/main.ui.h:18
-msgid "Add File..."
-msgstr "Adicionar arquivo..."
-
-#: ../ui/main.ui.h:19
-msgid "Additional library paths:"
-msgstr "Caminhos de biblioteca adicionais:"
-
-#: ../ui/main.ui.h:20
-msgid "Auto Format"
-msgstr "Formatar automaticamente"
-
 #: ../ui/main.ui.h:21
-msgid "Board"
-msgstr "Placa"
+msgid "Search for:"
+msgstr "Pesquisar por:"
 
 #: ../ui/main.ui.h:22
-msgid "Burn Bootloader"
-msgstr "Gravar gerenciador de inicialização"
+msgid "Match entire word only"
+msgstr "Coincidir apenas palavras inteiras"
 
 #: ../ui/main.ui.h:23
-msgid "Compile"
-msgstr "Compilar"
+msgid "Wrap around"
+msgstr "Voltar ao início"
 
 #: ../ui/main.ui.h:24
-msgid "Console font size"
-msgstr "Tamanho da fonte do console"
+msgid "Match case"
+msgstr "Diferenciar maiúsculas de minúsculas"
 
 #: ../ui/main.ui.h:25
+msgid "Search backwards"
+msgstr "Pesquisar para trás"
+
+#: ../ui/main.ui.h:26
 msgid "Editor font size"
 msgstr "Tamanho da fonte do editor"
 
-#: ../ui/main.ui.h:26
+#: ../ui/main.ui.h:27
+msgid "Console font size"
+msgstr "Tamanho da fonte do console"
+
+#: ../ui/main.ui.h:28
+msgid "Verbose build"
+msgstr "Compilação detalhada"
+
+#: ../ui/main.ui.h:29
+msgid "Show line numbers"
+msgstr "Mostrar números de linha"
+
+#: ../ui/main.ui.h:30
 msgid ""
 "Enter any supplementary path that compiler will check for, separate them by "
 "semicolons. (eg /usr/share/gnoduino;/usr/local/share/gnoduino)"
@@ -299,118 +315,102 @@ msgstr ""
 "separe-os por pontos e vírgulas. (ex. /usr/share/gnoduino;/usr/local/share/"
 "gnoduino)"
 
-#: ../ui/main.ui.h:27
-msgid "Find Next"
-msgstr "Localizar próximo"
-
-#: ../ui/main.ui.h:28
-msgid "GNOME Arduino IDE"
-msgstr "IDE Arduino do GNOME"
-
-#: ../ui/main.ui.h:29
-msgid "Import Library"
-msgstr "Importar biblioteca"
-
-#: ../ui/main.ui.h:30
-msgid "Lucian Langa <lucilanga@gnome.org>"
-msgstr "Lucian Langa <lucilanga@gnome.org>"
-
 #: ../ui/main.ui.h:31
-msgid "Match case"
-msgstr "Diferenciar maiúsculas de minúsculas"
+msgid "Additional library paths:"
+msgstr "Caminhos de biblioteca adicionais:"
 
 #: ../ui/main.ui.h:32
-msgid "Match entire word only"
-msgstr "Coincidir apenas palavras inteiras"
-
-#: ../ui/main.ui.h:33
-msgid "New"
-msgstr "Novo"
-
-#: ../ui/main.ui.h:34
-msgid "Open"
-msgstr "Abrir"
-
-#: ../ui/main.ui.h:35
-msgid "Preferences"
-msgstr "Preferências"
-
-#: ../ui/main.ui.h:36
-msgid "Reference"
-msgstr "Referência"
-
-#: ../ui/main.ui.h:37
-msgid "Reset Board"
-msgstr "Restaurar placa"
-
-#: ../ui/main.ui.h:38
-msgid "Save"
-msgstr "Salvar"
-
-#: ../ui/main.ui.h:39
-msgid "Search backwards"
-msgstr "Pesquisar para trás"
-
-#: ../ui/main.ui.h:40
-msgid "Search for:"
-msgstr "Pesquisar por:"
-
-#: ../ui/main.ui.h:42
-msgid "Serial Monitor"
-msgstr "Monitor serial"
-
-#: ../ui/main.ui.h:43
-msgid "Serial Port"
-msgstr "Porta serial"
-
-#: ../ui/main.ui.h:44
-msgid "Show line numbers"
-msgstr "Mostrar números de linha"
-
-#: ../ui/main.ui.h:45
-msgid "Sketch"
-msgstr "Sketch"
-
-#: ../ui/main.ui.h:46
-msgid "Stop"
-msgstr "Parar"
-
-#: ../ui/main.ui.h:47
-msgid "Tools"
-msgstr "Ferramentas"
-
-#: ../ui/main.ui.h:48
-msgid "Upload"
-msgstr "Fazer upload"
-
-#: ../ui/main.ui.h:49
-msgid "Upload to I/O Board"
-msgstr "Fazer upload para a placa de E/S"
-
-#: ../ui/main.ui.h:50
-msgid "Verbose build"
-msgstr "Compilação detalhada"
-
-#: ../ui/main.ui.h:51
-msgid "Verify/Compile"
-msgstr "Verificar/Compilar"
-
-#: ../ui/main.ui.h:52
-msgid "Wrap around"
-msgstr "Voltar ao início"
-
-#: ../ui/main.ui.h:53
-msgid "_Edit"
-msgstr "_Editar"
-
-#: ../ui/main.ui.h:54
 msgid "_File"
 msgstr "_Arquivo"
 
-#: ../ui/main.ui.h:55
+#: ../ui/main.ui.h:33
+msgid "Upload to I/O Board"
+msgstr "Fazer upload para a placa de E/S"
+
+#: ../ui/main.ui.h:34
+msgid "Preferences"
+msgstr "Preferências"
+
+#: ../ui/main.ui.h:35
+msgid "_Edit"
+msgstr "_Editar"
+
+#: ../ui/main.ui.h:36
+msgid "Find Next"
+msgstr "Localizar próximo"
+
+#: ../ui/main.ui.h:37
+msgid "Sketch"
+msgstr "Sketch"
+
+#: ../ui/main.ui.h:38
+msgid "Verify/Compile"
+msgstr "Verificar/Compilar"
+
+#: ../ui/main.ui.h:39
+msgid "Stop"
+msgstr "Parar"
+
+#: ../ui/main.ui.h:40
+msgid "Import Library"
+msgstr "Importar biblioteca"
+
+#: ../ui/main.ui.h:41
+msgid "Add File..."
+msgstr "Adicionar arquivo..."
+
+#: ../ui/main.ui.h:42
+msgid "Tools"
+msgstr "Ferramentas"
+
+#: ../ui/main.ui.h:43
+msgid "Auto Format"
+msgstr "Formatar automaticamente"
+
+#: ../ui/main.ui.h:44
+msgid "Serial Monitor"
+msgstr "Monitor serial"
+
+#: ../ui/main.ui.h:45
+msgid "Reset Board"
+msgstr "Restaurar placa"
+
+#: ../ui/main.ui.h:46
+msgid "Board"
+msgstr "Placa"
+
+#: ../ui/main.ui.h:47
+msgid "Serial Port"
+msgstr "Porta serial"
+
+#: ../ui/main.ui.h:48
+msgid "Burn Bootloader"
+msgstr "Gravar gerenciador de inicialização"
+
+#: ../ui/main.ui.h:49
 msgid "_Help"
 msgstr "_Ajuda"
 
-#: ../ui/main.ui.h:56
-msgid "gnoduino"
-msgstr "gnoduino"
+#: ../ui/main.ui.h:50
+msgid "Reference"
+msgstr "Referência"
+
+#: ../ui/main.ui.h:51
+msgid "Compile"
+msgstr "Compilar"
+
+#: ../ui/main.ui.h:52
+msgid "New"
+msgstr "Novo"
+
+#: ../ui/main.ui.h:53
+msgid "Open"
+msgstr "Abrir"
+
+#: ../ui/main.ui.h:54
+msgid "Save"
+msgstr "Salvar"
+
+#: ../ui/main.ui.h:55
+msgid "Upload"
+msgstr "Fazer upload"

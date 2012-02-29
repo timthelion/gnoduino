@@ -30,6 +30,7 @@ import gettext
 import sys
 _ = gettext.gettext
 
+import board
 import config
 import prefs
 
@@ -57,8 +58,33 @@ def getArduinoFile(filename):
 def getArduinoPath():
 	return get_path("hardware/arduino/cores/arduino")
 
+def getArduinoVariantPath():
+	b = board.Board()
+	return get_path("hardware/arduino/variants/"+b.getVariant(b.getBoard()))
+
+def getArduinoIncludes():
+	includes = ["-I" + getArduinoPath()]
+	if getArduinoVersion() >= 100:
+		includes += ["-I" + getArduinoVariantPath()]
+	return includes
+
 def getArduinoBootPath():
 	return get_path("hardware/arduino/bootloaders")
+
+def getArduinoVersion():
+	"""this is far from something accurate but for now
+		we just need to differentiate beween 1.0 and pre 1.0
+		versions of arduino"""
+	if os.path.isfile(getArduinoFile("hardware/arduino/cores/arduino/Arduino.h")):
+		return 100
+	if os.path.isfile(getArduinoFile("hardware/arduino/cores/arduino/WProgram.h")):
+		return 22
+
+def getArduinoAPIFile():
+	if getArduinoVersion() >= 100:
+		return "Arduino.h"
+	else:
+		return "WProgram.h"
 
 def getArduinoLibsPath():
 	return get_path("libraries", default="")

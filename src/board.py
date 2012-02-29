@@ -91,6 +91,11 @@ class Board(object):
 	def getPath(self, id):
 		return self.boards[id]['path']
 
+	def getVariant(self, id):
+		try:
+			return self.boards[id]['variant']
+		except KeyError: return ""
+
 	def getBootloader(self, id):
 		return self.boards[id]['file']
 

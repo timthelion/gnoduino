@@ -1,5 +1,5 @@
 # Arduino python implementation
-# Copyright (C) 2010  Lucian Langa <cooly@gnome.eu.org>
+# Copyright (C) 2010-2012  Lucian Langa <cooly@gnome.eu.org>
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -48,8 +48,6 @@ cobj = [
 	"wiring_shift.c",
 	"wiring_analog.c",
 	"wiring_pulse.c",
-#	"wiring_serial.c",
-	"pins_arduino.c",
 	"WInterrupts.c",
 	"wiring.c"
 	]
@@ -61,6 +59,15 @@ cppobj = [
 	"main.cpp",
 	"Tone.cpp"
 	]
+
+cppobj_additional = [
+			"new.cpp",
+			"WString.cpp",
+			"CDC.cpp",
+			"Stream.cpp",
+			"IPAddress.cpp",
+			"USBCore.cpp"
+			]
 
 defc = [
 	"/usr/bin/avr-gcc",
@@ -141,7 +148,9 @@ def compile(tw, id, output, notify):
 			compline=[j for j in defc]
 			compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
 			compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
-			compline.append("-I"+misc.getArduinoPath())
+			compline.extend(misc.getArduinoIncludes())
+			if misc.getArduinoVersion >= 100:
+				compline.append("-DARDUINO=100")
 			compline.append(os.path.join(misc.getArduinoPath(), i))
 			compline.append("-o"+id+"/"+i+".o")
 			misc.printMessageLn(output, ' '.join(compline))
@@ -159,7 +168,29 @@ def compile(tw, id, output, notify):
 			compline = [j for j in defcpp]
 			compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
 			compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
-			compline.append("-I" + misc.getArduinoPath())
+			compline.extend(misc.getArduinoIncludes())
+			if misc.getArduinoVersion >= 100:
+				compline.append("-DARDUINO=100")
+			compline.append(os.path.join(misc.getArduinoPath(), i))
+			compline.append("-o"+id+"/"+i+".o")
+			misc.printMessageLn(output, ' '.join(compline))
+			misc.printLogMessageLn(' '.join(compline))
+			(run, sout) = misc.runProg(compline)
+			misc.printLogMessageLn(sout)
+			if run == False:
+				misc.printErrorLn(notify, output, _("Compile Error"), sout)
+				raise NameError("compile error")
+			else:
+				misc.printMessageLn(output, sout)
+		"""compile C++ additional (1.0) targets"""
+		misc.printLogMessageLn('processing C++ additional targets')
+		for i in cppobj_additional:
+			compline = [j for j in defcpp]
+			compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
+			compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
+			compline.extend(misc.getArduinoIncludes())
+			if misc.getArduinoVersion >= 100:
+				compline.append("-DARDUINO=100")
 			compline.append(os.path.join(misc.getArduinoPath(), i))
 			compline.append("-o"+id+"/"+i+".o")
 			misc.printMessageLn(output, ' '.join(compline))
@@ -173,7 +204,10 @@ def compile(tw, id, output, notify):
 				misc.printMessageLn(output, sout)
 		"""generate archive objects"""
 		misc.printLogMessageLn('generating ar objects')
-		for i in cobj+cppobj:
+		objects = cobj + cppobj
+		if misc.getArduinoVersion() >= 100:
+			objects = objects + cppobj_additional
+		for i in objects:
 			compline = [j for j in defar]
 			compline.append(id+"/core.a")
 			compline.append(id+"/"+i+".o")
@@ -192,7 +226,7 @@ def compile(tw, id, output, notify):
 		compline=[j for j in defcpp]
 		compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
 		compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
-		compline.append("-I" + misc.getArduinoPath())
+		compline.extend(misc.getArduinoIncludes())
 		flags = []
 		flags = preproc.generateCFlags(id, cont)
 		compline.extend(flags)

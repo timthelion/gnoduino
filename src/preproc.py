@@ -89,9 +89,9 @@ def addHeaders(path, b):
 	fs = firstStatement(cont)
 	if fs != None:
 		proto = findPrototype(cont)
-		result = cont[:fs:]+"\n#include \"WProgram.h\"\n" + proto + cont[fs:]+"\n\n"
+		result = cont[:fs:]+"\n#include \""+misc.getArduinoAPIFile()+"\"\n" + proto + cont[fs:]+"\n\n"
 	else:
-		result = "\n#include \"WProgram.h\"\n"+cont+"\n\n"
+		result = "\n#include \""+misc.getArduinoAPIFile()+"\"\n"+cont+"\n\n"
 	of = tempfile.mktemp(".cpp", "", path)
 	w = file(of, "w")
 	w.write(result)

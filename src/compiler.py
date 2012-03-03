@@ -232,6 +232,7 @@ def compile(tw, id, output, notify):
 		flags = preproc.generateCFlags(id, cont)
 		compline.extend(flags)
 		compline.extend(["-I" + os.path.join(i, "utility") for i in preproc.generateLibs(id, buf)])
+		compline.extend(misc.getArduinoIncludes())
 		compline.append(pre_file)
 		compline.append("-o"+pre_file+".o")
 		misc.printMessageLn(output, ' '.join(compline)+"\n")
@@ -257,6 +258,7 @@ def compile(tw, id, output, notify):
 			tmplibs.extend(validateLib(os.path.basename(i), tempobj, flags, output, notify))
 		compline.extend(list(set(tmplibs)))
 		compline.extend(["-I" + os.path.join(i, "utility") for i in preproc.generateLibs(id, buf)])
+		compline.extend(misc.getArduinoIncludes())
 		compline.append(id+"/core.a")
 		compline.append("-L"+id)
 		compline.append("-lm")
@@ -343,7 +345,7 @@ def validateLib(library, tempobj, flags, output, notify):
 						compline = [j for j in defc]
 						compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
 						compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
-						compline.append("-I" + misc.getArduinoPath())
+						compline.extend(misc.getArduinoIncludes())
 						compline.append("-I" + os.path.join(misc.getArduinoLibsPath(), library, "utility"))
 						compline.extend(preproc.generateCFlags(id, open(i).read()))
 						compline.extend(flags)
@@ -366,7 +368,7 @@ def validateLib(library, tempobj, flags, output, notify):
 						compline = [j for j in defcpp]
 						compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
 						compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
-						compline.append("-I" + misc.getArduinoPath())
+						compline.extend(misc.getArduinoIncludes())
 						compline.extend(preproc.generateCFlags(id, open(i).read()))
 						compline.extend(flags)
 						compline.append(i)

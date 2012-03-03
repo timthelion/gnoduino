@@ -79,10 +79,13 @@ def getArduinoVersion():
 	"""this is far from something accurate but for now
 		we just need to differentiate beween 1.0 and pre 1.0
 		versions of arduino"""
-	if os.path.isfile(getArduinoFile("hardware/arduino/cores/arduino/Arduino.h")):
-		return 100
-	if os.path.isfile(getArduinoFile("hardware/arduino/cores/arduino/WProgram.h")):
-		return 22
+	try:
+		print getArduinoFile("hardware/arduino/cores/arduino/Arduino.h")
+		if os.path.isfile(getArduinoFile("hardware/arduino/cores/arduino/Arduino.h")):
+			return 100
+	except:
+		if os.path.isfile(getArduinoFile("hardware/arduino/cores/arduino/WProgram.h")):
+			return 22
 
 def getArduinoAPIFile():
 	if getArduinoVersion() >= 100:

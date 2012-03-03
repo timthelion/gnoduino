@@ -149,7 +149,7 @@ def compile(tw, id, output, notify):
 			compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
 			compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
 			compline.extend(misc.getArduinoIncludes())
-			if misc.getArduinoVersion >= 100:
+			if misc.getArduinoVersion() >= 100:
 				compline.append("-DARDUINO=100")
 			compline.append(os.path.join(misc.getArduinoPath(), i))
 			compline.append("-o"+id+"/"+i+".o")
@@ -169,7 +169,7 @@ def compile(tw, id, output, notify):
 			compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
 			compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
 			compline.extend(misc.getArduinoIncludes())
-			if misc.getArduinoVersion >= 100:
+			if misc.getArduinoVersion() >= 100:
 				compline.append("-DARDUINO=100")
 			compline.append(os.path.join(misc.getArduinoPath(), i))
 			compline.append("-o"+id+"/"+i+".o")
@@ -182,26 +182,27 @@ def compile(tw, id, output, notify):
 				raise NameError("compile error")
 			else:
 				misc.printMessageLn(output, sout)
-		"""compile C++ additional (1.0) targets"""
-		misc.printLogMessageLn('processing C++ additional targets')
-		for i in cppobj_additional:
-			compline = [j for j in defcpp]
-			compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
-			compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
-			compline.extend(misc.getArduinoIncludes())
-			if misc.getArduinoVersion >= 100:
-				compline.append("-DARDUINO=100")
-			compline.append(os.path.join(misc.getArduinoPath(), i))
-			compline.append("-o"+id+"/"+i+".o")
-			misc.printMessageLn(output, ' '.join(compline))
-			misc.printLogMessageLn(' '.join(compline))
-			(run, sout) = misc.runProg(compline)
-			misc.printLogMessageLn(sout)
-			if run == False:
-				misc.printErrorLn(notify, output, _("Compile Error"), sout)
-				raise NameError("compile error")
-			else:
-				misc.printMessageLn(output, sout)
+		if misc.getArduinoVersion() >= 100:
+			"""compile C++ additional (1.0) targets"""
+			misc.printLogMessageLn('processing C++ additional targets')
+			for i in cppobj_additional:
+				compline = [j for j in defcpp]
+				compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
+				compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
+				compline.extend(misc.getArduinoIncludes())
+				if misc.getArduinoVersion() >= 100:
+					compline.append("-DARDUINO=100")
+				compline.append(os.path.join(misc.getArduinoPath(), i))
+				compline.append("-o"+id+"/"+i+".o")
+				misc.printMessageLn(output, ' '.join(compline))
+				misc.printLogMessageLn(' '.join(compline))
+				(run, sout) = misc.runProg(compline)
+				misc.printLogMessageLn(sout)
+				if run == False:
+					misc.printErrorLn(notify, output, _("Compile Error"), sout)
+					raise NameError("compile error")
+				else:
+					misc.printMessageLn(output, sout)
 		"""generate archive objects"""
 		misc.printLogMessageLn('generating ar objects')
 		objects = cobj + cppobj

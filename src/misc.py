@@ -60,12 +60,16 @@ def getArduinoPath():
 
 def getArduinoVariantPath():
 	b = board.Board()
-	return get_path("hardware/arduino/variants/"+b.getVariant(b.getBoard()))
+	variant = b.getVariant(b.getBoard())
+	if variant:
+		return get_path("hardware/arduino/variants/" + variant)
 
 def getArduinoIncludes():
 	includes = ["-I" + getArduinoPath()]
 	if getArduinoVersion() >= 100:
-		includes += ["-I" + getArduinoVariantPath()]
+		variant = getArduinoVariantPath()
+		if variant:
+			includes += ["-I" + getArduinoVariantPath()]
 	return includes
 
 def getArduinoBootPath():

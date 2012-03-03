@@ -1,5 +1,5 @@
 # Arduino python implementation
-# Copyright (C) 2010  Lucian Langa <cooly@gnome.eu.org>
+# Copyright (C) 2010-2012  Lucian Langa <cooly@gnome.eu.org>
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -33,6 +33,16 @@ class Board(object):
 		self.boards = []
 		self.programmers = []
 		self.defaults = []
+		try:
+			self.boards.extend(self.readArduinoBoards())
+		except:
+			self.boards.extend(self.readGnoduinoBoards())
+		self.p = prefs.preferences()
+		if config.cur_board == -1:
+			config.cur_board = self.getBoardIdByName(self.p.getSafeValue("board", "uno")) - 1
+
+	def readGnoduinoBoards(self):
+		boards = []
 		conf = ConfigParser.RawConfigParser()
 		path = misc.getArduinoFile("BOARDS")
 		if path is None: raise SystemExit(_("Cannot load BOARDS file. Exiting."))
@@ -44,11 +54,41 @@ class Board(object):
 			v = dict(conf.items(i))
 			v['id'] = c
 			v['desc'] = i
-			self.boards.append(v)
+			boards.append(v)
 			c = c + 1
-		self.p = prefs.preferences()
-		if config.cur_board == -1:
-			config.cur_board = self.getBoardIdByName(self.p.getSafeValue("board", "uno")) - 1
+		return boards
+
+	def readArduinoBoards(self):
+		boards = []
+		try:
+			f = open(misc.getArduinoFile("hardware/arduino/boards.txt"))
+			q = []
+			z = []
+			for c in f.readlines():
+				if c!='\n':
+					l = ""
+					line =  c.strip("#").split('\n')[0]
+					if line != "":
+						l = line.split("=")
+						z.append(l)
+						q.append(l[0].split(".")[0])
+
+			k = 1
+			for i in sorted(set(q), reverse=True):
+				w = dict()
+				for c in z:
+					if c[0].split(".")[0] == i:
+						var = c[0].split(".")[-1]
+						if var == "name":
+							w['name'] = i
+							w['desc'] = c[1]
+						else:
+							w[var] = c[1]
+				w['id'] = k
+				k += 1
+				boards.append(w)
+			return boards
+		except: return None
 
 	def getBoards(self):
 		return self.boards

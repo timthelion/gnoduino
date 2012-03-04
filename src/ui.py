@@ -26,6 +26,7 @@ import select
 import shutil
 import signal
 import urlparse
+import urllib
 
 import locale
 import gettext
@@ -483,7 +484,7 @@ def stopSpinner():
 
 
 def addRecentItem(manager, f):
-	uri = gnomevfs.get_uri_from_local_path(f)
+	uri = "file://" + urllib.pathname2url(f)
 	mime = misc.get_mime_type(file(f).read())
 	if mime:
 		data = { 'mime_type': mime, 'app_name' : "gnoduino", 'app_exec' : "gnoduino" }

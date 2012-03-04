@@ -545,6 +545,7 @@ def createScon():
 	gui.set_data("baudHBox", bb)
 	text = gtk.Entry()
 	text.connect("activate", serSendText)
+	s.connect("clicked", serSendTextButton, text)
 	hbox.pack_start(bb, False, False, 3)
 	hbox.pack_start(text, True, True, 3)
 	hbox.pack_start(s, False, False, 3)
@@ -555,6 +556,9 @@ def createScon():
 	vbox.show_all()
 	createBaudCombo(None, config.cur_serial_port)
 	return (vbox, tmp)
+
+def serSendTextButton(w, data=None):
+	serSendText(data, None)
 
 buttons = [
 		("compile", "compile.png", compile),

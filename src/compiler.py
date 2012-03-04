@@ -52,6 +52,10 @@ cobj = [
 	"wiring.c"
 	]
 
+cobj_deprecated = [
+	"pins_arduino.c"
+	]
+
 cppobj = [
 	"WMath.cpp",
 	"HardwareSerial.cpp",
@@ -144,70 +148,36 @@ def compile(tw, id, output, notify):
 		(pre_file, lines) = preproc.addHeaders(id, buf)
 		"""compile C targets"""
 		misc.printLogMessageLn('processing C targets')
-		for i in cobj:
-			compline=[j for j in defc]
-			compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
-			compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
-			compline.extend(misc.getArduinoIncludes())
-			if misc.getArduinoVersion() >= 100:
-				compline.append("-DARDUINO=100")
-			compline.append(os.path.join(misc.getArduinoPath(), i))
-			compline.append("-o"+id+"/"+i+".o")
-			misc.printMessageLn(output, ' '.join(compline))
-			misc.printLogMessageLn(' '.join(compline))
-			(run, sout) = misc.runProg(compline)
-			misc.printLogMessageLn(sout)
+		(run, sout) = compileObjects(cobj, defc, id, output)
+		if run == False:
+			misc.printErrorLn(notify, output, _("Compile Error"), stripOut(sout, pre_file))
+			raise NameError("compile error")
+		"""deprecated C targets (pre 1.0)"""
+		if misc.getArduinoVersion() < 100:
+			(run, sout) = compileObjects(cobj_deprecated, defc, id, output)
 			if run == False:
 				misc.printErrorLn(notify, output, _("Compile Error"), stripOut(sout, pre_file))
 				raise NameError("compile error")
-			else:
-				misc.printMessageLn(output, sout)
 		"""compile C++ targets"""
 		misc.printLogMessageLn('processing C++ targets')
-		for i in cppobj:
-			compline = [j for j in defcpp]
-			compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
-			compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
-			compline.extend(misc.getArduinoIncludes())
-			if misc.getArduinoVersion() >= 100:
-				compline.append("-DARDUINO=100")
-			compline.append(os.path.join(misc.getArduinoPath(), i))
-			compline.append("-o"+id+"/"+i+".o")
-			misc.printMessageLn(output, ' '.join(compline))
-			misc.printLogMessageLn(' '.join(compline))
-			(run, sout) = misc.runProg(compline)
-			misc.printLogMessageLn(sout)
+		(run, sout) = compileObjects(cppobj, defcpp, id, output)
+		if run == False:
+			misc.printErrorLn(notify, output, _("Compile Error"), sout)
+			raise NameError("compile error")
+		"""compile C++ additional (1.0) targets"""
+		if misc.getArduinoVersion() >= 100:
+			misc.printLogMessageLn('processing C++ additional targets')
+			(run, sout) = compileObjects(cppobj_additional, defcpp, id, output)
 			if run == False:
 				misc.printErrorLn(notify, output, _("Compile Error"), sout)
 				raise NameError("compile error")
-			else:
-				misc.printMessageLn(output, sout)
-		if misc.getArduinoVersion() >= 100:
-			"""compile C++ additional (1.0) targets"""
-			misc.printLogMessageLn('processing C++ additional targets')
-			for i in cppobj_additional:
-				compline = [j for j in defcpp]
-				compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
-				compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
-				compline.extend(misc.getArduinoIncludes())
-				if misc.getArduinoVersion() >= 100:
-					compline.append("-DARDUINO=100")
-				compline.append(os.path.join(misc.getArduinoPath(), i))
-				compline.append("-o"+id+"/"+i+".o")
-				misc.printMessageLn(output, ' '.join(compline))
-				misc.printLogMessageLn(' '.join(compline))
-				(run, sout) = misc.runProg(compline)
-				misc.printLogMessageLn(sout)
-				if run == False:
-					misc.printErrorLn(notify, output, _("Compile Error"), sout)
-					raise NameError("compile error")
-				else:
-					misc.printMessageLn(output, sout)
 		"""generate archive objects"""
 		misc.printLogMessageLn('generating ar objects')
 		objects = cobj + cppobj
 		if misc.getArduinoVersion() >= 100:
-			objects = objects + cppobj_additional
+			objects += cppobj_additional
+		else:
+			objects += cobj_deprecated
 		for i in objects:
 			compline = [j for j in defar]
 			compline.append(id+"/core.a")
@@ -311,6 +281,29 @@ def compile(tw, id, output, notify):
 		print "Error: %s" % e
 		return -1
 	return tempobj
+
+def compileObjects(objects, flags, objout, output):
+	status = True
+	sout = ""
+	b = board.Board()
+	for i in objects:
+		compline = [j for j in flags]
+		compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
+		compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
+		compline.extend(misc.getArduinoIncludes())
+		if misc.getArduinoVersion() >= 100:
+			compline.append("-DARDUINO=100")
+		compline.append(os.path.join(misc.getArduinoPath(), i))
+		compline.append("-o"+objout+"/"+i+".o")
+		misc.printMessageLn(output, ' '.join(compline))
+		misc.printLogMessageLn(' '.join(compline))
+		try:
+			(status, sout) = misc.runProg(compline)
+			misc.printLogMessageLn(sout)
+			misc.printMessageLn(output, sout)
+		except:
+			return (status, sout)
+	return (True, "")
 
 def getLibraries():
 	paths = ["", misc.getArduinoPath()]

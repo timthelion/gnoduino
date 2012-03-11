@@ -634,6 +634,49 @@ def _search_locales():
     # fall back to the current directory
 	return "locale/"
 
+def exampleProcess(widget):
+	processFile(widget.get_data("file"))
+
+def populateExamples():
+	submenu = gtk.Menu()
+	for dir in ["examples", "libraries"]:
+		d =  os.listdir(misc.get_path(dir))
+		q = []
+		for i in d: q.append(misc.get_path(os.path.join(dir, i)))
+		for c in sorted(q):
+			subitem = gtk.Menu()
+			menuItem = gtk.MenuItem(os.path.basename(c))
+			ext = False
+			for i in sorted(os.listdir(c)):
+				if os.path.isdir(os.path.join(c,i)):
+					ext = True
+					item = gtk.MenuItem(os.path.basename(i))
+					f = os.path.join(c, i, i + ".ino")
+					if not os.path.exists(f): f = os.path.join(c, i, i + ".pde")
+					item.set_data("file", f)
+					item.connect("activate", exampleProcess)
+					subitem.append(item)
+				else:
+					d = os.path.join(c, "examples")
+					if os.path.exists(d):
+						for j in sorted(os.listdir(d)):
+							ext = True
+							item = gtk.MenuItem(os.path.basename(j))
+							f = os.path.join(c, "examples", j, j + ".ino")
+							if not os.path.exists(f): f = os.path.join(c, "examples", j, j + ".pde")
+							item.set_data("file", f)
+							item.connect("activate", exampleProcess)
+							subitem.append(item)
+						break
+			if ext: menuItem.set_submenu(subitem)
+			else:
+				menuItem.set_data("file", os.path.join(c, i))
+				menuItem.connect("activate", exampleProcess)
+			submenu.append(menuItem)
+	ex = gtk.MenuItem(_("E_xamples"), use_underline=True)
+	ex.set_submenu(submenu)
+	gui.get_object("filemenu").insert(ex, 2)
+
 def run():
 	try:
 		global gui
@@ -755,6 +798,7 @@ def run():
 		gui.get_object("serial_port").set_submenu(sub)
 		gui.get_object("serial_port").set_sensitive(activePort)
 		createRecentMenu()
+		populateExamples()
 
 		sub = gtk.Menu()
 		pgm = programmer.Programmer()

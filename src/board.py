@@ -34,12 +34,21 @@ class Board(object):
 		self.programmers = []
 		self.defaults = []
 		try:
+			self.boards.extend(self.readCustomBoards())
+		except: pass
+		try:
 			self.boards.extend(self.readArduinoBoards())
 		except:
 			self.boards.extend(self.readGnoduinoBoards())
+		#renumber ids in case we grown with customs
+		for i in range(len(self.boards)): self.boards[i]['id'] = i+1
 		self.p = prefs.preferences()
 		if config.cur_board == -1:
-			config.cur_board = self.getBoardIdByName(self.p.getSafeValue("board", "uno")) - 1
+			"""error can occur when placing different types of hardware in sketchdir"""
+			try:
+				config.cur_board = self.getBoardIdByName(self.p.getSafeValue("board", "uno")) - 1
+			except:
+				config.cur_board = self.getBoardIdByName("uno") - 1
 
 	def readGnoduinoBoards(self):
 		boards = []
@@ -59,9 +68,12 @@ class Board(object):
 		return boards
 
 	def readArduinoBoards(self):
+		return self.readArduinoBoardsFile(misc.getArduinoFile("hardware/arduino/boards.txt"))
+
+	def readArduinoBoardsFile(self, boardsFile):
 		boards = []
 		try:
-			f = open(misc.getArduinoFile("hardware/arduino/boards.txt"))
+			f = open(boardsFile)
 			q = []
 			z = []
 			for c in f.readlines():
@@ -84,11 +96,21 @@ class Board(object):
 							w['desc'] = c[1]
 						else:
 							w[var] = c[1]
+				w['hwpath'] = boardsFile
 				w['id'] = k
 				k += 1
 				boards.append(w)
 			return boards
 		except: return None
+
+	def readCustomBoards(self):
+		p = prefs.preferences()
+		d = os.path.join(p.getValue("sketchbook.path"), "hardware")
+		try:
+			for i in os.listdir(d):
+				if os.path.exists(os.path.join(d, i, "boards.txt")):
+					return self.readArduinoBoardsFile(os.path.join(d, i, "boards.txt"))
+		except:	return None
 
 	def getBoards(self):
 		return self.boards
@@ -106,10 +128,14 @@ class Board(object):
 		return self.boards[id]['f_cpu']
 
 	def getPGM(self, id):
-		return self.boards[id]['protocol']
+		try:
+			return self.boards[id]['protocol']
+		except KeyError: return ""
 
 	def getPGMSpeed(self, id):
-		return self.boards[id]['speed']
+		try:
+			return self.boards[id]['speed']
+		except KeyError: return 0
 
 	def getFuseLock(self, id):
 		return self.boards[id]['lock_bits']
@@ -134,6 +160,11 @@ class Board(object):
 	def getVariant(self, id):
 		try:
 			return self.boards[id]['variant']
+		except KeyError: return ""
+
+	def getHardwarePath(self, id):
+		try:
+			return self.boards[id]['hwpath']
 		except KeyError: return ""
 
 	def getBootloader(self, id):

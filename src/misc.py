@@ -62,7 +62,11 @@ def getArduinoVariantPath():
 	b = board.Board()
 	variant = b.getVariant(b.getBoard())
 	if variant:
-		return get_path("hardware/arduino/variants/" + variant)
+		try:
+			return get_path("hardware/arduino/variants/" + variant)
+		except:
+			hwdir = os.path.dirname(b.getHardwarePath(b.getBoard()))
+			return os.path.join(hwdir, "variants", variant)
 
 def getArduinoIncludes():
 	includes = ["-I" + getArduinoPath()]

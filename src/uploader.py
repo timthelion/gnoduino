@@ -140,10 +140,12 @@ def upload(obj, serial, output, notify):
 	compline=[i for i in avr]
 	# avrdude wants "stk500v1" to distinguish it from stk500v2
 	protocol = b.getPGM(b.getBoard())
-	if protocol == "stk500": protocol = "stk500v1"
+	if protocol == "stk500" or protocol == "": protocol = "stk500v1"
 	compline.append("-c" + protocol)
 	compline.append("-P" + port)
-	compline.append("-b" + b.getPGMSpeed(b.getBoard()))
+	try:
+		compline.append("-b" + b.getPGMSpeed(b.getBoard()))
+	except: pass
 	compline.append("-p" + b.getBoardMCU(b.getBoard()))
 	compline.append("-Uflash:w:"+obj+".hex:i")
 	try:

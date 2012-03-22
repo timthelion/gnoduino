@@ -1,0 +1,409 @@
+# Chinese (China) translation for gnoduino.
+# Copyright (C) 2012 gnoduino's authors and contributors.
+# This file is distributed under the same license as the gnoduino package.
+# Wylmer Wang <wantinghard@gmail.com>, 2011, 2012.
+# Cammi Huang <huangyepei@gmail.com>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gnoduino master\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gnoduino&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2012-03-15 21:01+0000\n"
+"PO-Revision-Date: 2012-03-21 13:36+0000\n"
+"Last-Translator: Wylmer Wang <wantinghard@gmail.com>\n"
+"Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
+
+#: ../src/board.py:57
+msgid "Cannot load BOARDS file. Exiting."
+msgstr "无法加载 BOARDS 文件。退出。"
+
+#: ../src/board.py:60
+#, python-format
+msgid "Error reading %s file. File is corrupt. Installation problem.\n"
+msgstr "读取 %s 文件出错。文件损坏。安装有问题。\n"
+
+#: ../src/compiler.py:136
+msgid "Compiling..."
+msgstr "正在编译..."
+
+#: ../src/compiler.py:153 ../src/compiler.py:159 ../src/compiler.py:165
+#: ../src/compiler.py:172 ../src/compiler.py:190 ../src/compiler.py:213
+msgid "Compile Error"
+msgstr "编译出错"
+
+#: ../src/compiler.py:240
+msgid "Linking error"
+msgstr "链接出错"
+
+#: ../src/compiler.py:252 ../src/compiler.py:265
+msgid "Object error"
+msgstr "对象错误"
+
+#: ../src/compiler.py:271
+msgid "Done compilling."
+msgstr "编译完成。"
+
+#: ../src/compiler.py:275
+#, python-format
+msgid "Binary sketch size: %s bytes (of a %s bytes maximum)\n"
+msgstr "二进制描述大小: %s 字节 (最大 %s 字节)\n"
+
+#: ../src/compiler.py:352 ../src/compiler.py:375
+msgid "Library Error"
+msgstr "库错误"
+
+#: ../src/misc.py:53
+#, python-format
+msgid "Cannot find %s"
+msgstr "找不到 %s"
+
+#: ../src/misc.py:221
+msgid "Error compilling."
+msgstr "编译出错。"
+
+#: ../src/misc.py:291
+msgid "Close without Saving"
+msgstr "关闭但不保存"
+
+#: ../src/misc.py:293
+msgid "If you don't save, changes will be permanently lost."
+msgstr "如果您不保存，所作的修改会永久丢失。"
+
+#: ../src/programmer.py:39
+msgid "Cannot find PROGRAMMERS"
+msgstr "找不到 PROGRAMMERS"
+
+#: ../src/programmer.py:42
+#, python-format
+msgid "Error reading %s file. File is corrupt. Installation problem."
+msgstr "读取 %s 文件出错。文件损坏。安装有问题。"
+
+#: ../src/serialio.py:92
+msgid ""
+"Serial port not configured!\n"
+"Use Tools->Serial Port to configure port."
+msgstr ""
+"串口尚未配置！\n"
+"使用 工具->串口 来配置串口。"
+
+#: ../src/srcview.py:148 ../src/srcview.py:158
+#, python-format
+msgid "'%s' not found."
+msgstr "找不到“%s”。"
+
+#: ../src/ui.py:68 ../src/ui.py:88 ../src/ui.py:101 ../src/ui.py:169
+#: ../src/ui.py:184
+msgid "Untitled"
+msgstr "无标题"
+
+#: ../src/ui.py:69
+msgid "Save document"
+msgstr "保存文档"
+
+#: ../src/ui.py:70
+#, python-format
+msgid ""
+"Save changes to document \"%s\"\n"
+" before closing?"
+msgstr "在关闭前将更改保存到文档“%s”中吗？"
+
+#: ../src/ui.py:178
+msgid "Save file"
+msgstr "保存文件"
+
+#: ../src/ui.py:195
+msgid "Open file"
+msgstr "打开文件"
+
+#: ../src/ui.py:221
+#, python-format
+msgid "<b>A file named %s already exists. Do you want to replace it?</b>"
+msgstr "<b>文件 %s 已存在。您想替换它吗？</b>"
+
+#: ../src/ui.py:222
+#, python-format
+msgid ""
+"The file already exists in \"%s\". Replacing it will overwrite its contents."
+msgstr "文件已存在于 ”%s“ 中。替换它会覆盖该文件的内容。"
+
+#: ../src/ui.py:506
+msgid "Open Recent"
+msgstr "打开近期文件"
+
+#: ../src/ui.py:541 ../ui/main.ui.h:56
+msgid "Send"
+msgstr "发送"
+
+#: ../src/ui.py:542
+msgid "Clear"
+msgstr "清除"
+
+#: ../src/ui.py:581
+#, python-format
+msgid "%s baud"
+msgstr "%s 波特"
+
+#: ../src/ui.py:676
+msgid "E_xamples"
+msgstr ""
+
+#: ../src/ui.py:716 ../src/ui.py:722 ../src/ui.py:728
+msgid "System error"
+msgstr "系统错误"
+
+#: ../src/ui.py:731
+msgid "Cannot load ui file"
+msgstr "无法加载用户界面文件"
+
+#: ../src/ui.py:838
+msgid "--help    Print the command line options"
+msgstr "--help    打印命令行选项"
+
+#: ../src/ui.py:839
+msgid "--version Output version information and exit"
+msgstr "--version 输出版本信息并退出"
+
+#: ../src/uploader.py:54
+msgid "Burning bootloader..."
+msgstr "正在烧写引导程序..."
+
+#: ../src/uploader.py:67 ../src/uploader.py:100 ../src/uploader.py:137
+msgid "Flashing error."
+msgstr "刷写出错。"
+
+#: ../src/uploader.py:88 ../src/uploader.py:91 ../src/uploader.py:118
+#: ../src/uploader.py:121
+msgid "Burn Error"
+msgstr "烧写出错"
+
+#: ../src/uploader.py:91 ../src/uploader.py:121
+msgid "Burn ERROR."
+msgstr "烧写错误。"
+
+#: ../src/uploader.py:124
+msgid "Burn complete."
+msgstr "烧写完成。"
+
+#: ../src/uploader.py:132
+msgid "Flashing..."
+msgstr "刷写中..."
+
+#: ../src/uploader.py:159
+msgid "Flashing Error"
+msgstr "刷写出错"
+
+#: ../src/uploader.py:159
+msgid "Flash ERROR.\n"
+msgstr "刷写出错。\n"
+
+#: ../src/uploader.py:162
+msgid "Flashing complete."
+msgstr "刷写完成。"
+
+#: ../ui/arduino.xml.h:1
+msgid "Arduino"
+msgstr "Arduino"
+
+#: ../ui/arduino.xml.h:2
+msgid "Arduino color scheme"
+msgstr "Arduino 配色方案"
+
+#: ../ui/main.ui.h:1
+msgid "Lucian Langa <lucilanga@gnome.org>"
+msgstr "Lucian Langa <lucilanga@gnome.org>"
+
+#: ../ui/main.ui.h:2
+msgid "GNOME Arduino IDE"
+msgstr "GNOME Arduino 集成开发环境"
+
+#: ../ui/main.ui.h:3
+msgid "gnoduino"
+msgstr "gnoduino"
+
+#: ../ui/main.ui.h:4
+msgid ""
+"# gnoduino - Python Arduino IDE implementation\n"
+"# Copyright (C) 2010  Lucian Langa\n"
+"#\n"
+"# This program is free software; you can redistribute it and/or\n"
+"# modify it under the terms of the GNU General Public License\n"
+"# as published by the Free Software Foundation; either version 2\n"
+"# of the License, or (at your option) any later version.\n"
+"#\n"
+"# This program is distributed in the hope that it will be useful,\n"
+"# but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"# GNU General Public License for more details.\n"
+"#\n"
+"# You should have received a copy of the GNU General Public License\n"
+"# along with this program; if not, write to the Free Software\n"
+"# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, "
+"USA.\n"
+msgstr ""
+"# gnoduino - Python Arduino IDE implementation\n"
+"# Copyright (C) 2010  Lucian Langa\n"
+"#\n"
+"# This program is free software; you can redistribute it and/or\n"
+"# modify it under the terms of the GNU General Public License\n"
+"# as published by the Free Software Foundation; either version 2\n"
+"# of the License, or (at your option) any later version.\n"
+"#\n"
+"# This program is distributed in the hope that it will be useful,\n"
+"# but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"# GNU General Public License for more details.\n"
+"#\n"
+"# You should have received a copy of the GNU General Public License\n"
+"# along with this program; if not, write to the Free Software\n"
+"# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, "
+"USA.\n"
+
+#: ../ui/main.ui.h:21
+msgid "Search for:"
+msgstr "搜索内容："
+
+#: ../ui/main.ui.h:22
+msgid "Match entire word only"
+msgstr "只匹配完整词语"
+
+#: ../ui/main.ui.h:23
+msgid "Wrap around"
+msgstr "自动换行"
+
+#: ../ui/main.ui.h:24
+msgid "Match case"
+msgstr "区分大小写"
+
+#: ../ui/main.ui.h:25
+msgid "Search backwards"
+msgstr "反向搜索"
+
+#: ../ui/main.ui.h:26
+msgid "Editor font size"
+msgstr "编辑器字体大小"
+
+#: ../ui/main.ui.h:27
+msgid "Console font size"
+msgstr "终端字体大小"
+
+#: ../ui/main.ui.h:28
+msgid "Verbose build"
+msgstr "详尽方式编译"
+
+#: ../ui/main.ui.h:29
+msgid "Show line numbers"
+msgstr "显示行号"
+
+#: ../ui/main.ui.h:30
+msgid ""
+"Enter any supplementary path that compiler will check for, separate them by "
+"semicolons. (eg /usr/share/gnoduino;/usr/local/share/gnoduino)"
+msgstr ""
+"输入要让编译器检查的补充路径，以英文分号隔开。(如 /usr/share/gnoduino;/usr/"
+"local/share/gnoduino)"
+
+#: ../ui/main.ui.h:31
+msgid "Additional library paths:"
+msgstr "附加库路径："
+
+#: ../ui/main.ui.h:32
+msgid "_File"
+msgstr "文件(_F)"
+
+#: ../ui/main.ui.h:33
+msgid "Upload to I/O Board"
+msgstr "上传到输入/输出板"
+
+#: ../ui/main.ui.h:34
+msgid "Preferences"
+msgstr "首选项"
+
+#: ../ui/main.ui.h:35
+msgid "_Edit"
+msgstr "编辑(_E)"
+
+#: ../ui/main.ui.h:36
+msgid "Find Next"
+msgstr "查找下一个"
+
+#: ../ui/main.ui.h:37
+#, fuzzy
+msgid "Sketch"
+msgstr "描述"
+
+#: ../ui/main.ui.h:38
+msgid "Verify/Compile"
+msgstr "验证/编译"
+
+#: ../ui/main.ui.h:39
+msgid "Stop"
+msgstr "停止"
+
+#: ../ui/main.ui.h:40
+msgid "Import Library"
+msgstr "导入库"
+
+#: ../ui/main.ui.h:41
+msgid "Add File..."
+msgstr "添加文件..."
+
+#: ../ui/main.ui.h:42
+msgid "Tools"
+msgstr "工具"
+
+#: ../ui/main.ui.h:43
+msgid "Auto Format"
+msgstr "自动格式化"
+
+#: ../ui/main.ui.h:44
+msgid "Serial Monitor"
+msgstr "串口监视器"
+
+#: ../ui/main.ui.h:45
+msgid "Reset Board"
+msgstr "重置板卡"
+
+#: ../ui/main.ui.h:46
+msgid "Board"
+msgstr "板卡"
+
+#: ../ui/main.ui.h:47
+msgid "Serial Port"
+msgstr "串口"
+
+#: ../ui/main.ui.h:48
+msgid "Burn Bootloader"
+msgstr "烧写引导程序"
+
+#: ../ui/main.ui.h:49
+msgid "_Help"
+msgstr "帮助(_H)"
+
+#: ../ui/main.ui.h:50
+msgid "Reference"
+msgstr "参考"
+
+#: ../ui/main.ui.h:51
+msgid "Compile"
+msgstr "编译"
+
+#: ../ui/main.ui.h:52
+msgid "New"
+msgstr "新建"
+
+#: ../ui/main.ui.h:53
+msgid "Open"
+msgstr "打开"
+
+#: ../ui/main.ui.h:54
+msgid "Save"
+msgstr "保存"
+
+#: ../ui/main.ui.h:55
+msgid "Upload"
+msgstr "上传"

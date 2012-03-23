@@ -2,79 +2,78 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Xabier Villar <xabier.villar@gmail.com>, 2011.
-# Fran Dieguez <frandieguez@gnome.org>, 2011.
+# Fran Dieguez <frandieguez@gnome.org>, 2011, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gnoduino&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-10-29 17:18+0000\n"
-"PO-Revision-Date: 2011-12-09 14:02+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-03-24 00:20+0100\n"
+"PO-Revision-Date: 2012-03-24 00:20+0100\n"
 "Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
 "Language-Team: Galician <gnome-l10n-gl@gnome.org>\n"
+"Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: gl\n"
 "X-Generator: Lokalize 1.2\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
-#: ../src/board.py:38
+#: ../src/board.py:57
 msgid "Cannot load BOARDS file. Exiting."
 msgstr "Non foi posíbel cargar o ficheiro BOARDS. Saíndo."
 
-#: ../src/board.py:41
+#: ../src/board.py:60
 #, python-format
 msgid "Error reading %s file. File is corrupt. Installation problem.\n"
 msgstr ""
 "Produciuse un erro ó ler o ficheiro %s. Está corrompido. Problema na "
 "instalación.\n"
 
-#: ../src/compiler.py:125
+#: ../src/compiler.py:136
 msgid "Compiling..."
 msgstr "Compilando..."
 
-#: ../src/compiler.py:152 ../src/compiler.py:170 ../src/compiler.py:185
-#: ../src/compiler.py:207
+#: ../src/compiler.py:153 ../src/compiler.py:159 ../src/compiler.py:165
+#: ../src/compiler.py:172 ../src/compiler.py:190 ../src/compiler.py:213
 msgid "Compile Error"
 msgstr "Erro ao compilar"
 
-#: ../src/compiler.py:233
+#: ../src/compiler.py:240
 msgid "Linking error"
 msgstr "Erro ao ligar"
 
-#: ../src/compiler.py:245 ../src/compiler.py:258
+#: ../src/compiler.py:252 ../src/compiler.py:265
 msgid "Object error"
 msgstr "Erro no obxecto"
 
-#: ../src/compiler.py:264
+#: ../src/compiler.py:271
 msgid "Done compilling."
 msgstr "Compilación rematada"
 
-#: ../src/compiler.py:268
+#: ../src/compiler.py:275
 #, python-format
 msgid "Binary sketch size: %s bytes (of a %s bytes maximum)\n"
 msgstr "Tamaño do programa binario: %s bytes (dun máximo de %s)\n"
 
-#: ../src/compiler.py:322 ../src/compiler.py:345
+#: ../src/compiler.py:352 ../src/compiler.py:375
 msgid "Library Error"
 msgstr "Erro na biblioteca"
 
-#: ../src/misc.py:52
+#: ../src/misc.py:53
 #, python-format
 msgid "Cannot find %s"
 msgstr "Non foi posíbel atopar %s"
 
-#: ../src/misc.py:185
+#: ../src/misc.py:221
 msgid "Error compilling."
 msgstr "Erro ao compilar."
 
-#: ../src/misc.py:255
+#: ../src/misc.py:291
 msgid "Close without Saving"
 msgstr "Pechar sen gardar"
 
-#: ../src/misc.py:257
+#: ../src/misc.py:293
 msgid "If you don't save, changes will be permanently lost."
 msgstr "Se non garda, perderanse as modificacións."
 
@@ -102,16 +101,16 @@ msgstr ""
 msgid "'%s' not found."
 msgstr "Non foi posíbel atopar «%s»."
 
-#: ../src/ui.py:67 ../src/ui.py:87 ../src/ui.py:100 ../src/ui.py:168
-#: ../src/ui.py:183
+#: ../src/ui.py:68 ../src/ui.py:88 ../src/ui.py:101 ../src/ui.py:169
+#: ../src/ui.py:184
 msgid "Untitled"
 msgstr "Sen título"
 
-#: ../src/ui.py:68
+#: ../src/ui.py:69
 msgid "Save document"
 msgstr "Gardar o documento"
 
-#: ../src/ui.py:69
+#: ../src/ui.py:70
 #, python-format
 msgid ""
 "Save changes to document \"%s\"\n"
@@ -120,55 +119,59 @@ msgstr ""
 "Quere gardar as modificacións de «%s»\n"
 " antes de pechar?"
 
-#: ../src/ui.py:177
+#: ../src/ui.py:178
 msgid "Save file"
 msgstr "Gardar o ficheiro"
 
-#: ../src/ui.py:194
+#: ../src/ui.py:195
 msgid "Open file"
 msgstr "Abrir un ficheiro"
 
-#: ../src/ui.py:220
+#: ../src/ui.py:221
 #, python-format
 msgid "<b>A file named %s already exists. Do you want to replace it?</b>"
 msgstr "<b>Xa existe un ficheiro de nome %s. Quere substituílo?</b>"
 
-#: ../src/ui.py:221
+#: ../src/ui.py:222
 #, python-format
 msgid ""
 "The file already exists in \"%s\". Replacing it will overwrite its contents."
 msgstr "Xa existe o ficheiro en «%s». Substituílo sobrescribirá o seu contido."
 
-#: ../src/ui.py:505
+#: ../src/ui.py:506
 msgid "Open Recent"
 msgstr "Abrir un recente"
 
-#: ../src/ui.py:540 ../ui/main.ui.h:41
+#: ../src/ui.py:541 ../ui/main.ui.h:56
 msgid "Send"
 msgstr "Enviar"
 
-#: ../src/ui.py:541
+#: ../src/ui.py:542
 msgid "Clear"
 msgstr "Limpar"
 
-#: ../src/ui.py:576
+#: ../src/ui.py:581
 #, python-format
 msgid "%s baud"
 msgstr "%s baud"
 
-#: ../src/ui.py:668 ../src/ui.py:674 ../src/ui.py:680
+#: ../src/ui.py:676
+msgid "E_xamples"
+msgstr "E_xemplos"
+
+#: ../src/ui.py:716 ../src/ui.py:722 ../src/ui.py:728
 msgid "System error"
 msgstr "Erro do sistema"
 
-#: ../src/ui.py:683
+#: ../src/ui.py:731
 msgid "Cannot load ui file"
 msgstr "Non foi posíbel cargar o ficheiro ui"
 
-#: ../src/ui.py:789
+#: ../src/ui.py:838
 msgid "--help    Print the command line options"
 msgstr "--help    Mostra as opcións da liña de ordes"
 
-#: ../src/ui.py:790
+#: ../src/ui.py:839
 msgid "--version Output version information and exit"
 msgstr "--version Mostra información da versión e sae"
 
@@ -176,36 +179,36 @@ msgstr "--version Mostra información da versión e sae"
 msgid "Burning bootloader..."
 msgstr "Escribindo o cargador de arranque…"
 
-#: ../src/uploader.py:77 ../src/uploader.py:80 ../src/uploader.py:96
-#: ../src/uploader.py:99
-msgid "Burn Error"
-msgstr "Erro de escritura"
-
-#: ../src/uploader.py:80 ../src/uploader.py:99
-msgid "Burn ERROR."
-msgstr "Erro de escritura."
-
-#: ../src/uploader.py:102
-msgid "Burn complete."
-msgstr "Escritura rematada."
-
-#: ../src/uploader.py:110
-msgid "Flashing..."
-msgstr "Flasheando…"
-
-#: ../src/uploader.py:115
+#: ../src/uploader.py:67 ../src/uploader.py:100 ../src/uploader.py:137
 msgid "Flashing error."
 msgstr "Erro ao flashear."
 
-#: ../src/uploader.py:135
+#: ../src/uploader.py:88 ../src/uploader.py:91 ../src/uploader.py:118
+#: ../src/uploader.py:121
+msgid "Burn Error"
+msgstr "Erro de escritura"
+
+#: ../src/uploader.py:91 ../src/uploader.py:121
+msgid "Burn ERROR."
+msgstr "Erro de escritura."
+
+#: ../src/uploader.py:124
+msgid "Burn complete."
+msgstr "Escritura rematada."
+
+#: ../src/uploader.py:132
+msgid "Flashing..."
+msgstr "Flasheando…"
+
+#: ../src/uploader.py:159
 msgid "Flashing Error"
 msgstr "Erro ao flashear"
 
-#: ../src/uploader.py:135
+#: ../src/uploader.py:159
 msgid "Flash ERROR.\n"
 msgstr "ERRO ao flashear.\n"
 
-#: ../src/uploader.py:138
+#: ../src/uploader.py:162
 msgid "Flashing complete."
 msgstr "Flasheado completo."
 
@@ -218,6 +221,18 @@ msgid "Arduino color scheme"
 msgstr "Esquema de cor Arduino"
 
 #: ../ui/main.ui.h:1
+msgid "Lucian Langa <lucilanga@gnome.org>"
+msgstr "Lucian Langa <lucilanga@gnome.org>"
+
+#: ../ui/main.ui.h:2
+msgid "GNOME Arduino IDE"
+msgstr "IDE GNOME Arduino"
+
+#: ../ui/main.ui.h:3
+msgid "gnoduino"
+msgstr "gnoduino"
+
+#: ../ui/main.ui.h:4
 msgid ""
 "# gnoduino - Python Arduino IDE implementation\n"
 "# Copyright (C) 2010  Lucian Langa\n"
@@ -255,39 +270,43 @@ msgstr ""
 "Inc.,\n"
 "# 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.\n"
 
-#: ../ui/main.ui.h:18
-msgid "Add File..."
-msgstr "Engadir un ficheiro…"
-
-#: ../ui/main.ui.h:19
-msgid "Additional library paths:"
-msgstr "Rutas de bibliotecas adicionais:"
-
-#: ../ui/main.ui.h:20
-msgid "Auto Format"
-msgstr "Formato automático"
-
 #: ../ui/main.ui.h:21
-msgid "Board"
-msgstr "Taboleiro"
+msgid "Search for:"
+msgstr "Buscar:"
 
 #: ../ui/main.ui.h:22
-msgid "Burn Bootloader"
-msgstr "Escribir o cargador de arranque…"
+msgid "Match entire word only"
+msgstr "Coincidir só coa palabra completa"
 
 #: ../ui/main.ui.h:23
-msgid "Compile"
-msgstr "Compilar"
+msgid "Wrap around"
+msgstr "Axustar aproximadamente"
 
 #: ../ui/main.ui.h:24
-msgid "Console font size"
-msgstr "Tamaño da letra da consola"
+msgid "Match case"
+msgstr "Distinguir a capitalización"
 
 #: ../ui/main.ui.h:25
+msgid "Search backwards"
+msgstr "Busca cara tras"
+
+#: ../ui/main.ui.h:26
 msgid "Editor font size"
 msgstr "Tamaño da letra do editor"
 
-#: ../ui/main.ui.h:26
+#: ../ui/main.ui.h:27
+msgid "Console font size"
+msgstr "Tamaño da letra da consola"
+
+#: ../ui/main.ui.h:28
+msgid "Verbose build"
+msgstr "Construción detallada"
+
+#: ../ui/main.ui.h:29
+msgid "Show line numbers"
+msgstr "Mostrar os números de liña"
+
+#: ../ui/main.ui.h:30
 msgid ""
 "Enter any supplementary path that compiler will check for, separate them by "
 "semicolons. (eg /usr/share/gnoduino;/usr/local/share/gnoduino)"
@@ -296,118 +315,102 @@ msgstr ""
 "separándoas con punto e coma. (p. ex. /usr/share/gnoduino;/usr/local/share/"
 "gnoduino)"
 
-#: ../ui/main.ui.h:27
-msgid "Find Next"
-msgstr "Buscar a seguinte"
-
-#: ../ui/main.ui.h:28
-msgid "GNOME Arduino IDE"
-msgstr "IDE GNOME Arduino"
-
-#: ../ui/main.ui.h:29
-msgid "Import Library"
-msgstr "Importar biblioteca"
-
-#: ../ui/main.ui.h:30
-msgid "Lucian Langa <lucilanga@gnome.org>"
-msgstr "Lucian Langa <lucilanga@gnome.org>"
-
 #: ../ui/main.ui.h:31
-msgid "Match case"
-msgstr "Distinguir a capitalización"
+msgid "Additional library paths:"
+msgstr "Rutas de bibliotecas adicionais:"
 
 #: ../ui/main.ui.h:32
-msgid "Match entire word only"
-msgstr "Coincidir só coa palabra completa"
-
-#: ../ui/main.ui.h:33
-msgid "New"
-msgstr "Novo"
-
-#: ../ui/main.ui.h:34
-msgid "Open"
-msgstr "Abrir"
-
-#: ../ui/main.ui.h:35
-msgid "Preferences"
-msgstr "Preferencias"
-
-#: ../ui/main.ui.h:36
-msgid "Reference"
-msgstr "Referencia"
-
-#: ../ui/main.ui.h:37
-msgid "Reset Board"
-msgstr "Reiniciar taboleiro"
-
-#: ../ui/main.ui.h:38
-msgid "Save"
-msgstr "Gardar"
-
-#: ../ui/main.ui.h:39
-msgid "Search backwards"
-msgstr "Busca cara tras"
-
-#: ../ui/main.ui.h:40
-msgid "Search for:"
-msgstr "Buscar:"
-
-#: ../ui/main.ui.h:42
-msgid "Serial Monitor"
-msgstr "Monitor serie"
-
-#: ../ui/main.ui.h:43
-msgid "Serial Port"
-msgstr "Porto serie"
-
-#: ../ui/main.ui.h:44
-msgid "Show line numbers"
-msgstr "Mostrar os números de liña"
-
-#: ../ui/main.ui.h:45
-msgid "Sketch"
-msgstr "Programa"
-
-#: ../ui/main.ui.h:46
-msgid "Stop"
-msgstr "Deter"
-
-#: ../ui/main.ui.h:47
-msgid "Tools"
-msgstr "Ferramentas"
-
-#: ../ui/main.ui.h:48
-msgid "Upload"
-msgstr "Transferir"
-
-#: ../ui/main.ui.h:49
-msgid "Upload to I/O Board"
-msgstr "Subir ao taboleiro de E/S"
-
-#: ../ui/main.ui.h:50
-msgid "Verbose build"
-msgstr "Construción detallada"
-
-#: ../ui/main.ui.h:51
-msgid "Verify/Compile"
-msgstr "Verificar/Compilar"
-
-#: ../ui/main.ui.h:52
-msgid "Wrap around"
-msgstr "Axustar aproximadamente"
-
-#: ../ui/main.ui.h:53
-msgid "_Edit"
-msgstr "_Edición"
-
-#: ../ui/main.ui.h:54
 msgid "_File"
 msgstr "_Ficheiro"
 
-#: ../ui/main.ui.h:55
+#: ../ui/main.ui.h:33
+msgid "Upload to I/O Board"
+msgstr "Subir ao taboleiro de E/S"
+
+#: ../ui/main.ui.h:34
+msgid "Preferences"
+msgstr "Preferencias"
+
+#: ../ui/main.ui.h:35
+msgid "_Edit"
+msgstr "_Edición"
+
+#: ../ui/main.ui.h:36
+msgid "Find Next"
+msgstr "Buscar a seguinte"
+
+#: ../ui/main.ui.h:37
+msgid "Sketch"
+msgstr "Programa"
+
+#: ../ui/main.ui.h:38
+msgid "Verify/Compile"
+msgstr "Verificar/Compilar"
+
+#: ../ui/main.ui.h:39
+msgid "Stop"
+msgstr "Deter"
+
+#: ../ui/main.ui.h:40
+msgid "Import Library"
+msgstr "Importar biblioteca"
+
+#: ../ui/main.ui.h:41
+msgid "Add File..."
+msgstr "Engadir un ficheiro…"
+
+#: ../ui/main.ui.h:42
+msgid "Tools"
+msgstr "Ferramentas"
+
+#: ../ui/main.ui.h:43
+msgid "Auto Format"
+msgstr "Formato automático"
+
+#: ../ui/main.ui.h:44
+msgid "Serial Monitor"
+msgstr "Monitor serie"
+
+#: ../ui/main.ui.h:45
+msgid "Reset Board"
+msgstr "Reiniciar taboleiro"
+
+#: ../ui/main.ui.h:46
+msgid "Board"
+msgstr "Taboleiro"
+
+#: ../ui/main.ui.h:47
+msgid "Serial Port"
+msgstr "Porto serie"
+
+#: ../ui/main.ui.h:48
+msgid "Burn Bootloader"
+msgstr "Escribir o cargador de arranque…"
+
+#: ../ui/main.ui.h:49
 msgid "_Help"
 msgstr "_Axuda"
 
-#: ../ui/main.ui.h:56
-msgid "gnoduino"
-msgstr "gnoduino"
+#: ../ui/main.ui.h:50
+msgid "Reference"
+msgstr "Referencia"
+
+#: ../ui/main.ui.h:51
+msgid "Compile"
+msgstr "Compilar"
+
+#: ../ui/main.ui.h:52
+msgid "New"
+msgstr "Novo"
+
+#: ../ui/main.ui.h:53
+msgid "Open"
+msgstr "Abrir"
+
+#: ../ui/main.ui.h:54
+msgid "Save"
+msgstr "Gardar"
+
+#: ../ui/main.ui.h:55
+msgid "Upload"
+msgstr "Transferir"

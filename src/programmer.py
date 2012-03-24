@@ -56,12 +56,14 @@ class Programmer(object):
 		return misc.readArduinoConfFile(misc.getArduinoFile("hardware/arduino/programmers.txt"))
 
 	def readCustomProgrammers(self):
+		custom = []
 		p = prefs.preferences()
 		d = os.path.join(p.getValue("sketchbook.path"), "hardware")
 		try:
 			for i in os.listdir(d):
 				if os.path.exists(os.path.join(d, i, "programmers.txt")):
-					return misc.readArduinoConfFile(os.path.join(d, i, "programmers.txt"))
+					custom.extend(misc.readArduinoConfFile(os.path.join(d, i, "programmers.txt")))
+			return custom
 		except: return None
 
 	def getProgrammers(self):

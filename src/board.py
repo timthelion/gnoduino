@@ -54,12 +54,14 @@ class Board(object):
 		return misc.readArduinoConfFile(misc.getArduinoFile("hardware/arduino/boards.txt"))
 
 	def readCustomBoards(self):
+		custom = []
 		p = prefs.preferences()
 		d = os.path.join(p.getValue("sketchbook.path"), "hardware")
 		try:
 			for i in os.listdir(d):
 				if os.path.exists(os.path.join(d, i, "boards.txt")):
-					return misc.readArduinoConfFile(os.path.join(d, i, "boards.txt"))
+					custom.extend(misc.readArduinoConfFile(os.path.join(d, i, "boards.txt")))
+			return custom
 		except:	return None
 
 	def getBoards(self):

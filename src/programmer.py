@@ -34,31 +34,68 @@ class Programmer(object):
 	def __init__(self):
 		self.programmers = []
 		self.defaults = []
-		conf = ConfigParser.RawConfigParser()
-		path = misc.getArduinoFile("PROGRAMMERS")
-		if path is None: raise SystemExit(_("Cannot find PROGRAMMERS"))
-		conf.read(path)
-		if not len(conf.sections()):
-			raise SystemExit(_("Error reading %s file. File is corrupt. Installation problem.") % path)
-		c = 1
-		for i in conf.sections():
-			v = mydict(conf.items(i))
-			v['id'] = c
-			v['desc'] = i
-			self.programmers.append(v)
-			c = c + 1
+
+		try:
+			self.programmers.extend(self.readCustomProgrammers())
+		except: pass
+		try:
+			self.programmers.extend(self.readArduinoProgrammers())
+		except:	self.programmers.extend(misc.readGnoduinoConfFile("PROGRAMMERS"))
+
+		#renumber ids in case we grown with customs
+		for i in range(len(self.programmers)): self.programmers[i]['id'] = i+1
+
+		self.p = prefs.preferences()
+		if config.cur_programmer == -1:
+			try:
+				config.cur_programmer = self.getProgrammerIdByName(self.p.getSafeValue("programmer", "arduino:avrispmkii")) - 1
+			except:
+				config.cur_programmer = self.getProgrammerIdByName("arduino:avrispmkii") - 1
+
+	def readArduinoProgrammers(self):
+		return misc.readArduinoConfFile(misc.getArduinoFile("hardware/arduino/programmers.txt"))
+
+	def readCustomProgrammers(self):
+		p = prefs.preferences()
+		d = os.path.join(p.getValue("sketchbook.path"), "hardware")
+		try:
+			for i in os.listdir(d):
+				if os.path.exists(os.path.join(d, i, "programmers.txt")):
+					return misc.readArduinoConfFile(os.path.join(d, i, "programmers.txt"))
+		except: return None
 
 	def getProgrammers(self):
 		return self.programmers
 
+	def getProgrammer(self):
+		return config.cur_programmer
+
 	def getCommunication(self, id):
-		return self.programmers[id-1]['communication']
+		return self.programmers[id]['communication']
 
 	def getProtocol(self, id):
-		return self.programmers[id-1]['protocol']
+		return self.programmers[id]['protocol']
 
 	def getSpeed(self, id):
-		return self.programmers[id-1]['speed']
+		return self.programmers[id]['speed']
 
 	def getForce(self, id):
-		return  self.programmers[id-1]['force']
+		return self.programmers[id]['force']
+
+	def setProgrammer(self, id):
+		config.cur_programmer = (id - 1)
+		self.p.setValue("programmer",
+			self.getProgrammerPlatform(config.cur_programmer)+
+			":"+
+			self.programmers[config.cur_programmer]['name'])
+		self.p.saveValues()
+
+	def getProgrammerPlatform(self, id):
+		return os.path.basename(
+				os.path.dirname(self.programmers[id]['hwpath']))
+
+	def getProgrammerIdByName(self, name):
+		if name == None: return 1
+		for i in self.programmers:
+			if self.getProgrammerPlatform(i['id']-1)+":"+i['name'] == name:
+				return i['id']

@@ -105,6 +105,58 @@ def getArduinoUiPath():
 def getPixmapPath(pixmap):
 	return get_path(os.path.join("pixmaps", pixmap))
 
+"""generic function to read Arduino preferences-like file"""
+
+def readArduinoConfFile(confFile):
+	conf = []
+	try:
+		f = open(confFile)
+		q = []
+		z = []
+		for c in f.readlines():
+			if c!='\n':
+				l = ""
+				line =  c.split('\n')[0]
+				if line != "" and line[0] != "#":
+					l = line.split("=")
+					z.append(l)
+					q.append(l[0].split(".")[0])
+
+		k = 1
+		for i in sorted(set(q), reverse=True):
+			w = dict()
+			for c in z:
+				if c[0].split(".")[0] == i:
+					var = c[0].split(".")[-1]
+					if var == "name":
+						w['name'] = i
+						w['desc'] = c[1]
+					else:
+						w[var] = c[1]
+			w['hwpath'] = confFile
+			w['id'] = k
+			k += 1
+			conf.append(w)
+		return conf
+	except: return None
+
+def readGnoduinoConfFile(self, confFile):
+	conf = []
+	cnf = ConfigParser.RawConfigParser()
+	path = misc.getArduinoFile(confFile)
+	if path is None: raise SystemExit(_("Cannot load %s file. Exiting.") % confFile)
+	cnf.read(path)
+	if not len(cnf.sections()):
+		raise SystemExit(_("Error reading %s file. File is corrupt. Installation problem.\n") % path)
+	c = 1
+	for i in cnf.sections():
+		v = dict(cnf.items(i))
+		v['id'] = c
+		v['desc'] = i
+		conf.append(v)
+		c = c + 1
+	return conf
+
 def makeWorkdir():
 	return tempfile.mkdtemp("", os.path.join(tempfile.gettempdir(), "build"+str(time.time())))
 

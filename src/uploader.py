@@ -127,22 +127,41 @@ def burnBootloader(serial, output, notify, id):
 
 def upload(obj, serial, output, notify):
 	p = prefs.preferences()
+	pgm = programmer.Programmer()
 	context = notify.get_context_id("main")
 	notify.pop(context)
 	notify.push(context, _("Flashing..."))
 	b = board.Board()
-	port = serial.getConfigSerialPort(notify, output)
-	if port == -1:
-		notify.pop(context)
-		notify.push(context, _("Flashing error."))
-		return
-	serial.resetBoard()
 	compline=[i for i in avr]
-	# avrdude wants "stk500v1" to distinguish it from stk500v2
 	protocol = b.getPGM(b.getBoard())
-	if protocol == "stk500" or protocol == "": protocol = "stk500v1"
+	# avrdude wants "stk500v1" to distinguish it from stk500v2
+	if protocol == "stk500": protocol = "stk500v1"
+	if protocol == "":
+		protocol =  pgm.getProtocol(pgm.getProgrammer())
+		try:
+			comm = pgm.getCommunication(pgm.getProgrammer())
+			if comm == "serial":
+				port = serial.getConfigSerialPort(notify, output)
+				if port == -1:
+					notify.pop(context)
+					notify.push(context, _("Flashing error."))
+					return
+				serial.resetBoard()
+				compline.append("-P" + port)
+			else: compline.append("-P" + comm)
+			try:
+				compline.append("-b" + pgm.getSpeed(pgm.getProgrammer()))
+			except: pass
+		except: pass
+	else:
+		port = serial.getConfigSerialPort(notify, output)
+		if port == -1:
+			notify.pop(context)
+			notify.push(context, _("Flashing error."))
+			return
+		compline.append("-P" + port)
+		serial.resetBoard()
 	compline.append("-c" + protocol)
-	compline.append("-P" + port)
 	try:
 		compline.append("-b" + b.getPGMSpeed(b.getBoard()))
 	except: pass

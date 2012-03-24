@@ -588,6 +588,9 @@ def createBaudCombo(w, port):
 def selectBoard(w, id):
 	b.setBoard(id)
 
+def selectProgrammer(w, id):
+	pgm.setProgrammer(id)
+
 def setSerial(w, id):
 	createBaudCombo(w, id)
 	try:
@@ -694,6 +697,7 @@ def run():
 		global scon
 		global p
 		global b
+		global pgm
 		global recentmanager
 		locale_path = _search_locales()
 		gettext.bindtextdomain(APP_NAME, locale_path)
@@ -749,6 +753,7 @@ def run():
 		"""build menus"""
 		sub = gtk.Menu()
 		b = board.Board()
+		pgm = programmer.Programmer()
 		maingroup = gtk.RadioMenuItem(None, None)
 		for i in b.getBoards():
 			menuItem = gtk.RadioMenuItem(maingroup, i['desc'])
@@ -801,12 +806,15 @@ def run():
 		populateExamples()
 
 		sub = gtk.Menu()
-		pgm = programmer.Programmer()
+		maingroup = gtk.RadioMenuItem(None, None)
 		for i in pgm.getProgrammers():
-			menuItem = gtk.MenuItem(i['desc'])
-			menuItem.connect('activate', burnBootloader, i['id'])
+			menuItem = gtk.RadioMenuItem(maingroup, i['desc'])
+			if i['id'] == pgm.getProgrammer() + 1:
+				menuItem.set_active(True)
+			menuItem.connect('activate', selectProgrammer, i['id'])
 			sub.append(menuItem)
-		gui.get_object("burn").set_submenu(sub)
+		gui.get_object("programmer").set_submenu(sub)
+		gui.get_object("burn").connect('activate', burnBootloader, sub)
 
 		nb = gtk.Notebook()
 		nb.connect("switch-page", setupPage)

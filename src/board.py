@@ -39,7 +39,7 @@ class Board(object):
 		try:
 			self.boards.extend(self.readArduinoBoards())
 		except:
-			self.boards.extend(self.readGnoduinoBoards())
+			self.boards.extend(misc.readGnoduinoConfFile("BOARDS"))
 		#renumber ids in case we grown with customs
 		for i in range(len(self.boards)): self.boards[i]['id'] = i+1
 		self.p = prefs.preferences()
@@ -50,58 +50,8 @@ class Board(object):
 			except:
 				config.cur_board = self.getBoardIdByName("uno") - 1
 
-	def readGnoduinoBoards(self):
-		boards = []
-		conf = ConfigParser.RawConfigParser()
-		path = misc.getArduinoFile("BOARDS")
-		if path is None: raise SystemExit(_("Cannot load BOARDS file. Exiting."))
-		conf.read(path)
-		if not len(conf.sections()):
-			raise SystemExit(_("Error reading %s file. File is corrupt. Installation problem.\n") % path)
-		c = 1
-		for i in conf.sections():
-			v = dict(conf.items(i))
-			v['id'] = c
-			v['desc'] = i
-			boards.append(v)
-			c = c + 1
-		return boards
-
 	def readArduinoBoards(self):
-		return self.readArduinoBoardsFile(misc.getArduinoFile("hardware/arduino/boards.txt"))
-
-	def readArduinoBoardsFile(self, boardsFile):
-		boards = []
-		try:
-			f = open(boardsFile)
-			q = []
-			z = []
-			for c in f.readlines():
-				if c!='\n':
-					l = ""
-					line =  c.strip("#").split('\n')[0]
-					if line != "":
-						l = line.split("=")
-						z.append(l)
-						q.append(l[0].split(".")[0])
-
-			k = 1
-			for i in sorted(set(q), reverse=True):
-				w = dict()
-				for c in z:
-					if c[0].split(".")[0] == i:
-						var = c[0].split(".")[-1]
-						if var == "name":
-							w['name'] = i
-							w['desc'] = c[1]
-						else:
-							w[var] = c[1]
-				w['hwpath'] = boardsFile
-				w['id'] = k
-				k += 1
-				boards.append(w)
-			return boards
-		except: return None
+		return misc.readArduinoConfFile(misc.getArduinoFile("hardware/arduino/boards.txt"))
 
 	def readCustomBoards(self):
 		p = prefs.preferences()
@@ -109,7 +59,7 @@ class Board(object):
 		try:
 			for i in os.listdir(d):
 				if os.path.exists(os.path.join(d, i, "boards.txt")):
-					return self.readArduinoBoardsFile(os.path.join(d, i, "boards.txt"))
+					return misc.readArduinoConfFile(os.path.join(d, i, "boards.txt"))
 		except:	return None
 
 	def getBoards(self):

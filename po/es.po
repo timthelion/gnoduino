@@ -9,25 +9,14 @@ msgstr ""
 "Project-Id-Version: gnoduino master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gnoduino&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-03-11 20:42+0000\n"
-"PO-Revision-Date: 2012-03-16 11:19+0100\n"
+"POT-Creation-Date: 2012-03-24 22:56+0000\n"
+"PO-Revision-Date: 2012-03-25 18:23+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#: ../src/board.py:48
-msgid "Cannot load BOARDS file. Exiting."
-msgstr "No se puede cargar el archivo BOARDS. Saliendo."
-
-#: ../src/board.py:51
-#, python-format
-msgid "Error reading %s file. File is corrupt. Installation problem.\n"
-msgstr ""
-"Error al leer el archivo %s. El archivo está corrompido. Problema de la "
-"instalación.\n"
 
 #: ../src/compiler.py:136
 msgid "Compiling..."
@@ -64,28 +53,30 @@ msgstr "Error en la biblioteca"
 msgid "Cannot find %s"
 msgstr "No se pudo encontrar %s"
 
-#: ../src/misc.py:217
+#: ../src/misc.py:147
+#, python-format
+#| msgid "Cannot load BOARDS file. Exiting."
+msgid "Cannot load %s file. Exiting."
+msgstr "No se puede cargar el archivo %s. Saliendo."
+
+#: ../src/misc.py:150
+#, python-format
+msgid "Error reading %s file. File is corrupt. Installation problem.\n"
+msgstr ""
+"Error al leer el archivo %s. El archivo está corrompido. Problema de la "
+"instalación.\n"
+
+#: ../src/misc.py:273
 msgid "Error compilling."
 msgstr "Erro al compilar."
 
-#: ../src/misc.py:287
+#: ../src/misc.py:343
 msgid "Close without Saving"
 msgstr "Cerrar sin guardar"
 
-#: ../src/misc.py:289
+#: ../src/misc.py:345
 msgid "If you don't save, changes will be permanently lost."
 msgstr "Los cambios se perderán permanentemente si no los guarda."
-
-#: ../src/programmer.py:39
-msgid "Cannot find PROGRAMMERS"
-msgstr "No se puede encontrar PROGRAMMERS"
-
-#: ../src/programmer.py:42
-#, python-format
-msgid "Error reading %s file. File is corrupt. Installation problem."
-msgstr ""
-"Error al leer el archivo %s. El archivo está corrompido. Problema de la "
-"instalación."
 
 #: ../src/serialio.py:92
 msgid ""
@@ -142,7 +133,7 @@ msgstr ""
 msgid "Open Recent"
 msgstr "Abrir reciente"
 
-#: ../src/ui.py:541 ../ui/main.ui.h:56
+#: ../src/ui.py:541 ../ui/main.ui.h:57
 msgid "Send"
 msgstr "Enviar"
 
@@ -155,25 +146,25 @@ msgstr "Limpiar"
 msgid "%s baud"
 msgstr "%s baudios"
 
-#: ../src/ui.py:676
+#: ../src/ui.py:679
 msgid "E_xamples"
 msgstr "Eje_mplos"
 
-#: ../src/ui.py:716 ../src/ui.py:722 ../src/ui.py:728
+#: ../src/ui.py:720 ../src/ui.py:726 ../src/ui.py:732
 msgid "System error"
 msgstr "Error del sistema"
 
-#: ../src/ui.py:731
+#: ../src/ui.py:735
 msgid "Cannot load ui file"
 msgstr "No se puede cargar el archivo ui"
 
-#: ../src/ui.py:838
+#: ../src/ui.py:846
 msgid "--help    Print the command line options"
 msgstr ""
 "--help    Mostrar\n"
 " las opciones de la línea de comandos"
 
-#: ../src/ui.py:839
+#: ../src/ui.py:847
 msgid "--version Output version information and exit"
 msgstr "--version    Mostrar información de la versión y salir"
 
@@ -181,7 +172,8 @@ msgstr "--version    Mostrar información de la versión y salir"
 msgid "Burning bootloader..."
 msgstr "Grabando cargador de arranque…"
 
-#: ../src/uploader.py:67 ../src/uploader.py:100 ../src/uploader.py:137
+#: ../src/uploader.py:67 ../src/uploader.py:100 ../src/uploader.py:147
+#: ../src/uploader.py:160
 msgid "Flashing error."
 msgstr "Error al flashear."
 
@@ -198,19 +190,19 @@ msgstr "Error al grabar."
 msgid "Burn complete."
 msgstr "Grabación completada."
 
-#: ../src/uploader.py:132
+#: ../src/uploader.py:133
 msgid "Flashing..."
 msgstr "Flasheando…"
 
-#: ../src/uploader.py:157
+#: ../src/uploader.py:178
 msgid "Flashing Error"
 msgstr "Error al flashear"
 
-#: ../src/uploader.py:157
+#: ../src/uploader.py:178
 msgid "Flash ERROR.\n"
 msgstr "Error al flashear.\n"
 
-#: ../src/uploader.py:160
+#: ../src/uploader.py:181
 msgid "Flashing complete."
 msgstr "Flasheado completo."
 
@@ -389,33 +381,45 @@ msgid "Serial Port"
 msgstr "Puerto serie"
 
 #: ../ui/main.ui.h:48
+msgid "Programmer"
+msgstr "Programador"
+
+#: ../ui/main.ui.h:49
 msgid "Burn Bootloader"
 msgstr "Grabar cargador de arranque"
 
-#: ../ui/main.ui.h:49
+#: ../ui/main.ui.h:50
 msgid "_Help"
 msgstr "Ay_uda"
 
-#: ../ui/main.ui.h:50
+#: ../ui/main.ui.h:51
 msgid "Reference"
 msgstr "Referencia"
 
-#: ../ui/main.ui.h:51
+#: ../ui/main.ui.h:52
 msgid "Compile"
 msgstr "Compilar"
 
-#: ../ui/main.ui.h:52
+#: ../ui/main.ui.h:53
 msgid "New"
 msgstr "Nuevo"
 
-#: ../ui/main.ui.h:53
+#: ../ui/main.ui.h:54
 msgid "Open"
 msgstr "Abrir"
 
-#: ../ui/main.ui.h:54
+#: ../ui/main.ui.h:55
 msgid "Save"
 msgstr "Guardar"
 
-#: ../ui/main.ui.h:55
+#: ../ui/main.ui.h:56
 msgid "Upload"
 msgstr "Subir"
+
+#~ msgid "Cannot find PROGRAMMERS"
+#~ msgstr "No se puede encontrar PROGRAMMERS"
+
+#~ msgid "Error reading %s file. File is corrupt. Installation problem."
+#~ msgstr ""
+#~ "Error al leer el archivo %s. El archivo está corrompido. Problema de la "
+#~ "instalación."

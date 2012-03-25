@@ -2,14 +2,14 @@
 # Copyright (C) 2011 gnoduino's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gnoduino package.
 #
-# Matej Urbančič <mateju@svn.gnome.org>, 2011.
+# Matej Urbančič <mateju@svn.gnome.org>, 2011 - 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnoduino master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnoduino&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-03-11 20:42+0000\n"
-"PO-Revision-Date: 2012-03-11 22:07+0100\n"
+"POT-Creation-Date: 2012-03-25 17:47+0000\n"
+"PO-Revision-Date: 2012-03-25 22:18+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenščina <gnome-si@googlegroups.com>\n"
 "Language: \n"
@@ -20,15 +20,6 @@ msgstr ""
 "X-Poedit-Language: Slovenian\n"
 "X-Poedit-Country: Slovenia\n"
 "X-Poedit-SourceCharset: utf-8\n"
-
-#: ../src/board.py:48
-msgid "Cannot load BOARDS file. Exiting."
-msgstr "Ni mogoče naložiti datoteke BOARDS. Opravilo je končano."
-
-#: ../src/board.py:51
-#, python-format
-msgid "Error reading %s file. File is corrupt. Installation problem.\n"
-msgstr "Napaka branja datoteke %s. Datoteka je pokvarjena in predstavlja napako namestitve.\n"
 
 #: ../src/compiler.py:136
 msgid "Compiling..."
@@ -71,26 +62,27 @@ msgstr "Napaka knjižnice"
 msgid "Cannot find %s"
 msgstr "Ni mogoče najti %s"
 
-#: ../src/misc.py:217
+#: ../src/misc.py:147
+#, python-format
+msgid "Cannot load %s file. Exiting."
+msgstr "Ni mogoče naložiti datoteke %s. Opravilo je predčasno končano."
+
+#: ../src/misc.py:150
+#, python-format
+msgid "Error reading %s file. File is corrupt. Installation problem.\n"
+msgstr "Napaka branja datoteke %s. Datoteka je pokvarjena in predstavlja napako namestitve.\n"
+
+#: ../src/misc.py:273
 msgid "Error compilling."
 msgstr "Med kodnim prevajanjem je prišlo do napake."
 
-#: ../src/misc.py:287
+#: ../src/misc.py:343
 msgid "Close without Saving"
 msgstr "Zapri brez shranjevanja"
 
-#: ../src/misc.py:289
+#: ../src/misc.py:345
 msgid "If you don't save, changes will be permanently lost."
 msgstr "V primeru, da sprememb ne shranite, bodo te trajno izgubljene."
-
-#: ../src/programmer.py:39
-msgid "Cannot find PROGRAMMERS"
-msgstr "Ni mogoče najti datoteke PROGRAMMERS"
-
-#: ../src/programmer.py:42
-#, python-format
-msgid "Error reading %s file. File is corrupt. Installation problem."
-msgstr "Napaka branja datoteke %s. Datoteka je pokvarjena in predstavlja napako namestitve."
 
 #: ../src/serialio.py:92
 msgid ""
@@ -150,7 +142,7 @@ msgid "Open Recent"
 msgstr "Odpri nedavno"
 
 #: ../src/ui.py:541
-#: ../ui/main.ui.h:56
+#: ../ui/main.ui.h:57
 msgid "Send"
 msgstr "Pošlji"
 
@@ -163,25 +155,25 @@ msgstr "Počisti"
 msgid "%s baud"
 msgstr "%s baud"
 
-#: ../src/ui.py:676
+#: ../src/ui.py:679
 msgid "E_xamples"
 msgstr "_Primeri"
 
-#: ../src/ui.py:716
-#: ../src/ui.py:722
-#: ../src/ui.py:728
+#: ../src/ui.py:720
+#: ../src/ui.py:726
+#: ../src/ui.py:732
 msgid "System error"
 msgstr "Sistemska napaka"
 
-#: ../src/ui.py:731
+#: ../src/ui.py:735
 msgid "Cannot load ui file"
 msgstr "Datoteke uporabniškega vmesnika ni mogoče naložiti."
 
-#: ../src/ui.py:838
+#: ../src/ui.py:846
 msgid "--help    Print the command line options"
 msgstr "--help    Izpiši možnosti ukazne vrstice"
 
-#: ../src/ui.py:839
+#: ../src/ui.py:847
 msgid "--version Output version information and exit"
 msgstr "--version Izpiši podrobnosti različice in končaj"
 
@@ -191,7 +183,8 @@ msgstr "Zapisovanje zagonskega nalagalnika ..."
 
 #: ../src/uploader.py:67
 #: ../src/uploader.py:100
-#: ../src/uploader.py:137
+#: ../src/uploader.py:147
+#: ../src/uploader.py:160
 msgid "Flashing error."
 msgstr "Napaka zaključevanja."
 
@@ -211,19 +204,19 @@ msgstr "Napaka zapisovanja."
 msgid "Burn complete."
 msgstr "Zapisovanje je končano."
 
-#: ../src/uploader.py:132
+#: ../src/uploader.py:133
 msgid "Flashing..."
 msgstr "Zaključevanje ..."
 
-#: ../src/uploader.py:157
+#: ../src/uploader.py:178
 msgid "Flashing Error"
 msgstr "Napaka zaključevanja."
 
-#: ../src/uploader.py:157
+#: ../src/uploader.py:178
 msgid "Flash ERROR.\n"
 msgstr "Napaka Zaključevanja.\n"
 
-#: ../src/uploader.py:160
+#: ../src/uploader.py:181
 msgid "Flashing complete."
 msgstr "Zaključevanje je končano."
 
@@ -392,34 +385,45 @@ msgid "Serial Port"
 msgstr "Zaporedna vrata"
 
 #: ../ui/main.ui.h:48
+msgid "Programmer"
+msgstr "Programer"
+
+#: ../ui/main.ui.h:49
 msgid "Burn Bootloader"
 msgstr "Zapiši zagonski nalagalnik"
 
-#: ../ui/main.ui.h:49
+#: ../ui/main.ui.h:50
 msgid "_Help"
 msgstr "Pomo_č"
 
-#: ../ui/main.ui.h:50
+#: ../ui/main.ui.h:51
 msgid "Reference"
 msgstr "Sklic"
 
-#: ../ui/main.ui.h:51
+#: ../ui/main.ui.h:52
 msgid "Compile"
 msgstr "Kodno prevajanje"
 
-#: ../ui/main.ui.h:52
+#: ../ui/main.ui.h:53
 msgid "New"
 msgstr "Novo"
 
-#: ../ui/main.ui.h:53
+#: ../ui/main.ui.h:54
 msgid "Open"
 msgstr "Odpri"
 
-#: ../ui/main.ui.h:54
+#: ../ui/main.ui.h:55
 msgid "Save"
 msgstr "Shrani"
 
-#: ../ui/main.ui.h:55
+#: ../ui/main.ui.h:56
 msgid "Upload"
 msgstr "Pošlji"
 
+#~ msgid "Cannot find PROGRAMMERS"
+#~ msgstr "Ni mogoče najti datoteke PROGRAMMERS"
+
+#~ msgid "Error reading %s file. File is corrupt. Installation problem."
+#~ msgstr ""
+#~ "Napaka branja datoteke %s. Datoteka je pokvarjena in predstavlja napako "
+#~ "namestitve."

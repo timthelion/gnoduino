@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-24 00:20+0100\n"
-"PO-Revision-Date: 2012-03-24 00:20+0100\n"
+"POT-Creation-Date: 2012-03-25 18:05+0200\n"
+"PO-Revision-Date: 2012-03-25 18:06+0200\n"
 "Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
 "Language-Team: Galician <gnome-l10n-gl@gnome.org>\n"
 "Language: gl\n"
@@ -18,17 +18,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Lokalize 1.2\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
-
-#: ../src/board.py:57
-msgid "Cannot load BOARDS file. Exiting."
-msgstr "Non foi posíbel cargar o ficheiro BOARDS. Saíndo."
-
-#: ../src/board.py:60
-#, python-format
-msgid "Error reading %s file. File is corrupt. Installation problem.\n"
-msgstr ""
-"Produciuse un erro ó ler o ficheiro %s. Está corrompido. Problema na "
-"instalación.\n"
 
 #: ../src/compiler.py:136
 msgid "Compiling..."
@@ -65,28 +54,29 @@ msgstr "Erro na biblioteca"
 msgid "Cannot find %s"
 msgstr "Non foi posíbel atopar %s"
 
-#: ../src/misc.py:221
+#: ../src/misc.py:147
+#, python-format
+msgid "Cannot load %s file. Exiting."
+msgstr "Non foi posíbel cargar o ficheiro %s. Saíndo."
+
+#: ../src/misc.py:150
+#, python-format
+msgid "Error reading %s file. File is corrupt. Installation problem.\n"
+msgstr ""
+"Produciuse un erro ó ler o ficheiro %s. Está corrompido. Problema na "
+"instalación.\n"
+
+#: ../src/misc.py:273
 msgid "Error compilling."
 msgstr "Erro ao compilar."
 
-#: ../src/misc.py:291
+#: ../src/misc.py:343
 msgid "Close without Saving"
 msgstr "Pechar sen gardar"
 
-#: ../src/misc.py:293
+#: ../src/misc.py:345
 msgid "If you don't save, changes will be permanently lost."
 msgstr "Se non garda, perderanse as modificacións."
-
-#: ../src/programmer.py:39
-msgid "Cannot find PROGRAMMERS"
-msgstr "Non foi posíbel atopar PROGRAMMERS"
-
-#: ../src/programmer.py:42
-#, python-format
-msgid "Error reading %s file. File is corrupt. Installation problem."
-msgstr ""
-"Produciuse un erro ó ler o ficheiro %s. Está corrompido. Problema na "
-"instalación."
 
 #: ../src/serialio.py:92
 msgid ""
@@ -142,7 +132,7 @@ msgstr "Xa existe o ficheiro en «%s». Substituílo sobrescribirá o seu contid
 msgid "Open Recent"
 msgstr "Abrir un recente"
 
-#: ../src/ui.py:541 ../ui/main.ui.h:56
+#: ../src/ui.py:541 ../ui/main.ui.h:57
 msgid "Send"
 msgstr "Enviar"
 
@@ -155,23 +145,23 @@ msgstr "Limpar"
 msgid "%s baud"
 msgstr "%s baud"
 
-#: ../src/ui.py:676
+#: ../src/ui.py:679
 msgid "E_xamples"
 msgstr "E_xemplos"
 
-#: ../src/ui.py:716 ../src/ui.py:722 ../src/ui.py:728
+#: ../src/ui.py:720 ../src/ui.py:726 ../src/ui.py:732
 msgid "System error"
 msgstr "Erro do sistema"
 
-#: ../src/ui.py:731
+#: ../src/ui.py:735
 msgid "Cannot load ui file"
 msgstr "Non foi posíbel cargar o ficheiro ui"
 
-#: ../src/ui.py:838
+#: ../src/ui.py:846
 msgid "--help    Print the command line options"
 msgstr "--help    Mostra as opcións da liña de ordes"
 
-#: ../src/ui.py:839
+#: ../src/ui.py:847
 msgid "--version Output version information and exit"
 msgstr "--version Mostra información da versión e sae"
 
@@ -179,7 +169,8 @@ msgstr "--version Mostra información da versión e sae"
 msgid "Burning bootloader..."
 msgstr "Escribindo o cargador de arranque…"
 
-#: ../src/uploader.py:67 ../src/uploader.py:100 ../src/uploader.py:137
+#: ../src/uploader.py:67 ../src/uploader.py:100 ../src/uploader.py:147
+#: ../src/uploader.py:160
 msgid "Flashing error."
 msgstr "Erro ao flashear."
 
@@ -196,19 +187,19 @@ msgstr "Erro de escritura."
 msgid "Burn complete."
 msgstr "Escritura rematada."
 
-#: ../src/uploader.py:132
+#: ../src/uploader.py:133
 msgid "Flashing..."
 msgstr "Flasheando…"
 
-#: ../src/uploader.py:159
+#: ../src/uploader.py:178
 msgid "Flashing Error"
 msgstr "Erro ao flashear"
 
-#: ../src/uploader.py:159
+#: ../src/uploader.py:178
 msgid "Flash ERROR.\n"
 msgstr "ERRO ao flashear.\n"
 
-#: ../src/uploader.py:162
+#: ../src/uploader.py:181
 msgid "Flashing complete."
 msgstr "Flasheado completo."
 
@@ -384,33 +375,45 @@ msgid "Serial Port"
 msgstr "Porto serie"
 
 #: ../ui/main.ui.h:48
+msgid "Programmer"
+msgstr "Programador"
+
+#: ../ui/main.ui.h:49
 msgid "Burn Bootloader"
 msgstr "Escribir o cargador de arranque…"
 
-#: ../ui/main.ui.h:49
+#: ../ui/main.ui.h:50
 msgid "_Help"
 msgstr "_Axuda"
 
-#: ../ui/main.ui.h:50
+#: ../ui/main.ui.h:51
 msgid "Reference"
 msgstr "Referencia"
 
-#: ../ui/main.ui.h:51
+#: ../ui/main.ui.h:52
 msgid "Compile"
 msgstr "Compilar"
 
-#: ../ui/main.ui.h:52
+#: ../ui/main.ui.h:53
 msgid "New"
 msgstr "Novo"
 
-#: ../ui/main.ui.h:53
+#: ../ui/main.ui.h:54
 msgid "Open"
 msgstr "Abrir"
 
-#: ../ui/main.ui.h:54
+#: ../ui/main.ui.h:55
 msgid "Save"
 msgstr "Gardar"
 
-#: ../ui/main.ui.h:55
+#: ../ui/main.ui.h:56
 msgid "Upload"
 msgstr "Transferir"
+
+#~ msgid "Cannot find PROGRAMMERS"
+#~ msgstr "Non foi posíbel atopar PROGRAMMERS"
+
+#~ msgid "Error reading %s file. File is corrupt. Installation problem."
+#~ msgstr ""
+#~ "Produciuse un erro ó ler o ficheiro %s. Está corrompido. Problema na "
+#~ "instalación."

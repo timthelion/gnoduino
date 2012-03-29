@@ -43,7 +43,6 @@ import serialio
 import srcview
 import gnoduino
 
-import gtksourceview2
 font = "Monospace 10"
 APP_NAME = "gnoduino"
 

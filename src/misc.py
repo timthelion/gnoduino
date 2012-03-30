@@ -17,7 +17,7 @@
 
 import os
 import glib
-import gnomevfs
+from xdg import Mime
 import gtk
 import hashlib
 import logging
@@ -216,15 +216,15 @@ def runProgOutput(console, cmdline):
 	return True
 
 def get_mime_type(content):
-	mime = gnomevfs.get_mime_type_for_data(content)
+	mime = Mime.get_type_by_data(content)
 	"""try harder to guess mime type"""
 	"""sometimes helps to trim leading newlines"""
 	"""FIXME: try with smaller chunk of content"""
-	if mime == "text/plain":
-		tmpmime = gnomevfs.get_mime_type_for_data(content.strip("\n"))
-		if tmpmime != "text/plain": mime = tmpmime
+	if mime is None or mime == "text/plain":
+		tmpmime = Mime.get_type_by_data(content.strip("\n"))
+		if tmpmime and tmpmime != "text/plain": mime = tmpmime
 		else: mime = "text/x-csrc"
-	return mime
+	return str(mime)
 
 def merge_font_name(widget, font):
 	if widget == None: return

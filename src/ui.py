@@ -642,7 +642,9 @@ def exampleProcess(widget):
 def populateExamples():
 	submenu = gtk.Menu()
 	for dir in ["examples", "libraries"]:
-		d =  os.listdir(misc.get_path(dir))
+		if misc.get_path(dir, "\0") != "\0":
+			d =  os.listdir(misc.get_path(dir))
+		else: continue
 		q = []
 		for i in d: q.append(misc.get_path(os.path.join(dir, i)))
 		for c in sorted(q):
@@ -670,11 +672,14 @@ def populateExamples():
 							item.connect("activate", exampleProcess)
 							subitem.append(item)
 						break
-			if ext: menuItem.set_submenu(subitem)
+			if ext:
+				menuItem.set_submenu(subitem)
+				submenu.append(menuItem)
 			else:
-				menuItem.set_data("file", os.path.join(c, i))
-				menuItem.connect("activate", exampleProcess)
-			submenu.append(menuItem)
+				if os.path.basename(os.path.split(c)[0]) == "examples":
+					menuItem.set_data("file", os.path.join(c, i))
+					menuItem.connect("activate", exampleProcess)
+					submenu.append(menuItem)
 	ex = gtk.MenuItem(_("E_xamples"), use_underline=True)
 	ex.set_submenu(submenu)
 	gui.get_object("filemenu").insert(ex, 2)

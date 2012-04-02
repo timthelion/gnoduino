@@ -89,10 +89,6 @@ class Pixmaps(cmd.Command):
 				print "Error: Unable to convert images to PNG"
 				sys.exit(1)
 
-compline = "scripts/gen_boards.py"
-(run, sout) = runProg(compline)
-compline = "scripts/gen_programmers.py"
-(run, sout) = runProg(compline)
 compline = "scripts/gitlog.sh"
 (run, sout) = runProg(compline)
 

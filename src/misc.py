@@ -270,7 +270,7 @@ def printError(notify, console, message):
 	b = console.get_buffer()
 	context = notify.get_context_id("main")
 	notify.pop(context)
-	notify.push(context, _("Error compilling."))
+	notify.push(context, _("Error compiling."))
 	b.delete(b.get_start_iter(), b.get_end_iter())
 	b.set_text(message)
 

@@ -268,7 +268,7 @@ def compile(tw, id, output, notify):
 			misc.printMessageLn(output, sout)
 		size = computeSize(tempobj+".hex")
 		notify.pop(context)
-		notify.push(context, _("Done compilling."))
+		notify.push(context, _("Done compiling."))
 		misc.printLogMessageLn("compile done.")
 
 		misc.printMessageLn(output, \

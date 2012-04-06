@@ -73,16 +73,22 @@ class Programmer(object):
 		return config.cur_programmer
 
 	def getCommunication(self, id):
-		return self.programmers[id]['communication']
+		try:
+			return self.programmers[id]['communication']
+		except KeyError: return ""
 
 	def getProtocol(self, id):
 		return self.programmers[id]['protocol']
 
 	def getSpeed(self, id):
-		return self.programmers[id]['speed']
+		try:
+			return self.programmers[id]['speed']
+		except KeyError: return 0
 
 	def getForce(self, id):
-		return self.programmers[id]['force']
+		try:
+			return self.programmers[id]['force']
+		except KeyError: return "false"
 
 	def setProgrammer(self, id):
 		config.cur_programmer = (id - 1)

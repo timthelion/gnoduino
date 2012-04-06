@@ -378,9 +378,9 @@ def cserial(w, st, data=None):
 		vbox.remove(scon)
 		vbox.add(con)
 
-def burnBootloader(w, id):
+def burnBootloader(w):
 	startSpinner()
-	uploader.burnBootloader(ser, tw, sb, id)
+	uploader.burnBootloader(ser, tw, sb, pgm.getProgrammer())
 	stopSpinner()
 
 def setBaud(w, data=None):
@@ -818,7 +818,7 @@ def run():
 			menuItem.connect('activate', selectProgrammer, i['id'])
 			sub.append(menuItem)
 		gui.get_object("programmer").set_submenu(sub)
-		gui.get_object("burn").connect('activate', burnBootloader, sub)
+		gui.get_object("burn").connect('activate', burnBootloader)
 
 		nb = gtk.Notebook()
 		nb.connect("switch-page", setupPage)

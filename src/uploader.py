@@ -80,13 +80,14 @@ def burnBootloader(serial, output, notify, id):
 		compline.append("-Uefuse:w:" + b.getFuseExtended(b.getBoard()) + ":m")
 	compline.append("-Uhfuse:w:" + b.getFuseHigh(b.getBoard()) + ":m")
 	compline.append("-Ulfuse:w:" + b.getFuseLow(b.getBoard()) + ":m")
-	misc.printMessageLn(output, ' '.join(compline))
 	try:
+		if p.getBoolValue("build.verbose"):
+			sys.stderr.write(' '.join(compline)+"\n")
+			misc.printMessageLn(output, ' '.join(compline))
 		(run, sout) = misc.runProg(compline)
-		if run == False:
-			if p.getBoolValue("build.verbose"):
-				misc.printErrorLn(notify, output, _("Burn Error"), sout)
-			raise
+		misc.printMessageLn(output, sout, p.getBoolValue("build.verbose"), 'false')
+		if p.getBoolValue("build.verbose"): sys.stderr.write(sout+"\n")
+		if run == False: raise
 	except:
 		misc.printErrorLn(notify, output, _("Burn Error"), _("Burn ERROR."))
 		return
@@ -110,13 +111,14 @@ def burnBootloader(serial, output, notify, id):
 		compline.append("-F")
 	compline.append("-Uflash:w:" + findBootLoader() + ":i")
 	compline.append("-Ulock:w:" + b.getFuseLock(b.getBoard()) + ":m")
-	misc.printMessageLn(output, ' '.join(compline))
 	try:
+		if p.getBoolValue("build.verbose"):
+			sys.stderr.write(' '.join(compline)+"\n")
+			misc.printMessageLn(output, ' '.join(compline))
 		(run, sout) = misc.runProg(compline)
-		if run == False:
-			if p.getBoolValue("build.verbose"):
-				misc.printErrorLn(notify, output, _("Burn Error"), sout)
-			raise
+		misc.printMessageLn(output, sout, p.getBoolValue("build.verbose"), 'false')
+		if p.getBoolValue("build.verbose"): sys.stderr.write(sout+"\n")
+		if run == False: raise
 	except:
 		misc.printErrorLn(notify, output, _("Burn Error"), _("Burn ERROR."))
 		return
@@ -173,6 +175,7 @@ def upload(obj, serial, output, notify):
 			misc.printMessageLn(output, ' '.join(compline))
 		(run, sout) = misc.runProg(compline)
 		misc.printMessageLn(output, sout, p.getBoolValue("build.verbose"), 'false')
+		if p.getBoolValue("build.verbose"): sys.stderr.write(sout+"\n")
 		if run == False: raise
 	except:
 		misc.printErrorLn(notify, output, _("Flashing Error"), _("Flash ERROR.\n"))

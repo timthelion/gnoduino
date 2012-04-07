@@ -349,7 +349,7 @@ def validateLib(library, tempobj, flags, output, notify):
 						(run, sout) = misc.runProg(compline)
 						misc.printLogMessageLn(sout)
 						if run == False:
-							misc.printError(notify, output, _("Library Error"), sout)
+							misc.printErrorLn(notify, output, _("Library Error"), sout)
 							raise NameError('libs compile error')
 						res.append(os.path.join(os.path.dirname(tempobj), \
 							os.path.basename(i.replace(".c", ".o"))))
@@ -372,7 +372,7 @@ def validateLib(library, tempobj, flags, output, notify):
 						(run, sout) = misc.runProg(compline)
 						misc.printLogMessageLn(sout)
 						if run == False:
-							misc.printError(notify, output, _("Library Error"), sout)
+							misc.printErrorLn(notify, output, _("Library Error"), sout)
 							raise NameError('libs compile error')
 						res.append(os.path.join(os.path.dirname(tempobj), \
 							os.path.basename(i.replace(".cpp", ".o"))))

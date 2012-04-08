@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnoduino master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnoduino&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-04-04 08:05+0000\n"
-"PO-Revision-Date: 2012-04-04 13:35+0100\n"
+"POT-Creation-Date: 2012-04-08 18:10+0000\n"
+"PO-Revision-Date: 2012-04-08 20:27+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenščina <gnome-si@googlegroups.com>\n"
 "Language: \n"
@@ -44,8 +44,8 @@ msgid "Object error"
 msgstr "Napaka predmeta"
 
 #: ../src/compiler.py:271
-msgid "Done compilling."
-msgstr "Kodno prevajanje je končano."
+msgid "Done compiling."
+msgstr "Kodno prevajanje je končano!"
 
 #: ../src/compiler.py:275
 #, python-format
@@ -57,30 +57,30 @@ msgstr "Velikost dvojiške skice: %s bajtov (od največ %s bajtov)\n"
 msgid "Library Error"
 msgstr "Napaka knjižnice"
 
-#: ../src/misc.py:53
+#: ../src/misc.py:54
 #, python-format
 msgid "Cannot find %s"
 msgstr "Ni mogoče najti %s"
 
-#: ../src/misc.py:147
+#: ../src/misc.py:148
 #, python-format
 msgid "Cannot load %s file. Exiting."
 msgstr "Ni mogoče naložiti datoteke %s. Opravilo je predčasno končano."
 
-#: ../src/misc.py:150
+#: ../src/misc.py:151
 #, python-format
 msgid "Error reading %s file. File is corrupt. Installation problem.\n"
 msgstr "Napaka branja datoteke %s. Datoteka je pokvarjena in predstavlja napako namestitve.\n"
 
-#: ../src/misc.py:273
-msgid "Error compilling."
-msgstr "Med kodnim prevajanjem je prišlo do napake."
+#: ../src/misc.py:274
+msgid "Error compiling."
+msgstr "Prišlo je do napake med kodnim prevajanjem!"
 
-#: ../src/misc.py:343
+#: ../src/misc.py:344
 msgid "Close without Saving"
 msgstr "Zapri brez shranjevanja"
 
-#: ../src/misc.py:345
+#: ../src/misc.py:346
 msgid "If you don't save, changes will be permanently lost."
 msgstr "V primeru, da sprememb ne shranite, bodo te trajno izgubljene."
 
@@ -155,25 +155,25 @@ msgstr "Počisti"
 msgid "%s baud"
 msgstr "%s baud"
 
-#: ../src/ui.py:683
+#: ../src/ui.py:702
 msgid "E_xamples"
 msgstr "_Primeri"
 
-#: ../src/ui.py:724
-#: ../src/ui.py:730
-#: ../src/ui.py:736
+#: ../src/ui.py:743
+#: ../src/ui.py:749
+#: ../src/ui.py:755
 msgid "System error"
 msgstr "Sistemska napaka"
 
-#: ../src/ui.py:739
+#: ../src/ui.py:758
 msgid "Cannot load ui file"
 msgstr "Datoteke uporabniškega vmesnika ni mogoče naložiti."
 
-#: ../src/ui.py:850
+#: ../src/ui.py:869
 msgid "--help    Print the command line options"
 msgstr "--help    Izpiši možnosti ukazne vrstice"
 
-#: ../src/ui.py:851
+#: ../src/ui.py:870
 msgid "--version Output version information and exit"
 msgstr "--version Izpiši podrobnosti različice in končaj"
 
@@ -182,41 +182,39 @@ msgid "Burning bootloader..."
 msgstr "Zapisovanje zagonskega nalagalnika ..."
 
 #: ../src/uploader.py:67
-#: ../src/uploader.py:100
-#: ../src/uploader.py:147
-#: ../src/uploader.py:160
+#: ../src/uploader.py:101
+#: ../src/uploader.py:149
+#: ../src/uploader.py:162
 msgid "Flashing error."
 msgstr "Napaka zaključevanja."
 
-#: ../src/uploader.py:88
-#: ../src/uploader.py:91
-#: ../src/uploader.py:118
-#: ../src/uploader.py:121
+#: ../src/uploader.py:92
+#: ../src/uploader.py:123
 msgid "Burn Error"
 msgstr "Napaka zapisovanja"
 
-#: ../src/uploader.py:91
-#: ../src/uploader.py:121
+#: ../src/uploader.py:92
+#: ../src/uploader.py:123
 msgid "Burn ERROR."
 msgstr "Napaka zapisovanja."
 
-#: ../src/uploader.py:124
+#: ../src/uploader.py:126
 msgid "Burn complete."
 msgstr "Zapisovanje je končano."
 
-#: ../src/uploader.py:133
+#: ../src/uploader.py:135
 msgid "Flashing..."
 msgstr "Zaključevanje ..."
 
-#: ../src/uploader.py:178
+#: ../src/uploader.py:181
 msgid "Flashing Error"
 msgstr "Napaka zaključevanja."
 
-#: ../src/uploader.py:178
+#: ../src/uploader.py:181
 msgid "Flash ERROR.\n"
 msgstr "Napaka Zaključevanja.\n"
 
-#: ../src/uploader.py:181
+#: ../src/uploader.py:184
 msgid "Flashing complete."
 msgstr "Zaključevanje je končano."
 

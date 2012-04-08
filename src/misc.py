@@ -16,6 +16,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 import os
+import ConfigParser
 import glib
 from xdg import Mime
 import gtk
@@ -140,10 +141,10 @@ def readArduinoConfFile(confFile):
 		return conf
 	except: return None
 
-def readGnoduinoConfFile(self, confFile):
+def readGnoduinoConfFile(confFile):
 	conf = []
 	cnf = ConfigParser.RawConfigParser()
-	path = misc.getArduinoFile(confFile)
+	path = getArduinoFile(confFile)
 	if path is None: raise SystemExit(_("Cannot load %s file. Exiting.") % confFile)
 	cnf.read(path)
 	if not len(cnf.sections()):

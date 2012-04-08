@@ -18,7 +18,6 @@
 
 import os
 import sys
-import ConfigParser
 import config
 import prefs
 import misc

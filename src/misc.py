@@ -51,7 +51,7 @@ def get_path(main_path, default=None):
             return path
     if default:
         return default
-    raise SystemExit(_("Cannot find %s") % main_path)
+    raise SystemExit(_("Unable to locate %s\nArduino SDK missing or broken.") % main_path)
 
 def getArduinoFile(filename):
 	return get_path(filename)

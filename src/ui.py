@@ -691,13 +691,9 @@ def populateExamples():
 		paths.extend(i.strip() for i in config.user_library.split(';'))
 	for p in paths:
 		if os.path.exists(p):
-			d = os.listdir(p)
-		else: continue
-		q = []
-		for i in d:
-			f = os.path.join(p, i)
-			if os.path.isdir(os.path.join(f, "examples")):
-				q.append(f)
+			q = []
+			if os.path.isdir(os.path.join(p, "examples")):
+				q.append(p)
 		for c in sorted(q): populateExampleLine(c, submenu)
 	ex = gtk.MenuItem(_("E_xamples"), use_underline=True)
 	ex.set_submenu(submenu)

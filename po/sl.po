@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnoduino master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnoduino&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-04-08 18:10+0000\n"
-"PO-Revision-Date: 2012-04-08 20:27+0100\n"
+"POT-Creation-Date: 2012-04-08 19:39+0000\n"
+"PO-Revision-Date: 2012-04-08 22:43+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenščina <gnome-si@googlegroups.com>\n"
 "Language: \n"
@@ -59,8 +59,12 @@ msgstr "Napaka knjižnice"
 
 #: ../src/misc.py:54
 #, python-format
-msgid "Cannot find %s"
-msgstr "Ni mogoče najti %s"
+msgid ""
+"Unable to locate %s\n"
+"Arduino SDK missing or broken."
+msgstr ""
+"Ni mogoče najti %s.\n"
+"Arduino SDK manjka ali pa je pokvarjen."
 
 #: ../src/misc.py:148
 #, python-format
@@ -417,6 +421,9 @@ msgstr "Shrani"
 #: ../ui/main.ui.h:56
 msgid "Upload"
 msgstr "Pošlji"
+
+#~ msgid "Cannot find %s"
+#~ msgstr "Ni mogoče najti %s"
 
 #~ msgid "Cannot find PROGRAMMERS"
 #~ msgstr "Ni mogoče najti datoteke PROGRAMMERS"

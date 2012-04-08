@@ -639,6 +639,44 @@ def _search_locales():
 def exampleProcess(widget):
 	processFile(widget.get_data("file"))
 
+def populateExampleLine(entry, menu):
+	subitem = gtk.Menu()
+	menuItem = gtk.MenuItem(os.path.basename(entry))
+	ext = False
+	for i in sorted(os.listdir(entry)):
+		if os.path.isdir(os.path.join(entry,i)):
+			f = os.path.join(entry, i, i + ".ino")
+			if not os.path.exists(f):
+				f = os.path.join(entry, i, i + ".pde")
+				if not os.path.exists(f): continue
+			ext = True
+			item = gtk.MenuItem(os.path.basename(i))
+			item.set_data("file", f)
+			item.connect("activate", exampleProcess)
+			subitem.append(item)
+		else:
+			d = os.path.join(entry, "examples")
+			if os.path.exists(d):
+				for j in sorted(os.listdir(d)):
+					f = os.path.join(entry, "examples", j, j + ".ino")
+					if not os.path.exists(f):
+						f = os.path.join(entry, "examples", j, j + ".pde")
+						if not os.path.exists(f): continue
+					ext = True
+					item = gtk.MenuItem(os.path.basename(j))
+					item.set_data("file", f)
+					item.connect("activate", exampleProcess)
+					subitem.append(item)
+				break
+	if ext:
+		menuItem.set_submenu(subitem)
+		menu.append(menuItem)
+	else:
+		if os.path.basename(os.path.split(entry)[0]) == "examples":
+			menuItem.set_data("file", os.path.join(entry, i))
+			menuItem.connect("activate", exampleProcess)
+			menu.append(menuItem)
+
 def populateExamples():
 	submenu = gtk.Menu()
 	for dir in ["examples", "libraries"]:
@@ -647,39 +685,20 @@ def populateExamples():
 		else: continue
 		q = []
 		for i in d: q.append(misc.get_path(os.path.join(dir, i)))
-		for c in sorted(q):
-			subitem = gtk.Menu()
-			menuItem = gtk.MenuItem(os.path.basename(c))
-			ext = False
-			for i in sorted(os.listdir(c)):
-				if os.path.isdir(os.path.join(c,i)):
-					ext = True
-					item = gtk.MenuItem(os.path.basename(i))
-					f = os.path.join(c, i, i + ".ino")
-					if not os.path.exists(f): f = os.path.join(c, i, i + ".pde")
-					item.set_data("file", f)
-					item.connect("activate", exampleProcess)
-					subitem.append(item)
-				else:
-					d = os.path.join(c, "examples")
-					if os.path.exists(d):
-						for j in sorted(os.listdir(d)):
-							ext = True
-							item = gtk.MenuItem(os.path.basename(j))
-							f = os.path.join(c, "examples", j, j + ".ino")
-							if not os.path.exists(f): f = os.path.join(c, "examples", j, j + ".pde")
-							item.set_data("file", f)
-							item.connect("activate", exampleProcess)
-							subitem.append(item)
-						break
-			if ext:
-				menuItem.set_submenu(subitem)
-				submenu.append(menuItem)
-			else:
-				if os.path.basename(os.path.split(c)[0]) == "examples":
-					menuItem.set_data("file", os.path.join(c, i))
-					menuItem.connect("activate", exampleProcess)
-					submenu.append(menuItem)
+		for c in sorted(q): populateExampleLine(c, submenu)
+	paths = []
+	if config.user_library != None and config.user_library != -1:
+		paths.extend(i.strip() for i in config.user_library.split(';'))
+	for p in paths:
+		if os.path.exists(p):
+			d = os.listdir(p)
+		else: continue
+		q = []
+		for i in d:
+			f = os.path.join(p, i)
+			if os.path.isdir(os.path.join(f, "examples")):
+				q.append(f)
+		for c in sorted(q): populateExampleLine(c, submenu)
 	ex = gtk.MenuItem(_("E_xamples"), use_underline=True)
 	ex.set_submenu(submenu)
 	gui.get_object("filemenu").insert(ex, 2)

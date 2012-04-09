@@ -462,6 +462,7 @@ Pascal de Bruijn &lt;pmjdebruijn@pcode.nl&gt;</property>
               <object class="GtkEntry" id="user.library">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
+                <property name="tooltip_text" translatable="yes">Enter any supplementary path that compiler will check for, separate them by semicolons. (eg /usr/share/gnoduino;/usr/local/share/gnoduino)</property>
                 <property name="invisible_char">●</property>
                 <property name="invisible_char_set">True</property>
               </object>

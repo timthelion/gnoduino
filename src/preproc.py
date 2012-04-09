@@ -56,6 +56,10 @@ def findIncludes(instr, local=False):
 			my.append(os.path.join(misc.getArduinoLibsPath(), z.strip(".h")))
 		if config.user_library:
 			for q in config.user_library.split(';'):
+				fl = os.path.join(q.strip(), z)
+				if os.path.exists(fl) or os.path.exists(fl.lower()) or \
+					os.path.exists(fl.upper()):
+						my.append(q.strip())
 				fl = os.path.join(q.strip(), z.strip(".h"))
 				if os.path.exists(fl) or os.path.exists(fl.lower()) or \
 					os.path.exists(fl.upper()):

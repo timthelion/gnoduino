@@ -140,6 +140,8 @@ def compile(tw, id, output, notify):
 	tmpdir = id
 	tempobj = tempfile.mktemp("", "Tempobj", id)
 	global p
+	global queue
+	queue = []
 	p = prefs.preferences()
 	b = board.Board()
 	#compile inter c objects
@@ -197,6 +199,8 @@ def compile(tw, id, output, notify):
 		compline=[j for j in defcpp]
 		compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
 		compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
+		if misc.getArduinoVersion() >= 100:
+			compline.append("-DARDUINO=100")
 		compline.extend(misc.getArduinoIncludes())
 		flags = []
 		flags = preproc.generateCFlags(id, cont)
@@ -227,7 +231,10 @@ def compile(tw, id, output, notify):
 		for i in preproc.generateLibs(id, buf):
 			tmplibs.extend(validateLib(os.path.basename(i), tempobj, flags, output, notify))
 		compline.extend(list(set(tmplibs)))
+		compline.extend(["-I" + i for i in preproc.generateLibs(id, buf)])
 		compline.extend(["-I" + os.path.join(i, "utility") for i in preproc.generateLibs(id, buf)])
+		if misc.getArduinoVersion() >= 100:
+			compline.append("-DARDUINO=100")
 		compline.extend(misc.getArduinoIncludes())
 		compline.append(id+"/core.a")
 		compline.append("-L"+id)
@@ -319,17 +326,19 @@ def getLibraries():
 def validateLib(library, tempobj, flags, output, notify):
 	"""compile library also try to compile every cpp under libdir"""
 	"""also try to compile utility dir if present"""
-	paths = ["", misc.getArduinoPath(), misc.getArduinoLibsPath()]
+	paths = ["", misc.getArduinoLibsPath()]
 	if config.user_library != None and config.user_library != -1:
 		paths.extend(i.strip() for i in config.user_library.split(';'))
 	dirs = ["", "utility"]
 	b = board.Board()
 	res = []
 	fl = []
-	queue = []
 	for d in dirs:
 		for q in paths:
 			fl = os.path.join(q, library, d)
+			"""test the path directly, in case include was specified to the library directory"""
+			if fl not in set(queue) and not os.path.exists(fl):
+				fl = os.path.join(q, d)
 			if fl not in set(queue) and os.path.exists(fl):
 				queue.append(fl)
 				try:
@@ -338,6 +347,8 @@ def validateLib(library, tempobj, flags, output, notify):
 						compline = [j for j in defc]
 						compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
 						compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
+						if misc.getArduinoVersion() >= 100:
+							compline.append("-DARDUINO=100")
 						compline.extend(misc.getArduinoIncludes())
 						compline.append("-I" + os.path.join(misc.getArduinoLibsPath(), library, "utility"))
 						compline.extend(preproc.generateCFlags(id, open(i).read()))
@@ -361,6 +372,8 @@ def validateLib(library, tempobj, flags, output, notify):
 						compline = [j for j in defcpp]
 						compline.append("-mmcu="+b.getBoardMCU(b.getBoard()))
 						compline.append("-DF_CPU="+b.getBoardFCPU(b.getBoard()))
+						if misc.getArduinoVersion() >= 100:
+							compline.append("-DARDUINO=100")
 						compline.extend(misc.getArduinoIncludes())
 						compline.extend(preproc.generateCFlags(id, open(i).read()))
 						compline.extend(flags)

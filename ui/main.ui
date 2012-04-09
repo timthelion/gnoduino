@@ -402,7 +402,7 @@ Pascal de Bruijn &lt;pmjdebruijn@pcode.nl&gt;</property>
               </packing>
             </child>
             <child>
-              <object class="GtkCheckButton" id="build.upload">
+              <object class="GtkCheckButton" id="upload.verbose">
                 <property name="label" translatable="yes">Verbose upload</property>
                 <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>

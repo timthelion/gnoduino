@@ -295,6 +295,7 @@ def preferences(widget, data=None):
 	fe = gui.get_object("fontbutton1")
 	fc = gui.get_object("fontbutton2")
 	bv = gui.get_object("build.verbose")
+	uv = gui.get_object("upload.verbose")
 	sn = gui.get_object("show.numbers")
 	ul = gui.get_object("user.library")
 	p = prefs.preferences()
@@ -308,6 +309,14 @@ def preferences(widget, data=None):
 		if p.getSafeValue("build.verbose", "false") == 'true':
 			val = 1
 	bv.set_active(val)
+	val = 0
+	if config.upload_verbose != -1:
+		if config.upload_verbose == 'true':
+			val = 1
+	else:
+		if p.getSafeValue("upload.verbose", "false") == 'true':
+			val = 1
+	uv.set_active(val)
 	val = 0
 	if config.show_numbers != -1:
 		if config.show_numbers == 'true':
@@ -332,6 +341,11 @@ def preferences(widget, data=None):
 		else:
 			config.build_verbose = 'false'
 		p.setValue("build.verbose", config.build_verbose)
+		if uv.get_active() == 1:
+			config.upload_verbose = 'true'
+		else:
+			config.upload_verbose = 'false'
+		p.setValue("upload.verbose", config.upload_verbose)
 		if sn.get_active() == 1:
 			config.show_numbers = 'true'
 		else:

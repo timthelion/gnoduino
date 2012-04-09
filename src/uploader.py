@@ -81,12 +81,12 @@ def burnBootloader(serial, output, notify, id):
 	compline.append("-Uhfuse:w:" + b.getFuseHigh(b.getBoard()) + ":m")
 	compline.append("-Ulfuse:w:" + b.getFuseLow(b.getBoard()) + ":m")
 	try:
-		if p.getBoolValue("build.verbose"):
+		if p.getBoolValue("upload.verbose"):
 			sys.stderr.write(' '.join(compline)+"\n")
 			misc.printMessageLn(output, ' '.join(compline))
 		(run, sout) = misc.runProg(compline)
-		misc.printMessageLn(output, sout, p.getBoolValue("build.verbose"), 'false')
-		if p.getBoolValue("build.verbose"): sys.stderr.write(sout+"\n")
+		misc.printMessageLn(output, sout, p.getBoolValue("upload.verbose"), 'false')
+		if p.getBoolValue("upload.verbose"): sys.stderr.write(sout+"\n")
 		if run == False: raise
 	except:
 		misc.printErrorLn(notify, output, _("Burn Error"), _("Burn ERROR."))
@@ -112,12 +112,12 @@ def burnBootloader(serial, output, notify, id):
 	compline.append("-Uflash:w:" + findBootLoader() + ":i")
 	compline.append("-Ulock:w:" + b.getFuseLock(b.getBoard()) + ":m")
 	try:
-		if p.getBoolValue("build.verbose"):
+		if p.getBoolValue("upload.verbose"):
 			sys.stderr.write(' '.join(compline)+"\n")
 			misc.printMessageLn(output, ' '.join(compline))
 		(run, sout) = misc.runProg(compline)
-		misc.printMessageLn(output, sout, p.getBoolValue("build.verbose"), 'false')
-		if p.getBoolValue("build.verbose"): sys.stderr.write(sout+"\n")
+		misc.printMessageLn(output, sout, p.getBoolValue("upload.verbose"), 'false')
+		if p.getBoolValue("upload.verbose"): sys.stderr.write(sout+"\n")
 		if run == False: raise
 	except:
 		misc.printErrorLn(notify, output, _("Burn Error"), _("Burn ERROR."))
@@ -170,12 +170,12 @@ def upload(obj, serial, output, notify):
 	compline.append("-p" + b.getBoardMCU(b.getBoard()))
 	compline.append("-Uflash:w:"+obj+".hex:i")
 	try:
-		if p.getBoolValue("build.verbose"):
+		if p.getBoolValue("upload.verbose"):
 			sys.stderr.write(' '.join(compline)+"\n")
 			misc.printMessageLn(output, ' '.join(compline))
 		(run, sout) = misc.runProg(compline)
-		misc.printMessageLn(output, sout, p.getBoolValue("build.verbose"), 'false')
-		if p.getBoolValue("build.verbose"): sys.stderr.write(sout+"\n")
+		misc.printMessageLn(output, sout, p.getBoolValue("upload.verbose"), 'false')
+		if p.getBoolValue("upload.verbose"): sys.stderr.write(sout+"\n")
 		if run == False: raise
 	except:
 		misc.printErrorLn(notify, output, _("Flashing Error"), _("Flash ERROR.\n"))

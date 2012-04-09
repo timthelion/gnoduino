@@ -298,6 +298,7 @@ def preferences(widget, data=None):
 	uv = gui.get_object("upload.verbose")
 	sn = gui.get_object("show.numbers")
 	ul = gui.get_object("user.library")
+	sd = gui.get_object("sketchdir")
 	p = prefs.preferences()
 	fe.set_font_name(misc.merge_font_name(fe, config.cur_editor_font))
 	fc.set_font_name(misc.merge_font_name(fc, config.cur_console_font))
@@ -329,6 +330,11 @@ def preferences(widget, data=None):
 		ul.set_text(str(config.user_library))
 	else:
 		ul.set_text(str(p.getSafeValue("user.library", "")))
+
+	if (config.sketchdir != None and config.sketchdir != -1):
+		sd.set_filename(str(config.sketchdir))
+	else:
+		sd.set_filename(str(p.getSafeValue("sketchbook.path", "")))
 	r = pref.run()
 	if r == 1:
 		config.cur_editor_font = fe.get_font_name()
@@ -358,6 +364,7 @@ def preferences(widget, data=None):
 			else:
 				sv.set_show_line_numbers(False)
 		p.setValue("user.library", config.user_library)
+		p.setValue("sketchbook.path", sd.get_filename())
 		p.saveValues()
 		misc.set_widget_font(tw, config.cur_console_font)
 		misc.set_widget_font(sctw, config.cur_console_font)

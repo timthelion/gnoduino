@@ -42,6 +42,7 @@ config_keys = [
 [ "console.font", "/apps/gnoduino/console_font", "string", "Monospace,10" ],
 [ "build.verbose", "/apps/gnoduino/build_verbose", "string", "false" ],
 [ "upload.verbose", "/apps/gnoduino/upload_verbose", "string", "false" ],
+[ "sketchbook.path", "/apps/gnoduino/sketchbook_path", "string", "false" ],
 [ "show.numbers", "/apps/gnoduino/show_numbers", "string", "false" ]]
 
 class preferences(object):

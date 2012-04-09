@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: gnoduino master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gnoduino&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-04-06 20:22+0000\n"
-"PO-Revision-Date: 2012-04-08 12:28+0200\n"
+"POT-Creation-Date: 2012-04-08 19:39+0000\n"
+"PO-Revision-Date: 2012-04-09 14:31+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -36,7 +36,6 @@ msgid "Object error"
 msgstr "Error en el objeto"
 
 #: ../src/compiler.py:271
-#| msgid "Done compilling."
 msgid "Done compiling."
 msgstr "Compilación terminada."
 
@@ -49,33 +48,36 @@ msgstr "Tamaño del esbozo del binario: %s bytes (de un máximo de %s)\n"
 msgid "Library Error"
 msgstr "Error en la biblioteca"
 
-#: ../src/misc.py:53
+#: ../src/misc.py:54
 #, python-format
-msgid "Cannot find %s"
-msgstr "No se pudo encontrar %s"
+msgid ""
+"Unable to locate %s\n"
+"Arduino SDK missing or broken."
+msgstr ""
+"No se pudo encontrar %s\n"
+"Falta el SDK de Arduino o no funciona."
 
-#: ../src/misc.py:147
+#: ../src/misc.py:148
 #, python-format
 msgid "Cannot load %s file. Exiting."
 msgstr "No se puede cargar el archivo %s. Saliendo."
 
-#: ../src/misc.py:150
+#: ../src/misc.py:151
 #, python-format
 msgid "Error reading %s file. File is corrupt. Installation problem.\n"
 msgstr ""
 "Error al leer el archivo %s. El archivo está corrompido. Problema de la "
 "instalación.\n"
 
-#: ../src/misc.py:273
-#| msgid "Error compilling."
+#: ../src/misc.py:274
 msgid "Error compiling."
 msgstr "Erro al compilar."
 
-#: ../src/misc.py:343
+#: ../src/misc.py:344
 msgid "Close without Saving"
 msgstr "Cerrar sin guardar"
 
-#: ../src/misc.py:345
+#: ../src/misc.py:346
 msgid "If you don't save, changes will be permanently lost."
 msgstr "Los cambios se perderán permanentemente si no los guarda."
 
@@ -147,25 +149,25 @@ msgstr "Limpiar"
 msgid "%s baud"
 msgstr "%s baudios"
 
-#: ../src/ui.py:683
+#: ../src/ui.py:702
 msgid "E_xamples"
 msgstr "Eje_mplos"
 
-#: ../src/ui.py:724 ../src/ui.py:730 ../src/ui.py:736
+#: ../src/ui.py:743 ../src/ui.py:749 ../src/ui.py:755
 msgid "System error"
 msgstr "Error del sistema"
 
-#: ../src/ui.py:739
+#: ../src/ui.py:758
 msgid "Cannot load ui file"
 msgstr "No se puede cargar el archivo ui"
 
-#: ../src/ui.py:850
+#: ../src/ui.py:869
 msgid "--help    Print the command line options"
 msgstr ""
 "--help    Mostrar\n"
 " las opciones de la línea de comandos"
 
-#: ../src/ui.py:851
+#: ../src/ui.py:870
 msgid "--version Output version information and exit"
 msgstr "--version    Mostrar información de la versión y salir"
 
@@ -414,6 +416,9 @@ msgstr "Guardar"
 #: ../ui/main.ui.h:56
 msgid "Upload"
 msgstr "Subir"
+
+#~ msgid "Cannot find %s"
+#~ msgstr "No se pudo encontrar %s"
 
 #~ msgid "Cannot find PROGRAMMERS"
 #~ msgstr "No se puede encontrar PROGRAMMERS"

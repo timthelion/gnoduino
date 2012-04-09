@@ -928,11 +928,11 @@ Pascal de Bruijn &lt;pmjdebruijn@pcode.nl&gt;</property>
             <property name="can_focus">False</property>
             <property name="toolbar_style">icons</property>
             <child>
-              <object class="GtkToolButton" id="compile">
+              <object class="GtkToolButton" id="verify">
                 <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="tooltip_markup">Compile</property>
+                <property name="tooltip_markup">Verify/Compile</property>
                 <property name="use_action_appearance">False</property>
                 <property name="is_important">True</property>
                 <property name="label" translatable="yes">Compile</property>
@@ -944,13 +944,13 @@ Pascal de Bruijn &lt;pmjdebruijn@pcode.nl&gt;</property>
               </packing>
             </child>
             <child>
-              <object class="GtkToolButton" id="stop">
+              <object class="GtkToolButton" id="upload">
                 <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="tooltip_text" translatable="yes">Stop</property>
+                <property name="tooltip_text" translatable="yes">Upload</property>
                 <property name="use_action_appearance">False</property>
-                <property name="label" translatable="yes">Stop</property>
+                <property name="label" translatable="yes">Upload</property>
                 <property name="use_underline">True</property>
               </object>
               <packing>
@@ -1006,21 +1006,6 @@ Pascal de Bruijn &lt;pmjdebruijn@pcode.nl&gt;</property>
                 <property name="tooltip_text" translatable="yes">Save</property>
                 <property name="use_action_appearance">False</property>
                 <property name="label" translatable="yes">Save</property>
-                <property name="use_underline">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="homogeneous">True</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkToolButton" id="upload">
-                <property name="use_action_appearance">False</property>
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="tooltip_text" translatable="yes">Upload</property>
-                <property name="use_action_appearance">False</property>
-                <property name="label" translatable="yes">Upload</property>
                 <property name="use_underline">True</property>
               </object>
               <packing>

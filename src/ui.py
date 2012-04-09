@@ -581,14 +581,13 @@ def serSendTextButton(w, data=None):
 	serSendText(data, None)
 
 buttons = [
-		("compile", "compile.png", compile),
-		("stop", "stop.png", stop),
+		("verify", "verify.png", compile),
+		("upload", "upload.png", None),
 
 		("open", "open.png", copen),
 		("new", "new.png", cnew),
-
 		("save", "save.png", butSave),
-		("upload", "upload.png", None),
+
 		("serial", "serial.png", None)
 	]
 

@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: gnoduino master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gnoduino&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-04-08 19:39+0000\n"
-"PO-Revision-Date: 2012-04-09 14:31+0200\n"
+"POT-Creation-Date: 2012-04-09 18:01+0000\n"
+"PO-Revision-Date: 2012-04-12 16:16+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -22,29 +22,29 @@ msgstr ""
 msgid "Compiling..."
 msgstr "Compilando…"
 
-#: ../src/compiler.py:153 ../src/compiler.py:159 ../src/compiler.py:165
-#: ../src/compiler.py:172 ../src/compiler.py:190 ../src/compiler.py:213
+#: ../src/compiler.py:155 ../src/compiler.py:161 ../src/compiler.py:167
+#: ../src/compiler.py:174 ../src/compiler.py:192 ../src/compiler.py:217
 msgid "Compile Error"
 msgstr "Error al compilar"
 
-#: ../src/compiler.py:240
+#: ../src/compiler.py:247
 msgid "Linking error"
 msgstr "Error al enlazar"
 
-#: ../src/compiler.py:252 ../src/compiler.py:265
+#: ../src/compiler.py:259 ../src/compiler.py:272
 msgid "Object error"
 msgstr "Error en el objeto"
 
-#: ../src/compiler.py:271
+#: ../src/compiler.py:278
 msgid "Done compiling."
 msgstr "Compilación terminada."
 
-#: ../src/compiler.py:275
+#: ../src/compiler.py:282
 #, python-format
 msgid "Binary sketch size: %s bytes (of a %s bytes maximum)\n"
 msgstr "Tamaño del esbozo del binario: %s bytes (de un máximo de %s)\n"
 
-#: ../src/compiler.py:352 ../src/compiler.py:375
+#: ../src/compiler.py:363 ../src/compiler.py:388
 msgid "Library Error"
 msgstr "Error en la biblioteca"
 
@@ -132,42 +132,42 @@ msgid ""
 msgstr ""
 "El archivo ya existe en «%s». Si lo reemplaza sobreescribirá su contenido."
 
-#: ../src/ui.py:505
+#: ../src/ui.py:526
 msgid "Open Recent"
 msgstr "Abrir reciente"
 
-#: ../src/ui.py:540 ../ui/main.ui.h:57
+#: ../src/ui.py:561 ../ui/main.ui.h:59
 msgid "Send"
 msgstr "Enviar"
 
-#: ../src/ui.py:541
+#: ../src/ui.py:562
 msgid "Clear"
 msgstr "Limpiar"
 
-#: ../src/ui.py:580
+#: ../src/ui.py:601
 #, python-format
 msgid "%s baud"
 msgstr "%s baudios"
 
-#: ../src/ui.py:702
+#: ../src/ui.py:719
 msgid "E_xamples"
 msgstr "Eje_mplos"
 
-#: ../src/ui.py:743 ../src/ui.py:749 ../src/ui.py:755
+#: ../src/ui.py:760 ../src/ui.py:766 ../src/ui.py:772
 msgid "System error"
 msgstr "Error del sistema"
 
-#: ../src/ui.py:758
+#: ../src/ui.py:775
 msgid "Cannot load ui file"
 msgstr "No se puede cargar el archivo ui"
 
-#: ../src/ui.py:869
+#: ../src/ui.py:886
 msgid "--help    Print the command line options"
 msgstr ""
 "--help    Mostrar\n"
 " las opciones de la línea de comandos"
 
-#: ../src/ui.py:870
+#: ../src/ui.py:887
 msgid "--version Output version information and exit"
 msgstr "--version    Mostrar información de la versión y salir"
 
@@ -301,10 +301,20 @@ msgid "Verbose build"
 msgstr "Construcción detallada"
 
 #: ../ui/main.ui.h:29
+#| msgid "Verbose build"
+msgid "Verbose upload"
+msgstr "Subida detallada"
+
+#: ../ui/main.ui.h:30
 msgid "Show line numbers"
 msgstr "Mostrar números de línea"
 
-#: ../ui/main.ui.h:30
+#: ../ui/main.ui.h:31
+#| msgid "Sketch"
+msgid "Sketchdir: "
+msgstr "Carpeta de esbozos: "
+
+#: ../ui/main.ui.h:32
 msgid ""
 "Enter any supplementary path that compiler will check for, separate them by "
 "semicolons. (eg /usr/share/gnoduino;/usr/local/share/gnoduino)"
@@ -313,107 +323,107 @@ msgstr ""
 "separadas por punto y coma. (ej /usr/share/gnoduino;/usr/local/share/"
 "gnoduino)"
 
-#: ../ui/main.ui.h:31
+#: ../ui/main.ui.h:33
 msgid "Additional library paths:"
 msgstr "Rutas de bibliotecas adicionales:"
 
-#: ../ui/main.ui.h:32
+#: ../ui/main.ui.h:34
 msgid "_File"
 msgstr "_Archivo"
 
-#: ../ui/main.ui.h:33
+#: ../ui/main.ui.h:35
 msgid "Upload to I/O Board"
 msgstr "Subir al tablero de E/S"
 
-#: ../ui/main.ui.h:34
+#: ../ui/main.ui.h:36
 msgid "Preferences"
 msgstr "Preferencias"
 
-#: ../ui/main.ui.h:35
+#: ../ui/main.ui.h:37
 msgid "_Edit"
 msgstr "_Editar"
 
-#: ../ui/main.ui.h:36
+#: ../ui/main.ui.h:38
 msgid "Find Next"
 msgstr "Buscar siguiente"
 
-#: ../ui/main.ui.h:37
+#: ../ui/main.ui.h:39
 msgid "Sketch"
 msgstr "Esbozo"
 
-#: ../ui/main.ui.h:38
+#: ../ui/main.ui.h:40
 msgid "Verify/Compile"
 msgstr "Verificar/Compilar"
 
-#: ../ui/main.ui.h:39
+#: ../ui/main.ui.h:41
 msgid "Stop"
 msgstr "Parar"
 
-#: ../ui/main.ui.h:40
+#: ../ui/main.ui.h:42
 msgid "Import Library"
 msgstr "Importar biblioteca"
 
-#: ../ui/main.ui.h:41
+#: ../ui/main.ui.h:43
 msgid "Add File..."
 msgstr "Añadir archivo…"
 
-#: ../ui/main.ui.h:42
+#: ../ui/main.ui.h:44
 msgid "Tools"
 msgstr "Herramientas"
 
-#: ../ui/main.ui.h:43
+#: ../ui/main.ui.h:45
 msgid "Auto Format"
 msgstr "Formato automático"
 
-#: ../ui/main.ui.h:44
+#: ../ui/main.ui.h:46
 msgid "Serial Monitor"
 msgstr "Monitor serie"
 
-#: ../ui/main.ui.h:45
+#: ../ui/main.ui.h:47
 msgid "Reset Board"
 msgstr "Reiniciar tablero"
 
-#: ../ui/main.ui.h:46
+#: ../ui/main.ui.h:48
 msgid "Board"
 msgstr "Tablero"
 
-#: ../ui/main.ui.h:47
+#: ../ui/main.ui.h:49
 msgid "Serial Port"
 msgstr "Puerto serie"
 
-#: ../ui/main.ui.h:48
+#: ../ui/main.ui.h:50
 msgid "Programmer"
 msgstr "Programador"
 
-#: ../ui/main.ui.h:49
+#: ../ui/main.ui.h:51
 msgid "Burn Bootloader"
 msgstr "Grabar cargador de arranque"
 
-#: ../ui/main.ui.h:50
+#: ../ui/main.ui.h:52
 msgid "_Help"
 msgstr "Ay_uda"
 
-#: ../ui/main.ui.h:51
+#: ../ui/main.ui.h:53
 msgid "Reference"
 msgstr "Referencia"
 
-#: ../ui/main.ui.h:52
+#: ../ui/main.ui.h:54
 msgid "Compile"
 msgstr "Compilar"
 
-#: ../ui/main.ui.h:53
+#: ../ui/main.ui.h:55
 msgid "New"
 msgstr "Nuevo"
 
-#: ../ui/main.ui.h:54
+#: ../ui/main.ui.h:56
 msgid "Open"
 msgstr "Abrir"
 
-#: ../ui/main.ui.h:55
+#: ../ui/main.ui.h:57
 msgid "Save"
 msgstr "Guardar"
 
-#: ../ui/main.ui.h:56
+#: ../ui/main.ui.h:58
 msgid "Upload"
 msgstr "Subir"
 

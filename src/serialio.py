@@ -88,7 +88,7 @@ class sconsole:
 		return [i[0] for i in self.serial.getSupportedBaudrates() if i[1] >= 300 and i[1] <= 1150000]
 	def getConfigSerialPort(self, notify, output):
 		if config.cur_serial_port == -1:
-			misc.printError(notify, output, \
+			misc.printError(None, output, \
 				_("Serial port not configured!\nUse Tools->Serial Port to configure port."))
 			return -1
 		else:

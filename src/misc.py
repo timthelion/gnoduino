@@ -269,17 +269,19 @@ def clearConsole(console):
 def printError(notify, console, message):
 	console.modify_text(gtk.STATE_NORMAL, gtk.gdk.Color(red=1.0))
 	b = console.get_buffer()
-	context = notify.get_context_id("main")
-	notify.pop(context)
-	notify.push(context, _("Error compiling."))
+	if notify is not None:
+		context = notify.get_context_id("main")
+		notify.pop(context)
+		notify.push(context, _("Error compiling."))
 	b.delete(b.get_start_iter(), b.get_end_iter())
 	b.set_text(message)
 
 def printErrorLn(notify, console, error, message):
 	b = console.get_buffer()
-	context = notify.get_context_id("main")
-	notify.pop(context)
-	notify.push(context, error)
+	if notify is not None:
+		context = notify.get_context_id("main")
+		notify.pop(context)
+		notify.push(context, error)
 	b.insert_with_tags_by_name(b.get_end_iter(), message, "red_foreground")
 	b.place_cursor(b.get_end_iter())
 	mark = b.get_insert()

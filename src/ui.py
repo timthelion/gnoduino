@@ -19,7 +19,6 @@ import os
 import sys
 import glib
 import gobject
-import gnomevfs
 import gtk
 import subprocess
 import select

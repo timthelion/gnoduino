@@ -32,7 +32,7 @@ global forcesdk
 forcesdk = False
 
 for arg in sys.argv[1:]:
-	if arg == 'forcesdk': forcesdk = True
+	if arg == 'forcesdk' or arg == 'sdist': forcesdk = True
 try: sys.argv.remove('forcesdk')
 except: pass
 

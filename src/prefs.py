@@ -1,5 +1,5 @@
 # gnoduino - Python Arduino IDE implementation
-# Copyright (C) 2010  Lucian Langa
+# Copyright (C) 2010-2012  Lucian Langa
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -43,6 +43,7 @@ config_keys = [
 [ "build.verbose", "/apps/gnoduino/build_verbose", "string", "false" ],
 [ "upload.verbose", "/apps/gnoduino/upload_verbose", "string", "false" ],
 [ "sketchbook.path", "/apps/gnoduino/sketchbook_path", "string", "false" ],
+[ "programmer",  "/apps/gnoduino/programmer", "string", "arduino:avrispmkii" ],
 [ "show.numbers", "/apps/gnoduino/show_numbers", "string", "false" ]]
 
 class preferences(object):

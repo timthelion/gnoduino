@@ -76,15 +76,15 @@ msgstr "Ni mogoče naložiti datoteke %s. Opravilo je predčasno končano."
 msgid "Error reading %s file. File is corrupt. Installation problem.\n"
 msgstr "Napaka branja datoteke %s. Datoteka je pokvarjena in predstavlja napako namestitve.\n"
 
-#: ../src/misc.py:274
+#: ../src/misc.py:275
 msgid "Error compiling."
 msgstr "Prišlo je do napake med kodnim prevajanjem!"
 
-#: ../src/misc.py:344
+#: ../src/misc.py:346
 msgid "Close without Saving"
 msgstr "Zapri brez shranjevanja"
 
-#: ../src/misc.py:346
+#: ../src/misc.py:348
 msgid "If you don't save, changes will be permanently lost."
 msgstr "V primeru, da sprememb ne shranite, bodo te trajno izgubljene."
 
@@ -96,25 +96,25 @@ msgstr ""
 "Zaporedna vrata niso nastavljena!\n"
 "Uporabite Orodja->Zaporedna vrata na nastavljanje."
 
-#: ../src/srcview.py:148
-#: ../src/srcview.py:158
+#: ../src/srcview.py:149
+#: ../src/srcview.py:159
 #, python-format
 msgid "'%s' not found."
 msgstr "'%s' ni mogoče najti."
 
-#: ../src/ui.py:67
-#: ../src/ui.py:87
-#: ../src/ui.py:100
-#: ../src/ui.py:168
-#: ../src/ui.py:183
+#: ../src/ui.py:66
+#: ../src/ui.py:86
+#: ../src/ui.py:99
+#: ../src/ui.py:167
+#: ../src/ui.py:182
 msgid "Untitled"
 msgstr "Neimenovano"
 
-#: ../src/ui.py:68
+#: ../src/ui.py:67
 msgid "Save document"
 msgstr "Shrani dokument"
 
-#: ../src/ui.py:69
+#: ../src/ui.py:68
 #, python-format
 msgid ""
 "Save changes to document \"%s\"\n"
@@ -123,61 +123,70 @@ msgstr ""
 "Ali želite shraniti spremembe v dokumentu\n"
 "\"%s\", preden se zapre?"
 
-#: ../src/ui.py:177
+#: ../src/ui.py:176
 msgid "Save file"
 msgstr "Shrani datoteko"
 
-#: ../src/ui.py:194
+#: ../src/ui.py:193
 msgid "Open file"
 msgstr "Odpri datoteko"
 
-#: ../src/ui.py:220
+#: ../src/ui.py:219
 #, python-format
 msgid "<b>A file named %s already exists. Do you want to replace it?</b>"
 msgstr "<b>Datoteka z imenom %s že obstaja. Ali jo želite zamenjati?</b>"
 
-#: ../src/ui.py:221
+#: ../src/ui.py:220
 #, python-format
 msgid "The file already exists in \"%s\". Replacing it will overwrite its contents."
 msgstr "Datoteka že obstaja v mapi \"%s\". S prepisom bo njena vsebina izgubljena."
 
-#: ../src/ui.py:526
+#: ../src/ui.py:525
 msgid "Open Recent"
 msgstr "Odpri nedavno"
 
-#: ../src/ui.py:561
+#: ../src/ui.py:560
 #: ../ui/main.ui.h:59
 msgid "Send"
 msgstr "Pošlji"
 
-#: ../src/ui.py:562
+#: ../src/ui.py:561
 msgid "Clear"
 msgstr "Počisti"
 
-#: ../src/ui.py:601
+#: ../src/ui.py:599
 #, python-format
 msgid "%s baud"
 msgstr "%s baud"
 
-#: ../src/ui.py:719
+#: ../src/ui.py:717
 msgid "E_xamples"
 msgstr "_Primeri"
 
-#: ../src/ui.py:760
-#: ../src/ui.py:766
-#: ../src/ui.py:772
+#: ../src/ui.py:723
+#: ../ui/main.ui.h:55
+msgid "Upload"
+msgstr "Pošlji"
+
+#: ../src/ui.py:730
+msgid "Upload using programmer"
+msgstr "Naloži z uporabo programerja"
+
+#: ../src/ui.py:769
+#: ../src/ui.py:775
+#: ../src/ui.py:781
 msgid "System error"
 msgstr "Sistemska napaka"
 
-#: ../src/ui.py:775
+#: ../src/ui.py:784
 msgid "Cannot load ui file"
 msgstr "Datoteke uporabniškega vmesnika ni mogoče naložiti."
 
-#: ../src/ui.py:886
+#: ../src/ui.py:899
 msgid "--help    Print the command line options"
 msgstr "--help    Izpiši možnosti ukazne vrstice"
 
-#: ../src/ui.py:887
+#: ../src/ui.py:900
 msgid "--version Output version information and exit"
 msgstr "--version Izpiši podrobnosti različice in končaj"
 
@@ -414,29 +423,15 @@ msgstr "Sklic"
 msgid "Compile"
 msgstr "Kodno prevajanje"
 
-#: ../ui/main.ui.h:55
+#: ../ui/main.ui.h:56
 msgid "New"
 msgstr "Novo"
 
-#: ../ui/main.ui.h:56
+#: ../ui/main.ui.h:57
 msgid "Open"
 msgstr "Odpri"
 
-#: ../ui/main.ui.h:57
+#: ../ui/main.ui.h:58
 msgid "Save"
 msgstr "Shrani"
 
-#: ../ui/main.ui.h:58
-msgid "Upload"
-msgstr "Pošlji"
-
-#~ msgid "Cannot find %s"
-#~ msgstr "Ni mogoče najti %s"
-
-#~ msgid "Cannot find PROGRAMMERS"
-#~ msgstr "Ni mogoče najti datoteke PROGRAMMERS"
-
-#~ msgid "Error reading %s file. File is corrupt. Installation problem."
-#~ msgstr ""
-#~ "Napaka branja datoteke %s. Datoteka je pokvarjena in predstavlja napako "
-#~ "namestitve."

@@ -254,7 +254,7 @@ def compile(widget, data=file):
 	cserial(None, 0, sctw)
 	page = getCurrentPage()
 	startSpinner()
-	obj = compiler.compile(page.get_data("view"), id, tw, sb) #page.get_data("buffer")
+	obj = compiler.compile(page.get_data("view"),page.get_data("file"), id, tw, sb) #page.get_data("buffer")
 	stopSpinner()
 	return obj
 

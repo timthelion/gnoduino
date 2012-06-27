@@ -127,7 +127,7 @@ def stripOut(sout, pre):
 	if len(sout) >= 2: return sout[1]
 	else: return sout
 
-def compile(tw, id, output, notify):
+def compile(tw, sourcefile, id, output, notify):
 	buf =  tw.get_buffer()
 	cont = buf.get_text(buf.get_start_iter(), buf.get_end_iter())
 	if cont is "": return -1
@@ -209,6 +209,7 @@ def compile(tw, id, output, notify):
 		compline.extend(misc.getArduinoIncludes())
 		compline.append(pre_file)
 		compline.append("-o"+pre_file+".o")
+		compline.append("-I"+os.path.dirname(sourcefile))
 		misc.printMessageLn(output, ' '.join(compline)+"\n")
 		misc.printLogMessageLn(' '.join(compline))
 		(run, sout) = misc.runProg(compline)
